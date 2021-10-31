@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    public int[] start_tile = new int[2];
+    public int[] start_tile = new int[2]; //The tile to start at.
     private TileBoard board;
     // Start is called before the first frame update
     void Start()
@@ -18,8 +18,6 @@ public class CharacterController : MonoBehaviour
             start_tile[0] = 0;
             start_tile[1] = 0;
         }
-        Debug.Log(start_tile[0]);
-        Debug.Log(start_tile[1]);
         //Assign the position.
         transform.position = board.GetTilePosition(start_tile[0], start_tile[1]);
     }
@@ -27,6 +25,31 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+    }
+
+    /*
+     * Detect collision between the player and enemies or power-ups.
+     */
+    void OnCollisionEnter(Collision collision)
+    {
+        //Check for a match with the specific tag on any GameObject that collides with your GameObject
+        if (collision.gameObject.tag == "Powerup")
+        {
+            Destroy(collision.gameObject);
+            Debug.Log("Powerup hit");
+        }
+
+        if (collision.gameObject.tag == "Enemy")
+        {
+            //If the GameObject has the same tag as specified, output this message in the console
+            Debug.Log("Enemy hit");
+        }
+
+        if (collision.gameObject.tag == "Hazard")
+        {
+            //If the GameObject has the same tag as specified, output this message in the console
+            Debug.Log("Hazard hit");
+        }
     }
 }

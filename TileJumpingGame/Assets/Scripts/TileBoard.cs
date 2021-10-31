@@ -13,6 +13,7 @@ public class TileBoard : MonoBehaviour
     private const int TILE_COUNT_Y = 4;
 
     private GameObject[,] m_Tiles; //[,] means it's 2D //[,,] would mean 3D
+    private Vector3[,] m_TilePositions;
 
     private void Awake()
     {
@@ -21,10 +22,18 @@ public class TileBoard : MonoBehaviour
 
     private void GenerateAllTiles(float tilesize, int tileCountX, int tileCountY)
     {
+        //Compute each tiles positions and put them in the m_TilePositions list.
+        m_TilePositions = new Vector3[tileCountX, tileCountY];
+
         m_Tiles = new GameObject[tileCountX, tileCountY];
         for (int x = 0; x < tileCountX; x++)
+        {
             for (int y = 0; y < tileCountY; y++)
+            {
                 m_Tiles[x, y] = GenerateSingleTile(tilesize, x, y);
+                m_TilePositions[x, y] = new Vector3(x * m_TileSize, 0.0f, y * m_TileSize) + new Vector3(m_TileSize / 2.0f, 0, m_TileSize / 2.0f);
+            }
+        }
     }
 
     private GameObject GenerateSingleTile(float tilesize, int x, int y)
@@ -69,14 +78,9 @@ public class TileBoard : MonoBehaviour
     }
 
     //Input the x,y index of the tile and it should return the tiles position.
-    /*
-     * TODO: This should actually be pre-computed and put into and array since
-     * we will call this function a lot of times but we don't wanna compute
-     * it all the time and instead just sample the value from the array.
-     */
     public Vector3 GetTilePosition(int x, int y)
     {
         //The second addition is to center player in the tile.
-        return new Vector3(x* m_TileSize, 0.0f, y* m_TileSize) + new Vector3(m_TileSize/2.0f, 0, m_TileSize/2.0f);
+        return m_TilePositions[x, y];
     }
 }
