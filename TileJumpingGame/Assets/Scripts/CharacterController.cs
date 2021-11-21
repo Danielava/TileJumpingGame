@@ -25,7 +25,27 @@ public class CharacterController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        //Movement
+        //Up
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            print("Player went up");
+        }
+        //Down
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            print("space key was pressed");
+        }
+        //Right
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            print("space key was pressed");
+        }
+        //Left
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            print("space key was pressed");
+        }
     }
 
     /*
