@@ -77,6 +77,16 @@ public class TileBoard : MonoBehaviour
         return m_TileSize;
     }
 
+    public int GetSizeX()
+    {
+        return TILE_COUNT_X;
+    }
+
+    public int GetSizeY()
+    {
+        return TILE_COUNT_Y;
+    }
+
     //Input the x,y index of the tile and it should return the tiles position.
     public Vector3 GetTilePosition(int x, int y)
     {

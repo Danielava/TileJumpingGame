@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class CharacterController : MonoBehaviour
 {
-    public int[] start_tile = new int[2]; //The tile to start at.
+    public int[] start_tile = new int[2]; //The tile to start at. They are 0-indexed.
     private TileBoard board;
+    private int[] current_tile = new int[2]; //(x, y) pair
     // Start is called before the first frame update
     void Start()
     {
@@ -20,32 +21,95 @@ public class CharacterController : MonoBehaviour
         }
         //Assign the position.
         transform.position = board.GetTilePosition(start_tile[0], start_tile[1]);
+        current_tile[0] = start_tile[0];
+        current_tile[1] = start_tile[1];
     }
+
+    /*
+     * TODO: LOOK AT THIS TUTORIAL FOR SMOOTH MOVEMENT!
+     * https://youtu.be/3kW54hU98os?t=411
+     * 
+     */
 
     // Update is called once per frame
     void Update()
     {
-        //Movement
+        //Movement, check for collision in all of them before updating character position.
+
         //Up
         if (Input.GetKeyDown(KeyCode.W))
         {
-            print("Player went up");
+            //We move one UP in y-axis so check current_tile[0] collision
+            if(current_tile[1]+1 < board.GetSizeY())
+            {
+                Move(current_tile[0], current_tile[1]+1);
+                print("Player went up!");
+            }
+            else
+            {
+                print("Collision, can't move up!");
+            }
         }
         //Down
         if (Input.GetKeyDown(KeyCode.S))
         {
-            print("space key was pressed");
+            //We move one DOWN in y-axis so check current_tile[0] against 0 for collision
+            if (current_tile[1] > 0)
+            {
+                Move(current_tile[0], current_tile[1]-1);
+                print("Player went down!");
+            }
+            else
+            {
+                print("Collision, can't move down!");
+            }
         }
         //Right
         if (Input.GetKeyDown(KeyCode.D))
         {
-            print("space key was pressed");
+            //We move one RIGHT in x-axis so check current_tile[1] collision
+            if (current_tile[0]+1 < board.GetSizeX())
+            {
+                Move(current_tile[0]+1, current_tile[1]);
+                print("Player went right!");
+            }
+            else
+            {
+                print("Collision, can't move right!");
+            }
         }
         //Left
         if (Input.GetKeyDown(KeyCode.A))
         {
-            print("space key was pressed");
+            //We move one RIGHT in x-axis so check current_tile[1] collision
+            if (current_tile[0] > 0)
+            {
+                Move(current_tile[0]-1, current_tile[1]);
+                print("Player went left!");
+            }
+            else
+            {
+                print("Collision, can't move left!");
+            }
         }
+    }
+
+    /*
+    * Moves our player to another tile and updates the current_tile (= players current tile position)
+    */
+    void Move(int x, int y)
+    {
+        transform.position = board.GetTilePosition(x, y);
+        current_tile[0] = x;
+        current_tile[1] = y;
+    }
+
+    /*
+     *  Input a position, returns true if that position exists.
+     */
+    bool CheckBoardBounds(int x, int y)
+    {
+        return false;
     }
 
     /*

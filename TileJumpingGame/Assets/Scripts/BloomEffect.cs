@@ -9,8 +9,8 @@ public class BloomEffect : MonoBehaviour
 
     Material bloom;
 
-    const int mippass = 0;
-    const int addpass = 1;
+    const int MipMapPass = 0;
+    const int BloomPass = 1;
     void OnRenderImage(RenderTexture source, RenderTexture destination)
     {
 
@@ -29,7 +29,7 @@ public class BloomEffect : MonoBehaviour
              width, height, 0, format
         );
 
-        Graphics.Blit(source, temp, bloom, mippass);
+        Graphics.Blit(source, temp, bloom, MipMapPass);
         Graphics.Blit(temp, destination);
 
 
@@ -39,7 +39,7 @@ public class BloomEffect : MonoBehaviour
         //Now we're gonna have the source texture available to sample from
         //and apply our bloom to that.
         bloom.SetTexture("_SourceTex", source);
-        Graphics.Blit(currentSource, destination, bloom, addpass);
+        Graphics.Blit(currentSource, destination, bloom, BloomPass);
 
 
         RenderTexture.ReleaseTemporary(temp);

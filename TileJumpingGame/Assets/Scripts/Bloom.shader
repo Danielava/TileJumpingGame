@@ -37,7 +37,7 @@
         // No culling or depth
         Cull Off ZWrite Off ZTest Always
 
-        Pass //0 mippass
+        Pass //0 MipMapPass
         {
             CGPROGRAM
             #pragma vertex vert
@@ -48,17 +48,14 @@
             {
                 half4 col = tex2D(_MainTex, i.uv+ float2(-0.0,-0.0));
                 // just invert the colors
-                float contrast = col.r*0.2126f + col.g*0.7152f + col.b*0.0722f;
+                float luminance = col.r*0.2126f + col.g*0.7152f + col.b*0.0722f;
                 
-                if(contrast > 0.4f)
-                    return col;
-                else
-                    return 0;
+                return (luminance > 0.4f) ? col : 0;
             }
             ENDCG
         }
         
-        Pass //1 addpass
+        Pass //1 BloomPass
         {
             Blend One One //Makes so we add the previous scene to the current.
             CGPROGRAM
