@@ -21,5 +21,8 @@ public class Powerup : MonoBehaviour
             Destroy(gameObject);
             PowerupSpawner.DecrementPowerUpCountOnScreen();
         }
+
+        //float y_rot = transform.rotation.y;
+        //transform.Rotate(0.0f, 1.0f, 0.0f, Space.World);
     }
 }

@@ -43,11 +43,11 @@ public class CharacterController : MonoBehaviour
             if(current_tile[1]+1 < board.GetSizeY())
             {
                 Move(current_tile[0], current_tile[1]+1);
-                print("Player went up!");
+                //print("Player went up!");
             }
             else
             {
-                print("Collision, can't move up!");
+                //print("Collision, can't move up!");
             }
         }
         //Down
@@ -57,11 +57,11 @@ public class CharacterController : MonoBehaviour
             if (current_tile[1] > 0)
             {
                 Move(current_tile[0], current_tile[1]-1);
-                print("Player went down!");
+                //print("Player went down!");
             }
             else
             {
-                print("Collision, can't move down!");
+                //print("Collision, can't move down!");
             }
         }
         //Right
@@ -71,11 +71,11 @@ public class CharacterController : MonoBehaviour
             if (current_tile[0]+1 < board.GetSizeX())
             {
                 Move(current_tile[0]+1, current_tile[1]);
-                print("Player went right!");
+                //print("Player went right!");
             }
             else
             {
-                print("Collision, can't move right!");
+                //print("Collision, can't move right!");
             }
         }
         //Left
@@ -85,11 +85,11 @@ public class CharacterController : MonoBehaviour
             if (current_tile[0] > 0)
             {
                 Move(current_tile[0]-1, current_tile[1]);
-                print("Player went left!");
+                //print("Player went left!");
             }
             else
             {
-                print("Collision, can't move left!");
+                //print("Collision, can't move left!");
             }
         }
     }

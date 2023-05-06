@@ -35,7 +35,7 @@ public class PowerupSpawner : MonoBehaviour
         board = GameObject.Find("Board").GetComponent<TileBoard>();
         tiles = board.GetTileList(); //Do we need this?
 
-        MAX_POWEUPS_ON_SCREEN = 4;
+        MAX_POWEUPS_ON_SCREEN = 10;
         m_CurrentPowerUpsOnScreen = 0;
 
         timer = 0.0f;
@@ -53,11 +53,12 @@ public class PowerupSpawner : MonoBehaviour
             tile_index.y = Random.Range(0, tiles.GetLength(1));
             //Random object.
             int rnd_index = Random.Range(0, m_PowerUps.Length);
+            Debug.Log(rnd_index);
+            Debug.Log(m_PowerUps[rnd_index]);
             //Can't create object from the reference list as it gets null when destroyed.
             Instantiate(m_PowerUps[rnd_index], board.GetTilePosition(tile_index.x, tile_index.y), Quaternion.identity);
             m_CurrentPowerUpsOnScreen++;
             timer = 0;
-            Debug.Log(m_CurrentPowerUpsOnScreen);
         }
     }
 
