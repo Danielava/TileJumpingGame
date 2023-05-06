@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /*
@@ -9,10 +10,18 @@ using UnityEngine;
  * V1.1: 
  * 
  */
+
+[System.Serializable]
+public class PowerUpWrapper
+{
+    public Powerup powerup;
+    public int spawnWeight;
+}
+
 public class PowerupSpawner : MonoBehaviour
 {
     //A list of powerups that can potentially spawn.
-    public Powerup[] m_PowerUps;
+    public List<PowerUpWrapper> m_PowerUps;
 
     private TileBoard board;
     private GameObject[,] tiles;
@@ -29,11 +38,14 @@ public class PowerupSpawner : MonoBehaviour
 
     private static int m_CurrentPowerUpsOnScreen;
 
+    int totalWeight;
+
     // Start is called before the first frame update
     void Start()
     {
         board = GameObject.Find("Board").GetComponent<TileBoard>();
         tiles = board.GetTileList(); //Do we need this?
+        totalWeight = m_PowerUps.Sum(it => it.spawnWeight);
 
         MAX_POWEUPS_ON_SCREEN = 10;
         m_CurrentPowerUpsOnScreen = 0;
@@ -52,11 +64,17 @@ public class PowerupSpawner : MonoBehaviour
             tile_index.x = Random.Range(0, tiles.GetLength(0));
             tile_index.y = Random.Range(0, tiles.GetLength(1));
             //Random object.
-            int rnd_index = Random.Range(0, m_PowerUps.Length);
-            Debug.Log(rnd_index);
-            Debug.Log(m_PowerUps[rnd_index]);
+            int randomInt = Random.Range(0, totalWeight);
+            foreach (PowerUpWrapper powerUpWrapper in m_PowerUps)
+            {
+                if (randomInt < powerUpWrapper.spawnWeight)
+                {
+                    Instantiate(powerUpWrapper.powerup, board.GetTilePosition(tile_index.x, tile_index.y), Quaternion.identity);
+                    break;
+                }
+                randomInt -= powerUpWrapper.spawnWeight;
+            }
             //Can't create object from the reference list as it gets null when destroyed.
-            Instantiate(m_PowerUps[rnd_index], board.GetTilePosition(tile_index.x, tile_index.y), Quaternion.identity);
             m_CurrentPowerUpsOnScreen++;
             timer = 0;
         }
