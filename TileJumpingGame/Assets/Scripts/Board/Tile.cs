@@ -8,11 +8,13 @@ public class Tile : MonoBehaviour
     public int xPos;
     public int yPos;
     public List<Powerup> powerUps;
+    public List<Hazard> hazards;
     public bool unEnterable;
     // Start is called before the first frame update
     void Start()
     {
         powerUps = new List<Powerup>();
+        hazards = new List<Hazard>();
     }
 
     // Update is called once per frame
@@ -51,12 +53,28 @@ public class Tile : MonoBehaviour
     public void EnterTile()
     {
         //add checks for hazards, items, etc
-        foreach(Powerup powerup in powerUps)
+        PickUpPowerUps();
+        TriggerHazards();
+    }
+
+    private void PickUpPowerUps()
+    {
+        foreach (Powerup powerup in powerUps)
         {
             //add to inventory
             PowerupSpawner.DecrementPowerUpCountOnScreen();
             Destroy(powerup.gameObject);
         }
         powerUps.Clear();
+    }
+
+    private void TriggerHazards()
+    {
+        foreach (Hazard hazard in hazards)
+        {
+            //do something with player
+
+            //clear hazard?
+        }
     }
 }
