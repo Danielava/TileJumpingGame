@@ -56,7 +56,7 @@ public class Inventory : MonoBehaviour
     {
         for(int i = 0; i < GameVariables.TOTAL_NR_OF_SPELLS; i++)
         {
-            if(GameVariables.SPELLS[i].CheckIfEnableSpell(this))
+            if(GameVariables.SPELLS[i].CheckIfSpellAvailable(this))
             {
                 m_AvailablePlayerSpells[i]++;
             }
