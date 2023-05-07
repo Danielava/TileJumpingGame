@@ -58,3 +58,7 @@ sysinfo.txt
 # Crashlytics generated file
 crashlytics-build.properties
 
+# Extra setting files
+TileJumpingGame/UserSettings/EditorUserSettings.asset
+TileJumpingGame/UserSettings/Layouts/default-2021.dwlt
+
