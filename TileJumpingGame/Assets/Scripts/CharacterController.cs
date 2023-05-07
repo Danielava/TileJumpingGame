@@ -8,23 +8,23 @@ public class CharacterController : MonoBehaviour
     private TileBoard board;
     private int[] current_tile = new int[2]; //(x, y) pair
 
-    private Tile CurrentTile;
+    private Tile currentTile;
 
     public Inventory m_Inventory;
     // Start is called before the first frame update
     void Start()
     {
         board = GameObject.Find("Board").GetComponent<TileBoard>();
-        GameObject[,] tiles = board.GetTileList();
+        //GameObject[,] tiles = board.GetTileList();
         //Set players start position to the specified tile position
-        if (start_tile[0] >= tiles.GetLength(0) || start_tile[0] < 0 ||
-            start_tile[1] >= tiles.GetLength(1) || start_tile[1] < 0) //The x coord.
-        {
-            start_tile[0] = 0;
-            start_tile[1] = 0;
-        }
-        //Assign the position.
-        transform.position = board.GetTilePosition(start_tile[0], start_tile[1]);
+        //if (start_tile[0] >= tiles.GetLength(0) || start_tile[0] < 0 ||
+        //    start_tile[1] >= tiles.GetLength(1) || start_tile[1] < 0) //The x coord.
+        //{
+        //    start_tile[0] = 0;
+        //    start_tile[1] = 0;
+        //}
+        ////Assign the position.
+        //transform.position = board.GetTilePosition(start_tile[0], start_tile[1]);
         //CurrentTile.xPos = start_tile[0];
         //CurrentTile.yPos = start_tile[1];
         var firstTile = board.GetTile(0, 0);
@@ -50,9 +50,9 @@ public class CharacterController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W))
         {
             //We move one UP in y-axis so check CurrentTile.xPos collision
-            if(CurrentTile.yPos+1 < board.GetSizeY())
+            if(board.CanMoveTo(currentTile.xPos, currentTile.yPos+1))
             {
-                var tile = board.GetTile(CurrentTile.xPos, CurrentTile.yPos + 1);
+                var tile = board.GetTile(currentTile.xPos, currentTile.yPos + 1);
                 Move(tile);
                 //Move(CurrentTile.xPos, CurrentTile.yPos+1);
                 //print("Player went up!");
@@ -66,10 +66,10 @@ public class CharacterController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             //We move one DOWN in y-axis so check CurrentTile.xPos against 0 for collision
-            if (CurrentTile.yPos > 0)
+            if (board.CanMoveTo(currentTile.xPos, currentTile.yPos - 1))
             {
                 //Move(CurrentTile.xPos, CurrentTile.yPos-1);
-                var tile = board.GetTile(CurrentTile.xPos, CurrentTile.yPos - 1);
+                var tile = board.GetTile(currentTile.xPos, currentTile.yPos - 1);
                 Move(tile);
                 //print("Player went down!");
             }
@@ -82,10 +82,10 @@ public class CharacterController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.D))
         {
             //We move one RIGHT in x-axis so check CurrentTile.yPos collision
-            if (CurrentTile.xPos+1 < board.GetSizeX())
+            if (board.CanMoveTo(currentTile.xPos + 1, currentTile.yPos))
             {
                 //Move(CurrentTile.xPos+1, CurrentTile.yPos);
-                var tile = board.GetTile(CurrentTile.xPos + 1, CurrentTile.yPos);
+                var tile = board.GetTile(currentTile.xPos + 1, currentTile.yPos);
                 Move(tile);
                 //print("Player went right!");
             }
@@ -98,10 +98,10 @@ public class CharacterController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             //We move one RIGHT in x-axis so check CurrentTile.yPos collision
-            if (CurrentTile.xPos > 0)
+            if (board.CanMoveTo(currentTile.xPos - 1, currentTile.yPos))
             {
                 //Move(CurrentTile.xPos-1, CurrentTile.yPos);
-                var tile = board.GetTile(CurrentTile.xPos - 1, CurrentTile.yPos);
+                var tile = board.GetTile(currentTile.xPos - 1, currentTile.yPos);
                 Move(tile);
                 //print("Player went left!");
             }
@@ -117,12 +117,12 @@ public class CharacterController : MonoBehaviour
     */
     void Move(Tile tile)
     {
-        CurrentTile = tile;
+        currentTile = tile;
         transform.position = new Vector3(tile.xPos, tile.yPos);
         //transform.position = board.GetTilePosition(x, y);
         //CurrentTile.xPos = (int)tile.Position.x;
         //CurrentTile.yPos = (int)tile.Position.y;
-        CurrentTile.EnterTile();
+        currentTile.EnterTile();
     }
 
     /*

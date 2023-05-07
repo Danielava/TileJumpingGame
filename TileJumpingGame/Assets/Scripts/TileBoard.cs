@@ -16,7 +16,7 @@ public class TileBoard : MonoBehaviour
     private Vector3[,] m_TilePositions;
 
     public GameObject TilePrefab;
-    private Tile[,] Tiles;
+    private Tile[,] tiles;
 
     private void Awake()
     {
@@ -110,6 +110,12 @@ public class TileBoard : MonoBehaviour
     public Tile GetTile(int x, int y)
     {
         return Tiles[x, y];
+    }
+
+    public bool CanMoveTo(int x, int y)
+    {
+        var r = x >= TILE_COUNT_X || x < 0 || y >= TILE_COUNT_Y || y < 0 || Tiles[x, y].unEnterable;
+        return !r;
     }
 
     public Tile GetRandomTile()

@@ -16,13 +16,18 @@ public class Powerup : MonoBehaviour
     void Update()
     {
         timeAlive -= Time.deltaTime * 1.0f;
-        if(timeAlive < 0)
-        {
-            Destroy(gameObject);
-            PowerupSpawner.DecrementPowerUpCountOnScreen();
-        }
+        //if(timeAlive < 0)
+        //{
+        //    Destroy(gameObject);
+        //    PowerupSpawner.DecrementPowerUpCountOnScreen();
+        //}
 
         //float y_rot = transform.rotation.y;
         //transform.Rotate(0.0f, 1.0f, 0.0f, Space.World);
+    }
+
+    public bool CheckDestruction()
+    {
+        return timeAlive < 0;
     }
 }
