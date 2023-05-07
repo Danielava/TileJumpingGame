@@ -8,6 +8,8 @@ public class CharacterController : MonoBehaviour
     private TileBoard board;
     private int[] current_tile = new int[2]; //(x, y) pair
 
+    private Tile CurrentTile;
+
     public Inventory m_Inventory;
     // Start is called before the first frame update
     void Start()
@@ -23,8 +25,14 @@ public class CharacterController : MonoBehaviour
         }
         //Assign the position.
         transform.position = board.GetTilePosition(start_tile[0], start_tile[1]);
-        current_tile[0] = start_tile[0];
-        current_tile[1] = start_tile[1];
+        //CurrentTile.xPos = start_tile[0];
+        //CurrentTile.yPos = start_tile[1];
+        var firstTile = board.GetTile(0, 0);
+        Move(firstTile);
+    }
+
+    private void Awake()
+    {
     }
 
     /*
@@ -41,10 +49,12 @@ public class CharacterController : MonoBehaviour
         //Up
         if (Input.GetKeyDown(KeyCode.W))
         {
-            //We move one UP in y-axis so check current_tile[0] collision
-            if(current_tile[1]+1 < board.GetSizeY())
+            //We move one UP in y-axis so check CurrentTile.xPos collision
+            if(CurrentTile.yPos+1 < board.GetSizeY())
             {
-                Move(current_tile[0], current_tile[1]+1);
+                var tile = board.GetTile(CurrentTile.xPos, CurrentTile.yPos + 1);
+                Move(tile);
+                //Move(CurrentTile.xPos, CurrentTile.yPos+1);
                 //print("Player went up!");
             }
             else
@@ -55,10 +65,12 @@ public class CharacterController : MonoBehaviour
         //Down
         if (Input.GetKeyDown(KeyCode.S))
         {
-            //We move one DOWN in y-axis so check current_tile[0] against 0 for collision
-            if (current_tile[1] > 0)
+            //We move one DOWN in y-axis so check CurrentTile.xPos against 0 for collision
+            if (CurrentTile.yPos > 0)
             {
-                Move(current_tile[0], current_tile[1]-1);
+                //Move(CurrentTile.xPos, CurrentTile.yPos-1);
+                var tile = board.GetTile(CurrentTile.xPos, CurrentTile.yPos - 1);
+                Move(tile);
                 //print("Player went down!");
             }
             else
@@ -69,10 +81,12 @@ public class CharacterController : MonoBehaviour
         //Right
         if (Input.GetKeyDown(KeyCode.D))
         {
-            //We move one RIGHT in x-axis so check current_tile[1] collision
-            if (current_tile[0]+1 < board.GetSizeX())
+            //We move one RIGHT in x-axis so check CurrentTile.yPos collision
+            if (CurrentTile.xPos+1 < board.GetSizeX())
             {
-                Move(current_tile[0]+1, current_tile[1]);
+                //Move(CurrentTile.xPos+1, CurrentTile.yPos);
+                var tile = board.GetTile(CurrentTile.xPos + 1, CurrentTile.yPos);
+                Move(tile);
                 //print("Player went right!");
             }
             else
@@ -83,10 +97,12 @@ public class CharacterController : MonoBehaviour
         //Left
         if (Input.GetKeyDown(KeyCode.A))
         {
-            //We move one RIGHT in x-axis so check current_tile[1] collision
-            if (current_tile[0] > 0)
+            //We move one RIGHT in x-axis so check CurrentTile.yPos collision
+            if (CurrentTile.xPos > 0)
             {
-                Move(current_tile[0]-1, current_tile[1]);
+                //Move(CurrentTile.xPos-1, CurrentTile.yPos);
+                var tile = board.GetTile(CurrentTile.xPos - 1, CurrentTile.yPos);
+                Move(tile);
                 //print("Player went left!");
             }
             else
@@ -99,11 +115,14 @@ public class CharacterController : MonoBehaviour
     /*
     * Moves our player to another tile and updates the current_tile (= players current tile position)
     */
-    void Move(int x, int y)
+    void Move(Tile tile)
     {
-        transform.position = board.GetTilePosition(x, y);
-        current_tile[0] = x;
-        current_tile[1] = y;
+        CurrentTile = tile;
+        transform.position = new Vector3(tile.xPos, tile.yPos);
+        //transform.position = board.GetTilePosition(x, y);
+        //CurrentTile.xPos = (int)tile.Position.x;
+        //CurrentTile.yPos = (int)tile.Position.y;
+        CurrentTile.EnterTile();
     }
 
     /*

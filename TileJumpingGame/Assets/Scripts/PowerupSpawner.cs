@@ -60,16 +60,19 @@ public class PowerupSpawner : MonoBehaviour
         if (timer >= m_TimeBetweenSpawns && m_CurrentPowerUpsOnScreen <= m_MaxPowerUpsToSpawn)
         {
             //A random tile to spawn on.
-            Vector2Int tile_index = new Vector2Int();
-            tile_index.x = Random.Range(0, tiles.GetLength(0));
-            tile_index.y = Random.Range(0, tiles.GetLength(1));
+            //Vector2Int tile_index = new Vector2Int();
+            //tile_index.x = Random.Range(0, tiles.GetLength(0));
+            //tile_index.y = Random.Range(0, tiles.GetLength(1));
+            var tile = board.GetRandomTile();
+
             //Random object.
             int randomInt = Random.Range(0, totalWeight);
             foreach (PowerUpWrapper powerUpWrapper in m_PowerUps)
             {
                 if (randomInt < powerUpWrapper.spawnWeight)
                 {
-                    Instantiate(powerUpWrapper.powerup, board.GetTilePosition(tile_index.x, tile_index.y), Quaternion.identity);
+                    var powerObj = Instantiate(powerUpWrapper.powerup, new Vector3(tile.xPos, 0, tile.yPos), Quaternion.identity, tile.transform);
+                    tile.addPowerUp(powerObj.GetComponent<Powerup>());
                     break;
                 }
                 randomInt -= powerUpWrapper.spawnWeight;
