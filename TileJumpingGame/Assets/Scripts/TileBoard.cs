@@ -15,6 +15,9 @@ public class TileBoard : MonoBehaviour
     private GameObject[,] m_Tiles; //[,] means it's 2D //[,,] would mean 3D
     private Vector3[,] m_TilePositions;
 
+    public GameObject TilePrefab;
+    private Tile[,] Tiles;
+
     private void Awake()
     {
         GenerateAllTiles(m_TileSize, TILE_COUNT_X, TILE_COUNT_Y);
@@ -25,13 +28,23 @@ public class TileBoard : MonoBehaviour
         //Compute each tiles positions and put them in the m_TilePositions list.
         m_TilePositions = new Vector3[tileCountX, tileCountY];
 
+        Tiles = new Tile[tileCountX, tileCountY];
+
+
         m_Tiles = new GameObject[tileCountX, tileCountY];
         for (int x = 0; x < tileCountX; x++)
         {
             for (int y = 0; y < tileCountY; y++)
             {
-                m_Tiles[x, y] = GenerateSingleTile(tilesize, x, y);
-                m_TilePositions[x, y] = new Vector3(x * m_TileSize, 0.0f, y * m_TileSize) + new Vector3(m_TileSize / 2.0f, 0, m_TileSize / 2.0f);
+                //m_Tiles[x, y] = GenerateSingleTile(tilesize, x, y);
+                //m_TilePositions[x, y] = new Vector3(x * m_TileSize, 0.0f, y * m_TileSize) + new Vector3(m_TileSize / 2.0f, 0, m_TileSize / 2.0f);
+
+
+                var tile = Instantiate(TilePrefab, transform).GetComponent<Tile>();
+
+                tile.Init(x + (int)m_TileSize/2, y+ (int)m_TileSize / 2);
+
+                Tiles[x, y] = tile;
             }
         }
     }
@@ -93,4 +106,18 @@ public class TileBoard : MonoBehaviour
         //The second addition is to center player in the tile.
         return m_TilePositions[x, y];
     }
+
+    public Tile GetTile(int x, int y)
+    {
+        return Tiles[x, y];
+    }
+
+    public Tile GetRandomTile()
+    {
+        var x = Random.Range(0, TILE_COUNT_X);
+        var y = Random.Range(0, TILE_COUNT_Y);
+
+        return Tiles[x, y];
+    }
+
 }
