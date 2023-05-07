@@ -72,7 +72,7 @@ public class PowerupSpawner : MonoBehaviour
                 if (randomInt < powerUpWrapper.spawnWeight)
                 {
                     var powerObj = Instantiate(powerUpWrapper.powerup, new Vector3(tile.xPos, 0, tile.yPos), Quaternion.identity, tile.transform);
-                    tile.addPowerUp(powerObj.GetComponent<Powerup>());
+                    tile.AddPowerUp(powerObj.GetComponent<Powerup>());
                     break;
                 }
                 randomInt -= powerUpWrapper.spawnWeight;

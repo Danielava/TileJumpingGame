@@ -10,6 +10,8 @@ public class Tile : MonoBehaviour
     public List<Powerup> powerUps;
     public List<Hazard> hazards;
     public bool unEnterable;
+
+    public GameObject incomingDamage;
     // Start is called before the first frame update
     void Start()
     {
@@ -55,6 +57,13 @@ public class Tile : MonoBehaviour
         //add checks for hazards, items, etc
         PickUpPowerUps();
         TriggerHazards();
+    }
+
+    public void AddIncomingDamage(float delay)
+    {
+        var obj = Instantiate(incomingDamage);
+        obj.GetComponent<IncomingDamage>().Init(delay);
+        obj.transform.position = transform.position + new Vector3(0, 0, 0.05f);
     }
 
     private void PickUpPowerUps()

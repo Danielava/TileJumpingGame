@@ -18,6 +18,24 @@ public class TileBoard : MonoBehaviour
     public GameObject TilePrefab;
     private Tile[,] tiles;
 
+    //to test, move to enemy once fixed
+    private float damageTimer;
+    private void Update()
+    {
+        damageTimer += Time.deltaTime;
+        if(damageTimer > 1)
+        {
+            if(Random.Range(0, 1f) > 0.5f)
+            {
+                DamageRow(Random.Range(0, TILE_COUNT_Y), 0.75f);
+            } else
+            {
+                DamageColumn(Random.Range(0, TILE_COUNT_X), 0.75f);
+            }
+            damageTimer = 0;
+        }
+    }
+
     private void Awake()
     {
         GenerateAllTiles(m_TileSize, TILE_COUNT_X, TILE_COUNT_Y);
@@ -28,7 +46,7 @@ public class TileBoard : MonoBehaviour
         //Compute each tiles positions and put them in the m_TilePositions list.
         m_TilePositions = new Vector3[tileCountX, tileCountY];
 
-        Tiles = new Tile[tileCountX, tileCountY];
+        tiles = new Tile[tileCountX, tileCountY];
 
 
         m_Tiles = new GameObject[tileCountX, tileCountY];
@@ -44,7 +62,7 @@ public class TileBoard : MonoBehaviour
 
                 tile.Init(x + (int)m_TileSize/2, y+ (int)m_TileSize / 2);
 
-                Tiles[x, y] = tile;
+                tiles[x, y] = tile;
             }
         }
     }
@@ -109,12 +127,12 @@ public class TileBoard : MonoBehaviour
 
     public Tile GetTile(int x, int y)
     {
-        return Tiles[x, y];
+        return tiles[x, y];
     }
 
     public bool CanMoveTo(int x, int y)
     {
-        var r = x >= TILE_COUNT_X || x < 0 || y >= TILE_COUNT_Y || y < 0 || Tiles[x, y].unEnterable;
+        var r = x >= TILE_COUNT_X || x < 0 || y >= TILE_COUNT_Y || y < 0 || tiles[x, y].unEnterable;
         return !r;
     }
 
@@ -123,7 +141,28 @@ public class TileBoard : MonoBehaviour
         var x = Random.Range(0, TILE_COUNT_X);
         var y = Random.Range(0, TILE_COUNT_Y);
 
-        return Tiles[x, y];
+        return tiles[x, y];
     }
 
+    public void DamageColumn(int columnNr, float delay)
+    {
+        for(int i = 0; i < TILE_COUNT_Y; i++)
+        {
+            tiles[columnNr, i].AddIncomingDamage(delay);
+        }
+    }
+
+    public void DamageRow(int rowNr, float delay)
+    {
+        Debug.Log("spawning damage");
+        for (int i = 0; i < TILE_COUNT_X; i++)
+        {
+            tiles[i, rowNr].AddIncomingDamage(delay);
+        }
+    }
+
+    public void DamageXPattern(int x, int y, float delay)
+    {
+
+    }
 }
