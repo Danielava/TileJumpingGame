@@ -297,6 +297,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_TileMaterial: {fileID: 2100000, guid: c30fb13cf01264938aa57c6c7e70e85f, type: 2}
   m_TileSize: 1
+  TilePrefab: {fileID: 4816298956635488630, guid: a9c8e413f0d8e2a4ca92e7dc95d0ce96,
+    type: 3}
 --- !u!4 &234397549
 Transform:
   m_ObjectHideFlags: 0
