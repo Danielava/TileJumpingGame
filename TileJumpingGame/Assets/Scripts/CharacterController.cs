@@ -7,6 +7,8 @@ public class CharacterController : MonoBehaviour
     public int[] start_tile = new int[2]; //The tile to start at. They are 0-indexed.
     private TileBoard board;
     private int[] current_tile = new int[2]; //(x, y) pair
+
+    public Inventory m_Inventory;
     // Start is called before the first frame update
     void Start()
     {
