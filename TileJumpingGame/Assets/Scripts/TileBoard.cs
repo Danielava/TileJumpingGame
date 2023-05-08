@@ -184,4 +184,9 @@ public class TileBoard : MonoBehaviour
             sum--;
         }
     }
+
+    public void DamageTiles(List<(int,int)> tilePositions)
+    {
+
+    }
 }

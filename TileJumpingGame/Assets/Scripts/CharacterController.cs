@@ -6,29 +6,15 @@ public class CharacterController : MonoBehaviour
 {
     public int[] start_tile = new int[2]; //The tile to start at. They are 0-indexed.
     private TileBoard board;
-    private int[] current_tile = new int[2]; //(x, y) pair
-
-    private Tile currentTile;
-
+    public Player Player;
+    
     public Inventory m_Inventory;
     // Start is called before the first frame update
     void Start()
     {
         board = GameObject.Find("Board").GetComponent<TileBoard>();
-        //GameObject[,] tiles = board.GetTileList();
-        //Set players start position to the specified tile position
-        //if (start_tile[0] >= tiles.GetLength(0) || start_tile[0] < 0 ||
-        //    start_tile[1] >= tiles.GetLength(1) || start_tile[1] < 0) //The x coord.
-        //{
-        //    start_tile[0] = 0;
-        //    start_tile[1] = 0;
-        //}
-        ////Assign the position.
-        //transform.position = board.GetTilePosition(start_tile[0], start_tile[1]);
-        //CurrentTile.xPos = start_tile[0];
-        //CurrentTile.yPos = start_tile[1];
         var firstTile = board.GetTile(0, 0);
-        Move(firstTile);
+        Player.EnterTile(firstTile);
     }
 
     private void Awake()
@@ -50,111 +36,42 @@ public class CharacterController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W))
         {
             //We move one UP in y-axis so check CurrentTile.xPos collision
-            if(board.CanMoveTo(currentTile.xPos, currentTile.yPos+1))
+            if(board.CanMoveTo(Player.currentTile.xPos, Player.currentTile.yPos+1))
             {
-                var tile = board.GetTile(currentTile.xPos, currentTile.yPos + 1);
-                Move(tile);
-                //Move(CurrentTile.xPos, CurrentTile.yPos+1);
-                //print("Player went up!");
-            }
-            else
-            {
-                //print("Collision, can't move up!");
+                var tile = board.GetTile(Player.currentTile.xPos, Player.currentTile.yPos + 1);
+                Player.EnterTile(tile);
             }
         }
         //Down
         if (Input.GetKeyDown(KeyCode.S))
         {
-            //We move one DOWN in y-axis so check CurrentTile.xPos against 0 for collision
-            if (board.CanMoveTo(currentTile.xPos, currentTile.yPos - 1))
+            //We move one DOWN in y-axis so check Player.currentTilexPos against 0 for collision
+            if (board.CanMoveTo(Player.currentTile.xPos, Player.currentTile.yPos - 1))
             {
-                //Move(CurrentTile.xPos, CurrentTile.yPos-1);
-                var tile = board.GetTile(currentTile.xPos, currentTile.yPos - 1);
-                Move(tile);
-                //print("Player went down!");
-            }
-            else
-            {
-                //print("Collision, can't move down!");
+                var tile = board.GetTile(Player.currentTile.xPos, Player.currentTile.yPos - 1);
+                Player.EnterTile(tile);
             }
         }
         //Right
         if (Input.GetKeyDown(KeyCode.D))
         {
-            //We move one RIGHT in x-axis so check CurrentTile.yPos collision
-            if (board.CanMoveTo(currentTile.xPos + 1, currentTile.yPos))
+            //We move one RIGHT in x-axis so check Player.currentTileyPos collision
+            if (board.CanMoveTo(Player.currentTile.xPos + 1, Player.currentTile.yPos))
             {
-                //Move(CurrentTile.xPos+1, CurrentTile.yPos);
-                var tile = board.GetTile(currentTile.xPos + 1, currentTile.yPos);
-                Move(tile);
-                //print("Player went right!");
-            }
-            else
-            {
-                //print("Collision, can't move right!");
+                var tile = board.GetTile(Player.currentTile.xPos + 1, Player.currentTile.yPos);
+
+                Player.EnterTile(tile);
             }
         }
         //Left
         if (Input.GetKeyDown(KeyCode.A))
         {
-            //We move one RIGHT in x-axis so check CurrentTile.yPos collision
-            if (board.CanMoveTo(currentTile.xPos - 1, currentTile.yPos))
+            //We move one RIGHT in x-axis so check Player.currentTileyPos collision
+            if (board.CanMoveTo(Player.currentTile.xPos - 1, Player.currentTile.yPos))
             {
-                //Move(CurrentTile.xPos-1, CurrentTile.yPos);
-                var tile = board.GetTile(currentTile.xPos - 1, currentTile.yPos);
-                Move(tile);
-                //print("Player went left!");
+                var tile = board.GetTile(Player.currentTile.xPos - 1, Player.currentTile.yPos);
+                Player.EnterTile(tile);
             }
-            else
-            {
-                //print("Collision, can't move left!");
-            }
-        }
-    }
-
-    /*
-    * Moves our player to another tile and updates the current_tile (= players current tile position)
-    */
-    void Move(Tile tile)
-    {
-        currentTile = tile;
-        transform.position = new Vector3(tile.xPos, tile.yPos);
-        //transform.position = board.GetTilePosition(x, y);
-        //CurrentTile.xPos = (int)tile.Position.x;
-        //CurrentTile.yPos = (int)tile.Position.y;
-        currentTile.EnterTile();
-    }
-
-    /*
-     *  Input a position, returns true if that position exists.
-     */
-    bool CheckBoardBounds(int x, int y)
-    {
-        return false;
-    }
-
-    /*
-     * Detect collision between the player and enemies or power-ups.
-     */
-    void OnCollisionEnter(Collision collision)
-    {
-        //Check for a match with the specific tag on any GameObject that collides with your GameObject
-        if (collision.gameObject.tag == "Powerup")
-        {
-            Destroy(collision.gameObject);
-            Debug.Log("Powerup hit");
-        }
-
-        if (collision.gameObject.tag == "Enemy")
-        {
-            //If the GameObject has the same tag as specified, output this message in the console
-            Debug.Log("Enemy hit");
-        }
-
-        if (collision.gameObject.tag == "Hazard")
-        {
-            //If the GameObject has the same tag as specified, output this message in the console
-            Debug.Log("Hazard hit");
         }
     }
 }

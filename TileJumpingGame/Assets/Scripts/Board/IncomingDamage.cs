@@ -28,7 +28,6 @@ public class IncomingDamage : MonoBehaviour
                 Destroy(gameObject);
             }
         }
-
     }
 
     public void Init(float delay)

@@ -66,7 +66,7 @@ public class Tile : MonoBehaviour
         obj.transform.position = transform.position + new Vector3(0, 0, 0.05f);
     }
 
-    private void PickUpPowerUps()
+    public void PickUpPowerUps()
     {
         foreach (Powerup powerup in powerUps)
         {
