@@ -10,7 +10,7 @@ public class TileBoard : MonoBehaviour
 
     public float m_TileSize = 1.0f;
     private const int TILE_COUNT_X = 8;
-    private const int TILE_COUNT_Y = 4;
+    private const int TILE_COUNT_Y = 5;
 
     private GameObject[,] m_Tiles; //[,] means it's 2D //[,,] would mean 3D
     private Vector3[,] m_TilePositions;
@@ -23,14 +23,19 @@ public class TileBoard : MonoBehaviour
     private void Update()
     {
         damageTimer += Time.deltaTime;
-        if(damageTimer > 1)
+        if(damageTimer > 0.2f)
         {
-            if(Random.Range(0, 1f) > 0.5f)
+            var r = Random.Range(0, 1f);
+            if (r > 0.33f)
             {
-                DamageRow(Random.Range(0, TILE_COUNT_Y), 0.75f);
+                DamageRow(Random.Range(0, TILE_COUNT_Y), 0.4f);
+            }
+            else if (r > 0.66f)
+            {
+                DamageColumn(Random.Range(0, TILE_COUNT_X), 0.4f);
             } else
             {
-                DamageColumn(Random.Range(0, TILE_COUNT_X), 0.75f);
+                DamageXPattern(Random.Range(0, TILE_COUNT_X), Random.Range(0, TILE_COUNT_Y), 0.4f);
             }
             damageTimer = 0;
         }
@@ -154,7 +159,6 @@ public class TileBoard : MonoBehaviour
 
     public void DamageRow(int rowNr, float delay)
     {
-        Debug.Log("spawning damage");
         for (int i = 0; i < TILE_COUNT_X; i++)
         {
             tiles[i, rowNr].AddIncomingDamage(delay);
@@ -163,6 +167,21 @@ public class TileBoard : MonoBehaviour
 
     public void DamageXPattern(int x, int y, float delay)
     {
+        int diff = x - y;
 
+        for(int i = 0; i < TILE_COUNT_Y; i++)
+        {
+            if(diff >= 0 && diff < TILE_COUNT_X)
+                tiles[diff, i].AddIncomingDamage(delay);
+            diff++;
+        }
+
+        int sum = x + y;
+        for (int i = 0; i < TILE_COUNT_Y; i++)
+        {
+            if (sum < TILE_COUNT_X && sum >= 0)
+                tiles[sum, i].AddIncomingDamage(delay);
+            sum--;
+        }
     }
 }
