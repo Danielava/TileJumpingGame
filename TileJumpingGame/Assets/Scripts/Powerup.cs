@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Powerup : MonoBehaviour
 {
     public float timeAlive; //Time available;
 
     // Start is called before the first frame update
-    void Start()
+    protected void Start()
     {
 
     }
@@ -29,5 +30,10 @@ public class Powerup : MonoBehaviour
     public bool CheckDestruction()
     {
         return timeAlive < 0;
+    }
+
+    public virtual void AddToInventory(Inventory inventory)
+    {
+        return;
     }
 }

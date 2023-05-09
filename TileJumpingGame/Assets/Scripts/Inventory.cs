@@ -16,6 +16,8 @@ public class Inventory : MonoBehaviour
      * Call ComputeAndShowAvailableSpells() to fill this list with available spells and visualize them in the UI.   
      */
     private int[] m_AvailablePlayerSpells = new int[GameVariables.TOTAL_NR_OF_SPELLS];
+    private int[] m_AvailablePlayerSpellsPrevious = new int[GameVariables.TOTAL_NR_OF_SPELLS];
+    private SpellPanel m_SpellPanel; //The spell UI basically where you select spells to cast.
 
     static bool setup = false; //TODO: Might not be needed! Remove
 
@@ -26,6 +28,14 @@ public class Inventory : MonoBehaviour
 
         }
         setup = true;
+
+        m_SpellPanel = GameObject.FindGameObjectWithTag("SpellPanel").GetComponent<SpellPanel>();
+
+        for (int i = 0; i < GameVariables.TOTAL_NR_OF_SPELLS; i++)
+        {
+            m_AvailablePlayerSpells[i] = 0;
+            m_AvailablePlayerSpellsPrevious[i] = 0;
+        }
 
         ComputeAndShowAvailableSpells();
     }
@@ -46,6 +56,7 @@ public class Inventory : MonoBehaviour
         ResetAvailableSpellsList();
         PopulateAvailableSpellsList();
         //TODO: Implement some way of visualizing them as well.
+        //m_SpellPanel.RenderSpellPanel(); //DON'T USE FOR NOW. WE RENDER WHEN CALLING m_SpellPanel.AddSpellToPanel();
     }
 
     /*
@@ -54,12 +65,39 @@ public class Inventory : MonoBehaviour
     */
     private void PopulateAvailableSpellsList()
     {
-        for(int i = 0; i < GameVariables.TOTAL_NR_OF_SPELLS; i++)
+        /*
+         *  OBS! This whole system of m_AvailablePlayerSpellsPrevious is totally useless if
+         *  we only wanna display one of each spell regardless... This system is only useful
+         *  if we want to allow multiple of the same spell in the panel.. we have to think about this..
+         * 
+         */
+        for (int i = 0; i < GameVariables.TOTAL_NR_OF_SPELLS; i++)
         {
             if(GameVariables.SPELLS[i].CheckIfSpellAvailable(this))
             {
                 m_AvailablePlayerSpells[i]++;
             }
+        }
+
+        for (int i = 0; i < GameVariables.TOTAL_NR_OF_SPELLS; i++)
+        {
+            /*
+             * TODO: A clever solution here would be to have a m_AvailablePlayerSpellsPrevious
+             * which holds the previous amount of spells! Compare your newly computed m_AvailablePlayerSpells
+             * to the m_AvailablePlayerSpellsPrevious, and only if the number between index i in these lists differ
+             * do we want to AddSpellToPanel().. i.e we turn that index i to Dirty!
+             * 
+             * This m_AvailablePlayerSpellsPrevious list will then update after this process, i.e below here! 
+             */
+             if(m_AvailablePlayerSpellsPrevious[i] != m_AvailablePlayerSpells[i])
+             {
+                m_SpellPanel.AddSpellToPanel(GameVariables.SPELLS[i]);
+             }
+        }
+
+        for (int i = 0; i < GameVariables.TOTAL_NR_OF_SPELLS; i++)
+        {
+            m_AvailablePlayerSpellsPrevious[i] = m_AvailablePlayerSpells[i];
         }
     }
 
@@ -89,4 +127,22 @@ public class Inventory : MonoBehaviour
     }
 
     //--------------------------------------
+
+    public void IncrementEarth(int value)
+    {
+        m_NrOfEarthElement += value;
+        ComputeAndShowAvailableSpells();
+    }
+
+    public void IncrementFire(int value)
+    {
+        m_NrOfFireElement += value;
+        ComputeAndShowAvailableSpells();
+    }
+
+    public void IncrementCoin(int value)
+    {
+        m_NrOfCoins += value;
+        ComputeAndShowAvailableSpells();
+    }
 }

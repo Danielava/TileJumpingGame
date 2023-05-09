@@ -6,12 +6,13 @@ public class Player : MonoBehaviour
 {
     public int maxHealth;
     private int currentHealth;
+    private Inventory inventory;
 
     public Tile currentTile { get; private set; }
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        
+        inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
     }
 
     // Update is called once per frame
@@ -26,6 +27,6 @@ public class Player : MonoBehaviour
         currentTile = tile;
 
         //pickups and shit
-        tile.PickUpPowerUps();
+        tile.PickUpPowerUps(inventory);
     }
 }

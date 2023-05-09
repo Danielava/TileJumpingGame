@@ -18,6 +18,7 @@ public class GameVariables : MonoBehaviour
         {
             //---Populate the global SPELLS list---
             SPELLS[(int)SPELL_NAMES.FireBall] = new FireBall();
+            Debug.Log(SPELLS[(int)SPELL_NAMES.FireBall].GetSpellImage());
             //TODO: Add your spells here as you create more!
         }
         setup = true;

@@ -52,10 +52,10 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public void EnterTile()
+    public void EnterTile(Inventory inventory)
     {
         //add checks for hazards, items, etc
-        PickUpPowerUps();
+        PickUpPowerUps(inventory);
         TriggerHazards();
     }
 
@@ -66,12 +66,13 @@ public class Tile : MonoBehaviour
         obj.transform.position = transform.position + new Vector3(0, 0, 0.05f);
     }
 
-    public void PickUpPowerUps()
+    public void PickUpPowerUps(Inventory inventory)
     {
         foreach (Powerup powerup in powerUps)
         {
             //add to inventory
             PowerupSpawner.DecrementPowerUpCountOnScreen();
+            powerup.AddToInventory(inventory);
             Destroy(powerup.gameObject);
         }
         powerUps.Clear();
