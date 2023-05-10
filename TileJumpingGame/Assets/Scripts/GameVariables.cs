@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameVariables : MonoBehaviour
 {
-    public static int TOTAL_NR_OF_SPELLS = 1; //Change this when adding spells
+    public static int TOTAL_NR_OF_SPELLS = 2; //Change this when adding spells
     public static int NR_LEVELS = 1;
     public static int TOTAL_NR_OF_COLLECTIBLES = 3; //E.g of collectibles: Fire, stone, coins (that is 3)
 
@@ -18,7 +18,7 @@ public class GameVariables : MonoBehaviour
         {
             //---Populate the global SPELLS list---
             SPELLS[(int)SPELL_NAMES.FireBall] = new FireBall();
-            Debug.Log(SPELLS[(int)SPELL_NAMES.FireBall].GetSpellImage());
+            SPELLS[(int)SPELL_NAMES.Bomb] = new Bomb();
             //TODO: Add your spells here as you create more!
         }
         setup = true;
@@ -27,6 +27,7 @@ public class GameVariables : MonoBehaviour
     public enum SPELL_NAMES
     {
         FireBall,
+        Bomb,
         count // = TOTAL_NR_OF_SPELLS
     }
 }

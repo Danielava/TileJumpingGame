@@ -24,9 +24,9 @@ public class Spell : MonoBehaviour
      * will return true if you have enough resources to perform
      * the spell.
      */
-    public virtual bool CheckIfSpellAvailable(Inventory inventory)
+    public virtual int CheckIfSpellAvailable(Inventory inventory)
     {
-        return false;
+        return 0;
     }
 
     public virtual void CastSpell()

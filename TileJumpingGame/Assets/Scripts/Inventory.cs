@@ -5,6 +5,8 @@ using UnityEngine;
 //Will be located in the Player object
 public class Inventory : MonoBehaviour
 {
+    //private const int MAX_NUMBER_OF_ELEMENT = 10; //You can't have more than this amount of each element!
+
     //-------------The amount of each elements you have collected---------------
     private int m_NrOfFireElement = 0;
     private int m_NrOfEarthElement = 0;
@@ -73,10 +75,7 @@ public class Inventory : MonoBehaviour
          */
         for (int i = 0; i < GameVariables.TOTAL_NR_OF_SPELLS; i++)
         {
-            if(GameVariables.SPELLS[i].CheckIfSpellAvailable(this))
-            {
-                m_AvailablePlayerSpells[i]++;
-            }
+            m_AvailablePlayerSpells[i] = GameVariables.SPELLS[i].CheckIfSpellAvailable(this);
         }
 
         for (int i = 0; i < GameVariables.TOTAL_NR_OF_SPELLS; i++)
