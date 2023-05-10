@@ -6,10 +6,15 @@ using UnityEngine.UI;
 public class SpellPanel : MonoBehaviour
 {
     private List<Spell> m_Spells;
+    private RectTransform m_RectTransform;
+    private float m_PanelWidth;
     // Start is called before the first frame update
     void Awake()
     {
         m_Spells = new List<Spell>();
+
+        m_RectTransform = gameObject.GetComponent<RectTransform>();
+        m_PanelWidth = m_RectTransform.rect.width; //Position 0 will be in the middle of the panel. m_PanelWidth/2 will be the right edge, -m_PanelWidth/2 will be left edge!
     }
 
     public void AddSpellToPanel(Spell spell)
@@ -30,8 +35,24 @@ public class SpellPanel : MonoBehaviour
 
         image.transform.parent = this.transform;
 
-        //TODO: Calculate the image positions, don't hardcode them!
-        image.rectTransform.anchoredPosition = new Vector2(-45.0f, 0.0f);
+        //You need to loop through all panel spells to beautifully sort them visually.
+        ArangeSpellsVisually();
+    }
+
+    //Loop through all SpellPanel's children and arrange them visually in the panel!
+    private void ArangeSpellsVisually()
+    {
+        float distanceBetweenSpellImages = 70.0f;
+        float spellCoverageLength = distanceBetweenSpellImages * Mathf.Max(0, transform.childCount - 1);
+        float rightMostPos = spellCoverageLength / 2.0f;
+        float leftMostPos = -rightMostPos;
+
+        int idx = 0;
+        foreach (Transform child in transform)
+        {
+            child.GetComponent<Image>().rectTransform.anchoredPosition = new Vector2(leftMostPos + idx * distanceBetweenSpellImages, 0.0f);
+            idx++;
+        }
     }
 
     /*

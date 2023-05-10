@@ -5,7 +5,7 @@ using UnityEngine;
 //Will be located in the Player object
 public class Inventory : MonoBehaviour
 {
-    //private const int MAX_NUMBER_OF_ELEMENT = 10; //You can't have more than this amount of each element!
+    private const int MAX_NUMBER_OF_ELEMENT = 10; //You can't have more than this amount of each element!
 
     //-------------The amount of each elements you have collected---------------
     private int m_NrOfFireElement = 0;
@@ -130,12 +130,20 @@ public class Inventory : MonoBehaviour
     public void IncrementEarth(int value)
     {
         m_NrOfEarthElement += value;
+        if(m_NrOfEarthElement >= MAX_NUMBER_OF_ELEMENT)
+        {
+            m_NrOfEarthElement = MAX_NUMBER_OF_ELEMENT;
+        }
         ComputeAndShowAvailableSpells();
     }
 
     public void IncrementFire(int value)
     {
         m_NrOfFireElement += value;
+        if (m_NrOfFireElement >= MAX_NUMBER_OF_ELEMENT)
+        {
+            m_NrOfFireElement = MAX_NUMBER_OF_ELEMENT;
+        }
         ComputeAndShowAvailableSpells();
     }
 
