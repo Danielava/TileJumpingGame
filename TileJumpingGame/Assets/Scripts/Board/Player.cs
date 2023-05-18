@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     private int currentHealth;
     private Inventory inventory;
 
-    public Tile currentTile { get; private set; }
+    public Tile CurrentTile { get; private set; }
     // Start is called before the first frame update
     void Awake()
     {
@@ -24,9 +24,15 @@ public class Player : MonoBehaviour
     public void EnterTile(Tile tile)
     {
         transform.position = tile.transform.position;
-        currentTile = tile;
+        CurrentTile = tile;
 
         //pickups and shit
         tile.PickUpPowerUps(inventory);
+    }
+
+    public void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        Debug.Log("oowie noo i got hit :(");
     }
 }

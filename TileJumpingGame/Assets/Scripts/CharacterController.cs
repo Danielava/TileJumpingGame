@@ -36,9 +36,9 @@ public class CharacterController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.W))
         {
             //We move one UP in y-axis so check CurrentTile.xPos collision
-            if(board.CanMoveTo(Player.currentTile.xPos, Player.currentTile.yPos+1))
+            if(board.CanMoveTo(Player.CurrentTile.xPos, Player.CurrentTile.yPos+1))
             {
-                var tile = board.GetTile(Player.currentTile.xPos, Player.currentTile.yPos + 1);
+                var tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos + 1);
                 Player.EnterTile(tile);
             }
         }
@@ -46,9 +46,9 @@ public class CharacterController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.S))
         {
             //We move one DOWN in y-axis so check Player.currentTilexPos against 0 for collision
-            if (board.CanMoveTo(Player.currentTile.xPos, Player.currentTile.yPos - 1))
+            if (board.CanMoveTo(Player.CurrentTile.xPos, Player.CurrentTile.yPos - 1))
             {
-                var tile = board.GetTile(Player.currentTile.xPos, Player.currentTile.yPos - 1);
+                var tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos - 1);
                 Player.EnterTile(tile);
             }
         }
@@ -56,9 +56,9 @@ public class CharacterController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.D))
         {
             //We move one RIGHT in x-axis so check Player.currentTileyPos collision
-            if (board.CanMoveTo(Player.currentTile.xPos + 1, Player.currentTile.yPos))
+            if (board.CanMoveTo(Player.CurrentTile.xPos + 1, Player.CurrentTile.yPos))
             {
-                var tile = board.GetTile(Player.currentTile.xPos + 1, Player.currentTile.yPos);
+                var tile = board.GetTile(Player.CurrentTile.xPos + 1, Player.CurrentTile.yPos);
 
                 Player.EnterTile(tile);
             }
@@ -67,9 +67,9 @@ public class CharacterController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.A))
         {
             //We move one RIGHT in x-axis so check Player.currentTileyPos collision
-            if (board.CanMoveTo(Player.currentTile.xPos - 1, Player.currentTile.yPos))
+            if (board.CanMoveTo(Player.CurrentTile.xPos - 1, Player.CurrentTile.yPos))
             {
-                var tile = board.GetTile(Player.currentTile.xPos - 1, Player.currentTile.yPos);
+                var tile = board.GetTile(Player.CurrentTile.xPos - 1, Player.CurrentTile.yPos);
                 Player.EnterTile(tile);
             }
         }

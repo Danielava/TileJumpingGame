@@ -16,29 +16,12 @@ public class TileBoard : MonoBehaviour
     private Vector3[,] m_TilePositions;
 
     public GameObject TilePrefab;
-    private Tile[,] tiles;
+    public Tile[,] tiles { get; private set; }
 
     //to test, move to enemy once fixed
-    private float damageTimer;
     private void Update()
     {
-        damageTimer += Time.deltaTime;
-        if(damageTimer > 0.2f)
-        {
-            var r = Random.Range(0, 1f);
-            if (r > 0.33f)
-            {
-                DamageRow(Random.Range(0, TILE_COUNT_Y), 0.4f);
-            }
-            else if (r > 0.66f)
-            {
-                DamageColumn(Random.Range(0, TILE_COUNT_X), 0.4f);
-            } else
-            {
-                DamageXPattern(Random.Range(0, TILE_COUNT_X), Random.Range(0, TILE_COUNT_Y), 0.4f);
-            }
-            damageTimer = 0;
-        }
+        
     }
 
     private void Awake()
@@ -147,46 +130,5 @@ public class TileBoard : MonoBehaviour
         var y = Random.Range(0, TILE_COUNT_Y);
 
         return tiles[x, y];
-    }
-
-    public void DamageColumn(int columnNr, float delay)
-    {
-        for(int i = 0; i < TILE_COUNT_Y; i++)
-        {
-            tiles[columnNr, i].AddIncomingDamage(delay);
-        }
-    }
-
-    public void DamageRow(int rowNr, float delay)
-    {
-        for (int i = 0; i < TILE_COUNT_X; i++)
-        {
-            tiles[i, rowNr].AddIncomingDamage(delay);
-        }
-    }
-
-    public void DamageXPattern(int x, int y, float delay)
-    {
-        int diff = x - y;
-
-        for(int i = 0; i < TILE_COUNT_Y; i++)
-        {
-            if(diff >= 0 && diff < TILE_COUNT_X)
-                tiles[diff, i].AddIncomingDamage(delay);
-            diff++;
-        }
-
-        int sum = x + y;
-        for (int i = 0; i < TILE_COUNT_Y; i++)
-        {
-            if (sum < TILE_COUNT_X && sum >= 0)
-                tiles[sum, i].AddIncomingDamage(delay);
-            sum--;
-        }
-    }
-
-    public void DamageTiles(List<(int,int)> tilePositions)
-    {
-
     }
 }
