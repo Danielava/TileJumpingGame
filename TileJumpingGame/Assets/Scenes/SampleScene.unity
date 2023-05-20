@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641228, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -860,24 +860,6 @@ MonoBehaviour:
     spawnWeight: 45
   m_MaxPowerUpsToSpawn: 5
   m_TimeBetweenSpawns: 1
---- !u!1 &1104101214 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2335516469763231557, guid: bce7ef572d92c4434a7d03268b8d9467,
-    type: 3}
-  m_PrefabInstance: {fileID: 2335516468675932187}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1104101218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1104101214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03aba354aa57b4acab8d483ad2b4467c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1197852416
 GameObject:
   m_ObjectHideFlags: 0

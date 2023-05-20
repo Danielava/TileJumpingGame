@@ -8,6 +8,10 @@ public class SpellPanel : MonoBehaviour
     private List<Spell> m_Spells;
     private RectTransform m_RectTransform;
     private float m_PanelWidth;
+
+    public GameObject m_Cursor;
+    private int m_CurrentSelectedSpell; //The spell the cursor is hovering at!
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -15,6 +19,9 @@ public class SpellPanel : MonoBehaviour
 
         m_RectTransform = gameObject.GetComponent<RectTransform>();
         m_PanelWidth = m_RectTransform.rect.width; //Position 0 will be in the middle of the panel. m_PanelWidth/2 will be the right edge, -m_PanelWidth/2 will be left edge!
+
+        m_Cursor.SetActive(false);
+        m_CurrentSelectedSpell = -1;
     }
 
     public void AddSpellToPanel(Spell spell)
@@ -24,9 +31,51 @@ public class SpellPanel : MonoBehaviour
     }
 
     // Update is called once per frame
+    /*
+     *  TODO! This cursor will iterate through our spell list. But make it instead iterate the children of SpellPanel to prevent sync/race condition issues.
+     */
     void Update()
     {
-        
+        Debug.Log(m_CurrentSelectedSpell);
+        if(m_Spells.Count <= 0)
+        {
+            m_Cursor.SetActive(false);
+            m_CurrentSelectedSpell = -1;
+        }
+        else
+        {
+            m_Cursor.SetActive(true);
+        }
+
+        if(m_Spells.Count == 1)
+        {
+            MoveCursor(0);
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeyCode.LeftArrow))
+            {
+                MoveCursor(m_CurrentSelectedSpell - 1);
+            }
+
+            if (Input.GetKeyDown(KeyCode.RightArrow))
+            {
+                MoveCursor(m_CurrentSelectedSpell + 1);
+            }
+        }
+    }
+
+    private void MoveCursor(int spellListIdx)
+    {
+        if(spellListIdx >= m_Spells.Count || spellListIdx < 0)
+        {
+            return;
+        }
+
+        //Get children object of spellpanel!
+        m_Cursor.GetComponent<Image>().rectTransform.anchoredPosition = transform.GetChild(spellListIdx).GetComponent<Image>().rectTransform.anchoredPosition;
+        Debug.Log("POS: " + m_Cursor.transform.position);
+        m_CurrentSelectedSpell = spellListIdx;
     }
 
     private void RenderSpellToPanel(Spell spell)
