@@ -5,8 +5,11 @@ using UnityEngine.UI;
 
 public class FireBall : Spell
 {
-    public FireBall()
+    private int fireCost = 3;
+
+    public FireBall(string spellname)
     {
+        m_SpellName = spellname;
         m_ID = (int)GameVariables.SPELL_NAMES.FireBall;
         m_SpellImage = Resources.Load<GameObject>("FireBallImage").GetComponent<Image>();
     }
@@ -17,7 +20,13 @@ public class FireBall : Spell
     public override int CheckIfSpellAvailable(Inventory inventory)
     {
         //The division by 3 here comes from the fact that we need 3 fire to perform this spell
-        int amount = inventory.GetNrOfFireElements() / 3;
+        int amount = inventory.GetNrOfFireElements() / fireCost;
         return amount;
+    }
+
+    public override void CastSpell(Inventory inventory)
+    {
+        inventory.IncrementFire(-fireCost);
+        Debug.Log(m_SpellName + " casted!");
     }
 }

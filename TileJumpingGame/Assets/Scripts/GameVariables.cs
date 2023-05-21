@@ -17,8 +17,8 @@ public class GameVariables : MonoBehaviour
         if (!setup)
         {
             //---Populate the global SPELLS list---
-            SPELLS[(int)SPELL_NAMES.FireBall] = new FireBall();
-            SPELLS[(int)SPELL_NAMES.Bomb] = new Bomb();
+            SPELLS[(int)SPELL_NAMES.FireBall] = new FireBall("FireBall");
+            SPELLS[(int)SPELL_NAMES.Bomb] = new Bomb("Bomb");
             //TODO: Add your spells here as you create more!
         }
         setup = true;

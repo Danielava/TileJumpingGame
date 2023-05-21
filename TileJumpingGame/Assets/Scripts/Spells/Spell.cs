@@ -7,6 +7,8 @@ public class Spell : MonoBehaviour
 {
     protected int m_ID;
     protected Image m_SpellImage;
+
+    public string m_SpellName;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,9 +31,9 @@ public class Spell : MonoBehaviour
         return 0;
     }
 
-    public virtual void CastSpell()
+    public virtual void CastSpell(Inventory inventory)
     {
-
+        //Debug.Log(m_SpellName + " casted!");
     }
 
     public Image GetSpellImage()

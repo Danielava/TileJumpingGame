@@ -32,6 +32,7 @@ public class Inventory : MonoBehaviour
         setup = true;
 
         m_SpellPanel = GameObject.FindGameObjectWithTag("SpellPanel").GetComponent<SpellPanel>();
+        m_SpellPanel.SetInventory(this);
 
         for (int i = 0; i < GameVariables.TOTAL_NR_OF_SPELLS; i++)
         {
@@ -88,7 +89,7 @@ public class Inventory : MonoBehaviour
              * 
              * This m_AvailablePlayerSpellsPrevious list will then update after this process, i.e below here! 
              */
-             if(m_AvailablePlayerSpellsPrevious[i] != m_AvailablePlayerSpells[i])
+             if(m_AvailablePlayerSpellsPrevious[i] < m_AvailablePlayerSpells[i])
              {
                 m_SpellPanel.AddSpellToPanel(GameVariables.SPELLS[i]);
              }
@@ -134,6 +135,7 @@ public class Inventory : MonoBehaviour
         {
             m_NrOfEarthElement = MAX_NUMBER_OF_ELEMENT;
         }
+        m_NrOfFireElement = Mathf.Max(m_NrOfEarthElement, 0);
         ComputeAndShowAvailableSpells();
     }
 
@@ -144,12 +146,15 @@ public class Inventory : MonoBehaviour
         {
             m_NrOfFireElement = MAX_NUMBER_OF_ELEMENT;
         }
+        m_NrOfFireElement = Mathf.Max(m_NrOfFireElement, 0);
+        Debug.Log("NR OF FIRE!! " + m_NrOfFireElement);
         ComputeAndShowAvailableSpells();
     }
 
     public void IncrementCoin(int value)
     {
         m_NrOfCoins += value;
+        m_NrOfCoins = Mathf.Max(m_NrOfCoins, 0);
         ComputeAndShowAvailableSpells();
     }
 }
