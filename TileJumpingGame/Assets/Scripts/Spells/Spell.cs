@@ -33,7 +33,7 @@ public class Spell : MonoBehaviour
 
     public virtual void CastSpell(Inventory inventory)
     {
-        //Debug.Log(m_SpellName + " casted!");
+        inventory.ComputeAndShowAvailableSpells(); //The reason we call this here is because this will lead to this being called less times!
     }
 
     public Image GetSpellImage()

@@ -27,8 +27,10 @@ public class Bomb : Spell
 
     public override void CastSpell(Inventory inventory)
     {
+        //TODO: Perform your spell here!
+
         inventory.IncrementEarth(-earthCost);
         inventory.IncrementFire(-fireCost);
-        Debug.Log(m_SpellName + " casted!");
+        base.CastSpell(inventory);
     }
 }

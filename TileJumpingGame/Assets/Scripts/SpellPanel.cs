@@ -28,7 +28,7 @@ public class SpellPanel : MonoBehaviour
         m_Cursor.transform.parent = this.transform;
         m_Cursor.tag = "Cursor";
     }
-
+    //Make sure to call this in the Inventory Awake function!
     public void SetInventory(Inventory inv)
     {
         m_Inventory = inv;
@@ -46,12 +46,10 @@ public class SpellPanel : MonoBehaviour
      */
     void Update()
     {
-        Debug.Log(m_CurrentSelectedSpell);
         if(m_Spells.Count <= 0)
         {
             m_Cursor.SetActive(false);
             m_CurrentSelectedSpell = -1;
-            //m_CurrentSelectedSpell = 0;
         }
         else
         {
@@ -94,7 +92,11 @@ public class SpellPanel : MonoBehaviour
 
         //Destroy spell child from the panel
         GameObject spellobj = transform.GetChild(spellNr).gameObject;
-        Destroy(spellobj);
+        /*
+         * TODO: WARNING!! This Destroy might not be immidiate and therefore transform.childCount might give unreliable results.. 
+         * If there are bugs in the future, this might be the reason!       
+        */
+        DestroyImmediate(spellobj);
 
         ArangeSpellsVisually(false);
 
@@ -166,7 +168,7 @@ public class SpellPanel : MonoBehaviour
     /*
      * UNUSED FOR NOW!!
      */
-    public void RenderSpellPanel()
+        public void RenderSpellPanel()
     {
         for(int i = 0; i < m_Spells.Count; i++)
         {

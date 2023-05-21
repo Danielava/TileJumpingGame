@@ -34,6 +34,6 @@ public class Powerup : MonoBehaviour
 
     public virtual void AddToInventory(Inventory inventory)
     {
-        return;
+        inventory.ComputeAndShowAvailableSpells(); //The reason we call this here is because this will lead to this being called less times!
     }
 }

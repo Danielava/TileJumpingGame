@@ -14,5 +14,6 @@ public class Fire : Powerup
     public override void AddToInventory(Inventory inventory)
     {
         inventory.IncrementFire(1);
+        base.AddToInventory(inventory);
     }
 }

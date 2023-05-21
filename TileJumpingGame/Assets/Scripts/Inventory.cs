@@ -135,26 +135,22 @@ public class Inventory : MonoBehaviour
         {
             m_NrOfEarthElement = MAX_NUMBER_OF_ELEMENT;
         }
-        m_NrOfFireElement = Mathf.Max(m_NrOfEarthElement, 0);
-        ComputeAndShowAvailableSpells();
+        m_NrOfEarthElement = Mathf.Max(m_NrOfEarthElement, 0);
     }
 
     public void IncrementFire(int value)
     {
-        m_NrOfFireElement += value;
+        m_NrOfFireElement = m_NrOfFireElement + value;
         if (m_NrOfFireElement >= MAX_NUMBER_OF_ELEMENT)
         {
             m_NrOfFireElement = MAX_NUMBER_OF_ELEMENT;
         }
         m_NrOfFireElement = Mathf.Max(m_NrOfFireElement, 0);
-        Debug.Log("NR OF FIRE!! " + m_NrOfFireElement);
-        ComputeAndShowAvailableSpells();
     }
 
     public void IncrementCoin(int value)
     {
         m_NrOfCoins += value;
         m_NrOfCoins = Mathf.Max(m_NrOfCoins, 0);
-        ComputeAndShowAvailableSpells();
     }
 }

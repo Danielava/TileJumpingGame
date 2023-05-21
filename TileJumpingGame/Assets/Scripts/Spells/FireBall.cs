@@ -26,7 +26,9 @@ public class FireBall : Spell
 
     public override void CastSpell(Inventory inventory)
     {
+        //TODO: Perform your spell here!
+
         inventory.IncrementFire(-fireCost);
-        Debug.Log(m_SpellName + " casted!");
+        base.CastSpell(inventory);
     }
 }

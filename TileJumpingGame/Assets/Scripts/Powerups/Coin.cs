@@ -14,5 +14,6 @@ public class Coin : Powerup
     public override void AddToInventory(Inventory inventory)
     {
         inventory.IncrementCoin(1);
+        base.AddToInventory(inventory);
     }
 }
