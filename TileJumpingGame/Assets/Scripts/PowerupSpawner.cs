@@ -44,7 +44,7 @@ public class PowerupSpawner : MonoBehaviour
     void Start()
     {
         board = GameObject.Find("Board").GetComponent<TileBoard>();
-        tiles = board.GetTileList(); //Do we need this?
+        //tiles = board.GetTileList(); //Do we need this?
         totalWeight = m_PowerUps.Sum(it => it.spawnWeight);
 
         MAX_POWEUPS_ON_SCREEN = 10;
@@ -63,7 +63,7 @@ public class PowerupSpawner : MonoBehaviour
             //Vector2Int tile_index = new Vector2Int();
             //tile_index.x = Random.Range(0, tiles.GetLength(0));
             //tile_index.y = Random.Range(0, tiles.GetLength(1));
-            var tile = board.GetRandomTile();
+            var tile = board.GetValidSpawnPoint();
 
             //Random object.
             int randomInt = Random.Range(0, totalWeight);

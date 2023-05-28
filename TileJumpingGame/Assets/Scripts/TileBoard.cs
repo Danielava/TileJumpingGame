@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TileBoard : MonoBehaviour
@@ -9,14 +10,13 @@ public class TileBoard : MonoBehaviour
     [SerializeField] private Material m_TileMaterial;
 
     public float m_TileSize = 1.0f;
-    private const int TILE_COUNT_X = 8;
-    private const int TILE_COUNT_Y = 5;
-
-    private GameObject[,] m_Tiles; //[,] means it's 2D //[,,] would mean 3D
-    private Vector3[,] m_TilePositions;
+    public int TILE_COUNT_X = 8;
+    public int TILE_COUNT_Y = 5;
 
     public GameObject TilePrefab;
-    public Tile[,] tiles { get; private set; }
+    public GameObject EmptyTilePrefab;
+    public GameObject IceTilePrefab;
+    public Tile[] tiles { get; private set; }
 
     //to test, move to enemy once fixed
     private void Update()
@@ -26,31 +26,45 @@ public class TileBoard : MonoBehaviour
 
     private void Awake()
     {
-        GenerateAllTiles(m_TileSize, TILE_COUNT_X, TILE_COUNT_Y);
+        GenerateAllTiles();
     }
 
-    private void GenerateAllTiles(float tilesize, int tileCountX, int tileCountY)
+    private void GenerateAllTiles()
     {
-        //Compute each tiles positions and put them in the m_TilePositions list.
-        m_TilePositions = new Vector3[tileCountX, tileCountY];
-
-        tiles = new Tile[tileCountX, tileCountY];
+        tiles = new Tile[TILE_COUNT_X * TILE_COUNT_Y];
 
 
-        m_Tiles = new GameObject[tileCountX, tileCountY];
-        for (int x = 0; x < tileCountX; x++)
+        for (int x = 0; x < TILE_COUNT_X; x++)
         {
-            for (int y = 0; y < tileCountY; y++)
+            for (int y = 0; y < TILE_COUNT_Y; y++)
             {
                 //m_Tiles[x, y] = GenerateSingleTile(tilesize, x, y);
                 //m_TilePositions[x, y] = new Vector3(x * m_TileSize, 0.0f, y * m_TileSize) + new Vector3(m_TileSize / 2.0f, 0, m_TileSize / 2.0f);
 
+                var r = Random.Range(0, 1f);
+                if (r > 0.9f)
+                {
+                    var tile = Instantiate(IceTilePrefab, transform).GetComponent<Tile>();
 
-                var tile = Instantiate(TilePrefab, transform).GetComponent<Tile>();
+                    tile.Init(x + (int)m_TileSize / 2, y + (int)m_TileSize / 2);
 
-                tile.Init(x + (int)m_TileSize/2, y+ (int)m_TileSize / 2);
+                    tiles[x * TILE_COUNT_Y + y] = tile;
+                } else if (r > 0.8f)
+                {
 
-                tiles[x, y] = tile;
+                    var tile = Instantiate(EmptyTilePrefab, transform).GetComponent<Tile>();
+
+                    tile.Init(x + (int)m_TileSize / 2, y + (int)m_TileSize / 2);
+
+                    tiles[x * TILE_COUNT_Y + y] = tile;
+                } else
+                {
+                    var tile = Instantiate(TilePrefab, transform).GetComponent<Tile>();
+
+                    tile.Init(x + (int)m_TileSize / 2, y + (int)m_TileSize / 2);
+
+                    tiles[x * TILE_COUNT_Y + y] = tile;
+                }
             }
         }
     }
@@ -86,11 +100,6 @@ public class TileBoard : MonoBehaviour
 
     //Positioning
 
-    public GameObject[,] GetTileList()
-    {
-        return m_Tiles;
-    }
-
     public float GetTileSize()
     {
         return m_TileSize;
@@ -106,21 +115,14 @@ public class TileBoard : MonoBehaviour
         return TILE_COUNT_Y;
     }
 
-    //Input the x,y index of the tile and it should return the tiles position.
-    public Vector3 GetTilePosition(int x, int y)
-    {
-        //The second addition is to center player in the tile.
-        return m_TilePositions[x, y];
-    }
-
     public Tile GetTile(int x, int y)
     {
-        return tiles[x, y];
+        return tiles[x * TILE_COUNT_Y +  y];
     }
 
     public bool CanMoveTo(int x, int y)
     {
-        var r = x >= TILE_COUNT_X || x < 0 || y >= TILE_COUNT_Y || y < 0 || tiles[x, y].unEnterable;
+        var r = x >= TILE_COUNT_X || x < 0 || y >= TILE_COUNT_Y || y < 0 || !tiles[x * TILE_COUNT_Y + y].canWalkOn;
         return !r;
     }
 
@@ -129,6 +131,12 @@ public class TileBoard : MonoBehaviour
         var x = Random.Range(0, TILE_COUNT_X);
         var y = Random.Range(0, TILE_COUNT_Y);
 
-        return tiles[x, y];
+        return tiles[x * TILE_COUNT_Y + y];
+    }
+
+    public Tile GetValidSpawnPoint()
+    {
+        var rnd = new System.Random();
+        return tiles.Where(t => t.canWalkOn).OrderBy(x => rnd.Next()).First();
     }
 }

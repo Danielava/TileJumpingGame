@@ -1,6 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Assets.Scripts.Board;
+
+public enum Direction
+{
+    Up,
+    Left,
+    Down,
+    Right
+}
 
 public class CharacterController : MonoBehaviour
 {
@@ -9,6 +18,7 @@ public class CharacterController : MonoBehaviour
     public Player Player;
     
     public Inventory m_Inventory;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,43 +45,83 @@ public class CharacterController : MonoBehaviour
         //Up
         if (Input.GetKeyDown(KeyCode.W))
         {
-            //We move one UP in y-axis so check CurrentTile.xPos collision
-            if(board.CanMoveTo(Player.CurrentTile.xPos, Player.CurrentTile.yPos+1))
-            {
-                var tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos + 1);
-                Player.EnterTile(tile);
-            }
+            Move(Direction.Up);
         }
         //Down
         if (Input.GetKeyDown(KeyCode.S))
         {
-            //We move one DOWN in y-axis so check Player.currentTilexPos against 0 for collision
-            if (board.CanMoveTo(Player.CurrentTile.xPos, Player.CurrentTile.yPos - 1))
-            {
-                var tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos - 1);
-                Player.EnterTile(tile);
-            }
+            Move(Direction.Down);
         }
         //Right
         if (Input.GetKeyDown(KeyCode.D))
         {
-            //We move one RIGHT in x-axis so check Player.currentTileyPos collision
-            if (board.CanMoveTo(Player.CurrentTile.xPos + 1, Player.CurrentTile.yPos))
-            {
-                var tile = board.GetTile(Player.CurrentTile.xPos + 1, Player.CurrentTile.yPos);
-
-                Player.EnterTile(tile);
-            }
+            Move(Direction.Right);
         }
         //Left
         if (Input.GetKeyDown(KeyCode.A))
         {
-            //We move one RIGHT in x-axis so check Player.currentTileyPos collision
-            if (board.CanMoveTo(Player.CurrentTile.xPos - 1, Player.CurrentTile.yPos))
-            {
-                var tile = board.GetTile(Player.CurrentTile.xPos - 1, Player.CurrentTile.yPos);
-                Player.EnterTile(tile);
-            }
+            Move(Direction.Left);
+        }
+    }
+
+    private void Move(Direction direction)
+    {
+        var tile = new Tile();
+        switch (direction)
+        {
+            case Direction.Up:
+                //We move one UP in y-axis so check CurrentTile.xPos collision
+                if (board.CanMoveTo(Player.CurrentTile.xPos, Player.CurrentTile.yPos + 1))
+                {
+                    tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos + 1);
+
+                    Player.EnterTile(tile);
+                    if (tile.tileType == TileType.Ice)
+                    {
+                        Move(direction);
+                    }
+                }
+                break;
+            case Direction.Down:
+                //We move one DOWN in y-axis so check Player.currentTilexPos against 0 for collision
+                if (board.CanMoveTo(Player.CurrentTile.xPos, Player.CurrentTile.yPos - 1))
+                {
+                    tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos - 1);
+
+                    Player.EnterTile(tile);
+                    if (tile.tileType == TileType.Ice)
+                    {
+                        Move(direction);
+                    }
+                }
+                break;
+            case Direction.Right:
+                //We move one RIGHT in x-axis so check Player.currentTileyPos collision
+                if (board.CanMoveTo(Player.CurrentTile.xPos + 1, Player.CurrentTile.yPos))
+                {
+                    tile = board.GetTile(Player.CurrentTile.xPos + 1, Player.CurrentTile.yPos);
+
+                    Player.EnterTile(tile);
+                    if (tile.tileType == TileType.Ice)
+                    {
+                        Move(direction);
+                    }
+
+                }
+                break;
+            case Direction.Left:
+                //We move one RIGHT in x-axis so check Player.currentTileyPos collision
+                if (board.CanMoveTo(Player.CurrentTile.xPos - 1, Player.CurrentTile.yPos))
+                {
+                    tile = board.GetTile(Player.CurrentTile.xPos - 1, Player.CurrentTile.yPos);
+
+                    Player.EnterTile(tile);
+                    if (tile.tileType == TileType.Ice)
+                    {
+                        Move(direction);
+                    }
+                }
+                break;
         }
     }
 }
