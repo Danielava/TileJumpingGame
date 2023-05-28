@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Boss : MonoBehaviour
 {
-    public int Health;
+    public BossHealthUI bossHealthUI;
+
+    public float CurrentHealth;
+    public float MaxHealth = 100f;
     public int Damage;
     public AttackHandler AttackHandler;
-    // Start is called before the first frame update
 
     public float AttackInterval;
     public float AttackDelay;
@@ -17,7 +19,7 @@ public class Boss : MonoBehaviour
     public int Attacks = 3;
     void Start()
     {
-        
+        CurrentHealth = MaxHealth;
     }
 
     // Update is called once per frame
@@ -41,5 +43,11 @@ public class Boss : MonoBehaviour
             }
             attackTimer = 0;
         }
+    }
+
+    void TakeDamage(float damage)
+    {
+        CurrentHealth -= damage;
+        bossHealthUI.SetHealth(CurrentHealth, MaxHealth);
     }
 }
