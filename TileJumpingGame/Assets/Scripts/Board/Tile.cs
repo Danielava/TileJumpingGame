@@ -1,3 +1,4 @@
+using Assets.Scripts.Board;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,14 @@ public class Tile : MonoBehaviour
     public int yPos;
     public List<Powerup> powerUps;
     public List<Hazard> hazards;
-    public bool unEnterable;
+    public bool canWalkOn { 
+        get { return tileType != TileType.Hole; } 
+        private set { canWalkOn = value; } 
+    }
 
     public GameObject incomingDamage;
+
+    public TileType tileType;
     // Start is called before the first frame update
     void Start()
     {
@@ -63,7 +69,7 @@ public class Tile : MonoBehaviour
     {
         var obj = Instantiate(incomingDamage);
         obj.GetComponent<IncomingDamage>().Init(delay);
-        obj.transform.position = transform.position + new Vector3(0, 0, 0.05f);
+        obj.transform.position = transform.position + new Vector3(0, 0.05f, 0);
     }
 
     public void PickUpPowerUps(Inventory inventory)

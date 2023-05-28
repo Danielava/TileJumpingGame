@@ -54,8 +54,10 @@ public class AttackHandler : MonoBehaviour
     public void DamageRandomColumn(int damage, float delay)
     {
         var columnNr = Random.Range(0, Board.GetSizeX());
-        var tiles = Enumerable.Range(0, Board.tiles.GetUpperBound(1) + 1)
-            .Select(i => Board.tiles[columnNr, i]).ToList();
+        //var tiles = Enumerable.Range(0, Board.tiles.GetUpperBound(1) + 1)
+        //    .Select(i => Board.tiles[columnNr, i]).ToList();
+
+        var tiles = Board.tiles.Where(t => t.xPos == columnNr && t.canWalkOn).ToList();
 
         Attacks.Add(new Attack(delay, damage, tiles));
     }
@@ -64,8 +66,9 @@ public class AttackHandler : MonoBehaviour
     {
         var rowNr = Random.Range(0, Board.GetSizeY());
 
-        var tiles = Enumerable.Range(0, Board.tiles.GetUpperBound(0) + 1)
-            .Select(i => Board.tiles[i, rowNr]).ToList();
+        var tiles = Board.tiles.Where(t => t.yPos == rowNr && t.canWalkOn).ToList();
+        //var tiles = Enumerable.Range(0, Board.tiles.GetUpperBound(0) + 1)
+        //    .Select(i => Board.tiles[i, rowNr]).ToList();
 
         Attacks.Add(new Attack(delay, damage, tiles));
     }
@@ -101,16 +104,16 @@ public class AttackHandler : MonoBehaviour
 
         for (int i = 0; i < Board.GetSizeY(); i++)
         {
-            if (diff >= 0 && diff < Board.GetSizeX())
-                tiles.Add(Board.tiles[diff, i]);
+            if (diff >= 0 && diff < Board.GetSizeX() && Board.GetTile(diff, i).canWalkOn)
+                tiles.Add(Board.GetTile(diff, i));
             diff++;
         }
 
         int sum = x + y;
         for (int i = 0; i < Board.GetSizeY(); i++)
         {
-            if (sum < Board.GetSizeX() && sum >= 0)
-                tiles.Add(Board.tiles[sum, i]);
+            if (sum < Board.GetSizeX() && sum >= 0 && Board.GetTile(sum, i).canWalkOn)
+                tiles.Add(Board.GetTile(sum, i));
             sum--;
         }
 
