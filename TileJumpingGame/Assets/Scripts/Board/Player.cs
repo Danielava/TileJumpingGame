@@ -7,14 +7,13 @@ public class Player : MonoBehaviour
     public PlayerHealthUI playerHealthUI;
     public int maxHealth;
     private int currentHealth;
-    private Inventory inventory;
+    public Inventory inventory;
 
     public Tile CurrentTile { get; private set; }
     // Start is called before the first frame update
     void Awake()
     {
         currentHealth = maxHealth;
-        inventory = GameObject.FindGameObjectWithTag("Inventory").GetComponent<Inventory>();
         playerHealthUI.SetMaxHealth(maxHealth);
         playerHealthUI.SetCurrentHealth(currentHealth);
     }

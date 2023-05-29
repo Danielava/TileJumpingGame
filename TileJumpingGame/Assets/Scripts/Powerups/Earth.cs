@@ -12,7 +12,7 @@ public class Earth : Powerup
 
     public override void AddToInventory(Inventory inventory)
     {
-        inventory.IncrementEarth(1);
+        inventory.IncrementElement(Element.Earth, 1);
         base.AddToInventory(inventory);
     }
 }

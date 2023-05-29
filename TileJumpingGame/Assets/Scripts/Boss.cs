@@ -45,7 +45,7 @@ public class Boss : MonoBehaviour
         }
     }
 
-    void TakeDamage(float damage)
+    public void TakeDamage(float damage)
     {
         CurrentHealth -= damage;
         bossHealthUI.SetHealth(CurrentHealth, MaxHealth);

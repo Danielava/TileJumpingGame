@@ -1,15 +1,24 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+
+public enum Element
+{
+    Fire,
+    Earth,
+}
 
 //Will be located in the Player object
 public class Inventory : MonoBehaviour
 {
+
+
     private const int MAX_NUMBER_OF_ELEMENT = 10; //You can't have more than this amount of each element!
 
     //-------------The amount of each elements you have collected---------------
-    private int m_NrOfFireElement = 0;
-    private int m_NrOfEarthElement = 0;
+    private Dictionary<Element, int> elementCountDict = new Dictionary<Element, int>();
     private int m_NrOfCoins = 0;
     //--------------------------------------------------------------------------
 
@@ -31,6 +40,14 @@ public class Inventory : MonoBehaviour
         }
         setup = true;
 
+        // Setup element dictionary
+        var elements = Enum.GetValues(typeof(Element)).Cast<Element>().ToList();
+        foreach (Element element in elements)
+        {
+            elementCountDict.Add(element, 0);
+        }
+
+
         m_SpellPanel = GameObject.FindGameObjectWithTag("SpellPanel").GetComponent<SpellPanel>();
         m_SpellPanel.SetInventory(this);
 
@@ -46,7 +63,7 @@ public class Inventory : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
 
@@ -76,6 +93,7 @@ public class Inventory : MonoBehaviour
          */
         for (int i = 0; i < GameVariables.TOTAL_NR_OF_SPELLS; i++)
         {
+            print(GameVariables.SPELLS.Length);
             m_AvailablePlayerSpells[i] = GameVariables.SPELLS[i].CheckIfSpellAvailable(this);
         }
 
@@ -89,10 +107,10 @@ public class Inventory : MonoBehaviour
              * 
              * This m_AvailablePlayerSpellsPrevious list will then update after this process, i.e below here! 
              */
-             if(m_AvailablePlayerSpellsPrevious[i] < m_AvailablePlayerSpells[i])
-             {
+            if (m_AvailablePlayerSpellsPrevious[i] < m_AvailablePlayerSpells[i])
+            {
                 m_SpellPanel.AddSpellToPanel(GameVariables.SPELLS[i]);
-             }
+            }
         }
 
         for (int i = 0; i < GameVariables.TOTAL_NR_OF_SPELLS; i++)
@@ -110,42 +128,19 @@ public class Inventory : MonoBehaviour
     }
 
     //------------Getter methods------------
-
-    public int GetNrOfFireElements()
+    public int GetElementCount(Element element)
     {
-        return m_NrOfFireElement;
+        return elementCountDict[element];
     }
 
-    public int GetNrOfEarthElements()
+    public void IncrementElement(Element element, int value)
     {
-        return m_NrOfEarthElement;
-    }
-
-    public int GetNrOfCoins()
-    {
-        return m_NrOfCoins;
-    }
-
-    //--------------------------------------
-
-    public void IncrementEarth(int value)
-    {
-        m_NrOfEarthElement += value;
-        if(m_NrOfEarthElement >= MAX_NUMBER_OF_ELEMENT)
+        elementCountDict[element] += value;
+        if (elementCountDict[element] >= MAX_NUMBER_OF_ELEMENT)
         {
-            m_NrOfEarthElement = MAX_NUMBER_OF_ELEMENT;
+            elementCountDict[element] = MAX_NUMBER_OF_ELEMENT;
         }
-        m_NrOfEarthElement = Mathf.Max(m_NrOfEarthElement, 0);
-    }
-
-    public void IncrementFire(int value)
-    {
-        m_NrOfFireElement = m_NrOfFireElement + value;
-        if (m_NrOfFireElement >= MAX_NUMBER_OF_ELEMENT)
-        {
-            m_NrOfFireElement = MAX_NUMBER_OF_ELEMENT;
-        }
-        m_NrOfFireElement = Mathf.Max(m_NrOfFireElement, 0);
+        elementCountDict[element] = Mathf.Max(elementCountDict[element], 0);
     }
 
     public void IncrementCoin(int value)
