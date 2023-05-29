@@ -66,62 +66,41 @@ public class CharacterController : MonoBehaviour
 
     private void Move(Direction direction)
     {
-        var tile = new Tile();
+        Tile tile = null;
         switch (direction)
         {
             case Direction.Up:
-                //We move one UP in y-axis so check CurrentTile.xPos collision
                 if (board.CanMoveTo(Player.CurrentTile.xPos, Player.CurrentTile.yPos + 1))
                 {
                     tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos + 1);
-
-                    Player.EnterTile(tile);
-                    if (tile.tileType == TileType.Ice)
-                    {
-                        Move(direction);
-                    }
                 }
                 break;
             case Direction.Down:
-                //We move one DOWN in y-axis so check Player.currentTilexPos against 0 for collision
                 if (board.CanMoveTo(Player.CurrentTile.xPos, Player.CurrentTile.yPos - 1))
                 {
                     tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos - 1);
-
-                    Player.EnterTile(tile);
-                    if (tile.tileType == TileType.Ice)
-                    {
-                        Move(direction);
-                    }
                 }
                 break;
             case Direction.Right:
-                //We move one RIGHT in x-axis so check Player.currentTileyPos collision
                 if (board.CanMoveTo(Player.CurrentTile.xPos + 1, Player.CurrentTile.yPos))
                 {
                     tile = board.GetTile(Player.CurrentTile.xPos + 1, Player.CurrentTile.yPos);
-
-                    Player.EnterTile(tile);
-                    if (tile.tileType == TileType.Ice)
-                    {
-                        Move(direction);
-                    }
-
                 }
                 break;
             case Direction.Left:
-                //We move one RIGHT in x-axis so check Player.currentTileyPos collision
                 if (board.CanMoveTo(Player.CurrentTile.xPos - 1, Player.CurrentTile.yPos))
                 {
                     tile = board.GetTile(Player.CurrentTile.xPos - 1, Player.CurrentTile.yPos);
-
-                    Player.EnterTile(tile);
-                    if (tile.tileType == TileType.Ice)
-                    {
-                        Move(direction);
-                    }
                 }
                 break;
+        }
+        if (tile != null)
+        {
+            Player.EnterTile(tile);
+            if (tile.tileType == TileType.Ice)
+            {
+                Move(direction);
+            }
         }
     }
 }

@@ -34,28 +34,10 @@ public class AttackHandler : MonoBehaviour
             }
         }
     }
-
-    //public void DamageColumn(int columnNr, int damage, float delay)
-    //{
-    //    for (int i = 0; i < Board.GetSizeY(); i++)
-    //    {
-    //        tiles[columnNr, i].AddIncomingDamage(delay);
-    //    }
-    //}
-
-    //public void DamageRow(int rowNr, int damage, float delay)
-    //{
-    //    for (int i = 0; i < Board.GetSizeX(); i++)
-    //    {
-    //        tiles[i, rowNr].AddIncomingDamage(delay);
-    //    }
-    //}
     
     public void DamageRandomColumn(int damage, float delay)
     {
         var columnNr = Random.Range(0, Board.GetSizeX());
-        //var tiles = Enumerable.Range(0, Board.tiles.GetUpperBound(1) + 1)
-        //    .Select(i => Board.tiles[columnNr, i]).ToList();
 
         var tiles = Board.tiles.Where(t => t.xPos == columnNr && t.canWalkOn).ToList();
 
@@ -67,8 +49,27 @@ public class AttackHandler : MonoBehaviour
         var rowNr = Random.Range(0, Board.GetSizeY());
 
         var tiles = Board.tiles.Where(t => t.yPos == rowNr && t.canWalkOn).ToList();
-        //var tiles = Enumerable.Range(0, Board.tiles.GetUpperBound(0) + 1)
-        //    .Select(i => Board.tiles[i, rowNr]).ToList();
+
+        Attacks.Add(new Attack(delay, damage, tiles));
+    }
+
+    public void DamagePlus(int xPos, int yPos, int damage, float delay, int range)
+    {
+        var tiles = Board.tiles
+            .Where(t => 
+                (t.yPos == yPos && Mathf.Abs(t.xPos - xPos) <= range ||
+                t.xPos == xPos && Mathf.Abs(t.yPos - yPos) <= range)
+                && t.canWalkOn)
+            .ToList();
+
+        Attacks.Add(new Attack(delay, damage, tiles));
+    }
+
+    public void DamageCircle(int xPos, int yPos, int damage, float delay, int range)
+    {
+        var tiles = Board.tiles
+            .Where(t => Mathf.Abs(t.xPos - xPos) <= range && Mathf.Abs(t.yPos - yPos) <= range && t.canWalkOn)
+            .ToList();
 
         Attacks.Add(new Attack(delay, damage, tiles));
     }
