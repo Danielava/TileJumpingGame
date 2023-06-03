@@ -8,6 +8,7 @@ TagManager:
   - SpellPanel
   - Cursor
   - Boss
+  - Enemy
   layers:
   - Default
   - TransparentFX

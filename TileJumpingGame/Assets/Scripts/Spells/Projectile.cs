@@ -10,8 +10,18 @@ public class Projectile : MonoBehaviour
         gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 6.0f);
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerEnter2D(Collider2D col)
     {
-        Destroy(this);
+        if (col.tag == "Boss")
+        {
+            col.GetComponent<Boss>().TakeDamage(10);
+            Destroy(gameObject);
+        }
+
+        if (col.tag == "Enemy")
+        {
+            col.GetComponent<Enemy>().TakeDamage(10);
+            Destroy(gameObject);
+        }
     }
 }

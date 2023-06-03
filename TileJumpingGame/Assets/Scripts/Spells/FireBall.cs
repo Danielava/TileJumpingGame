@@ -18,7 +18,7 @@ public class FireBall : Spell
     {
         //TODO: Perform your spell here!
         Instantiate(m_FireballProjectile, inventory.transform.position + new Vector3(0,0,-0.5f), Quaternion.identity);
-        GameObject.FindWithTag("Boss").GetComponent<Boss>().TakeDamage(10);
+        //GameObject.FindWithTag("Boss").GetComponent<Boss>().TakeDamage(10);
         base.CastSpell(inventory);
     }
 }

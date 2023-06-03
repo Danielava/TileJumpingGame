@@ -107,4 +107,9 @@ public class Enemy : MonoBehaviour
 
         } while (repeat);
     }
+
+    public void TakeDamage(int damage)
+    {
+        Destroy(gameObject);
+    }
 }
