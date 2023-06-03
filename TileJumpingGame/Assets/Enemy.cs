@@ -92,7 +92,8 @@ public class Enemy : MonoBehaviour
 
     private void EnterTile(Tile tile)
     {
-        transform.position = tile.transform.position;
+        float zPos = transform.position.z;
+        transform.position = tile.transform.position + new Vector3(0,0,zPos);
         CurrentTile = tile;
     }
     public static IEnumerator StartMove(float duration, bool repeat, Action callback)

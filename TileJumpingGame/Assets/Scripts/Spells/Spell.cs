@@ -12,17 +12,9 @@ public class Spell : MonoBehaviour
     public string m_SpellName;
 
     protected Dictionary<Element, int> spellCastCost = new Dictionary<Element, int>();
-    // Start is called before the first frame update
-    void Start()
-    {
-        m_ID = -1;
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    //Has to be called by GameVariable!
+    public virtual void InitSpell() {}
 
     /*
      * Every spell class will override this class and it

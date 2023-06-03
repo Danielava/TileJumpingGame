@@ -25,7 +25,8 @@ public class Player : MonoBehaviour
 
     public void EnterTile(Tile tile)
     {
-        transform.position = tile.transform.position;
+        float zPos = transform.position.z;
+        transform.position = tile.transform.position + new Vector3(0,0,zPos);
         CurrentTile = tile;
 
         //pickups and shit
@@ -36,6 +37,6 @@ public class Player : MonoBehaviour
     {
         currentHealth -= damage;
         playerHealthUI.SetCurrentHealth(currentHealth);
-        Debug.Log("oowie noo i got hit :(");
+        //Debug.Log("oowie noo i got hit :(");
     }
 }

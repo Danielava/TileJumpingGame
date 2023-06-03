@@ -35,7 +35,7 @@ public class Tile : MonoBehaviour
     {
         xPos = x;
         yPos = y;
-        transform.localPosition = new Vector3(x, 0, y);
+        transform.localPosition = new Vector3(x, y, 0);
     }
 
     public void AddPowerUp(Powerup powerup)
@@ -69,7 +69,7 @@ public class Tile : MonoBehaviour
     {
         var obj = Instantiate(incomingDamage);
         obj.GetComponent<IncomingDamage>().Init(delay);
-        obj.transform.position = transform.position + new Vector3(0, 0.05f, 0);
+        obj.transform.position = transform.position + new Vector3(0, 0, -0.01f);
     }
 
     public void PickUpPowerUps(Inventory inventory)

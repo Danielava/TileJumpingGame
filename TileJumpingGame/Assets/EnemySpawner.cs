@@ -29,7 +29,7 @@ public class EnemySpawner : MonoBehaviour
         {
             var tile = TileBoard.GetValidSpawnPoint();
 
-            var enemyObj = Instantiate(Enemy, new Vector3(tile.xPos, 0, tile.yPos), Quaternion.identity, transform);
+            var enemyObj = Instantiate(Enemy, new Vector3(tile.xPos, tile.yPos, -0.04f), Quaternion.identity, transform);
 
             enemyObj.GetComponent<Enemy>().CurrentTile = tile;
         }

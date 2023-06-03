@@ -93,8 +93,8 @@ public class Inventory : MonoBehaviour
          */
         for (int i = 0; i < GameVariables.TOTAL_NR_OF_SPELLS; i++)
         {
-            print(GameVariables.SPELLS.Length);
-            m_AvailablePlayerSpells[i] = GameVariables.SPELLS[i].CheckIfSpellAvailable(this);
+            //print(GameVariables.instance.SPELLS.Length);
+            m_AvailablePlayerSpells[i] = GameVariables.instance.SPELLS[i].CheckIfSpellAvailable(this);
         }
 
         for (int i = 0; i < GameVariables.TOTAL_NR_OF_SPELLS; i++)
@@ -109,7 +109,7 @@ public class Inventory : MonoBehaviour
              */
             if (m_AvailablePlayerSpellsPrevious[i] < m_AvailablePlayerSpells[i])
             {
-                m_SpellPanel.AddSpellToPanel(GameVariables.SPELLS[i]);
+                m_SpellPanel.AddSpellToPanel(GameVariables.instance.SPELLS[i]);
             }
         }
 

@@ -80,10 +80,10 @@ public class TileBoard : MonoBehaviour
         tileObject.AddComponent<MeshRenderer>().material = m_TileMaterial;
 
         Vector3[] vertices = new Vector3[4];
-        vertices[0] = new Vector3(x * tilesize, 0, y * tilesize);
-        vertices[1] = new Vector3(x * tilesize, 0, (y+1) * tilesize);
-        vertices[2] = new Vector3((x+1) * tilesize, 0, y * tilesize);
-        vertices[3] = new Vector3((x+1) * tilesize, 0, (y+1) * tilesize);
+        vertices[0] = new Vector3(x * tilesize, y * tilesize, 0);
+        vertices[1] = new Vector3(x * tilesize, (y + 1) * tilesize, 0);
+        vertices[2] = new Vector3((x+1) * tilesize, y * tilesize, 0);
+        vertices[3] = new Vector3((x+1) * tilesize, (y + 1) * tilesize, 0);
 
         int[] triangles = new int[] { 0, 1, 2, 1, 3, 2 }; //The two triangles of the quad are defines by these vertices
 

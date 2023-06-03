@@ -5,11 +5,10 @@ using UnityEngine.UI;
 
 public class Bomb : Spell
 {
-    public Bomb(string spellname)
+    public override void InitSpell()
     {
         spellCastCost.Add(Element.Fire, 3);
         spellCastCost.Add(Element.Earth, 2);
-        m_SpellName = spellname;
         m_ID = (int)GameVariables.SPELL_NAMES.Bomb;
         m_SpellImage = Resources.Load<GameObject>("BombImage").GetComponent<Image>();
     }

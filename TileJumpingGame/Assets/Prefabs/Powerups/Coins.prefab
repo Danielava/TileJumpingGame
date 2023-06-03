@@ -111,5 +111,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeAlive: 0
-  m_UIText: {fileID: 8313545877282558579, guid: cbccd768ef5f849a397d6dfe5bf34972,
-    type: 3}
