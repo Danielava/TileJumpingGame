@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    public Vector2 m_Speed;
     // Start is called before the first frame update
     void Start()
     {
-        gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0.0f, 6.0f);
+        gameObject.GetComponent<Rigidbody2D>().velocity = m_Speed;
     }
 
     private void OnTriggerEnter2D(Collider2D col)

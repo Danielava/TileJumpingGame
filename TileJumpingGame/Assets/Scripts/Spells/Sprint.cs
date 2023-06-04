@@ -11,9 +11,11 @@ public class Sprint : Spell
         m_ID = (int)GameVariables.SPELL_NAMES.Sprint;
     }
 
-    public override void CastSpell(Inventory inventory)
+    public override void CastSpell()
     {
         //TODO: Perform your spell here!
-        base.CastSpell(inventory);
+        CharacterController characterController = GameObject.FindWithTag("Player").GetComponent<CharacterController>();
+        characterController.Teleport();
+        base.CastSpell();
     }
 }

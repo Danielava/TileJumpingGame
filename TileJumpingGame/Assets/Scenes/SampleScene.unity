@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 101310539}
   m_Layer: 9
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -220,6 +220,8 @@ MonoBehaviour:
   start_tile: 0300000003000000
   Player: {fileID: 101310538}
   m_Inventory: {fileID: 101310539}
+  m_DirectionalArrows: {fileID: 0}
+  m_PlayerState: 0
 --- !u!114 &101310538
 MonoBehaviour:
   m_ObjectHideFlags: 0

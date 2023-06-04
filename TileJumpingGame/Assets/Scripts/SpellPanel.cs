@@ -87,7 +87,7 @@ public class SpellPanel : MonoBehaviour
      */
     private void CastSpell(int spellNr)
     {
-        m_Spells[spellNr].CastSpell(m_Inventory);
+        m_Spells[spellNr].PickSpell();
         m_Spells.RemoveAt(spellNr);
 
         //Destroy spell child from the panel

@@ -47,3 +47,4 @@ MonoBehaviour:
   m_SpellImage: {fileID: 7273070126994156962, guid: a5dc195ee27344a0fb76aaa2f33b2e14,
     type: 3}
   m_SpellName: Sprint
+  m_SpellType: 1

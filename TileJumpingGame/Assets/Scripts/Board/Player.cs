@@ -39,4 +39,14 @@ public class Player : MonoBehaviour
         playerHealthUI.SetCurrentHealth(currentHealth);
         //Debug.Log("oowie noo i got hit :(");
     }
+
+    public void CastSpell(Spell spell)
+    {
+        spell.CastSpell();
+
+        foreach (var elementCost in spell.GetSpellCastCost())
+        {
+            inventory.IncrementElement(elementCost.Key, -elementCost.Value);
+        }
+    }
 }

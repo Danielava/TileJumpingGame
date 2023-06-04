@@ -11,6 +11,14 @@ public enum Direction
     Right
 }
 
+public enum PlayerState
+{
+    Idle,
+    Moving,
+    PreparingSpell,
+    CastingSpell
+}
+
 public class CharacterController : MonoBehaviour
 {
     public int[] start_tile = new int[2]; //The tile to start at. They are 0-indexed.
@@ -19,12 +27,19 @@ public class CharacterController : MonoBehaviour
     
     public Inventory m_Inventory;
 
+    public GameObject m_DirectionalArrows; //Activated when player picks a directional spell
+    public PlayerState m_PlayerState;
+    private Spell m_PreparedSpell;
+
+
     // Start is called before the first frame update
     void Start()
     {
         board = GameObject.Find("Board").GetComponent<TileBoard>();
         var firstTile = board.GetTile(0, 0);
         Player.EnterTile(firstTile);
+        //m_DirectionalArrows.SetActive(false);
+        m_PlayerState = PlayerState.Idle;
     }
 
     private void Awake()
@@ -45,52 +60,80 @@ public class CharacterController : MonoBehaviour
         //Up
         if (Input.GetKeyDown(KeyCode.W))
         {
-            Move(Direction.Up);
+            if (m_PlayerState == PlayerState.PreparingSpell)
+            {
+                PlayerCastSpell();
+            }
+            else
+            {
+                Move(Direction.Up, 1);
+            }
         }
         //Down
         if (Input.GetKeyDown(KeyCode.S))
         {
-            Move(Direction.Down);
+            if (m_PlayerState == PlayerState.PreparingSpell)
+            {
+                PlayerCastSpell();
+            }
+            else
+            {
+                Move(Direction.Down, 1);
+            }
         }
         //Right
         if (Input.GetKeyDown(KeyCode.D))
         {
-            Move(Direction.Right);
+            if (m_PlayerState == PlayerState.PreparingSpell)
+            {
+                PlayerCastSpell();
+            }
+            else
+            {
+                Move(Direction.Right, 1);
+            }
         }
         //Left
         if (Input.GetKeyDown(KeyCode.A))
         {
-            Move(Direction.Left);
+            if (m_PlayerState == PlayerState.PreparingSpell)
+            {
+                PlayerCastSpell();
+            }
+            else
+            {
+                Move(Direction.Left, 1);
+            }
         }
     }
 
-    private void Move(Direction direction)
+    private void Move(Direction direction, int steps)
     {
         Tile tile = null;
         switch (direction)
         {
             case Direction.Up:
-                if (board.CanMoveTo(Player.CurrentTile.xPos, Player.CurrentTile.yPos + 1))
+                if (board.CanMoveTo(Player.CurrentTile.xPos, Player.CurrentTile.yPos + steps))
                 {
-                    tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos + 1);
+                    tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos + steps);
                 }
                 break;
             case Direction.Down:
-                if (board.CanMoveTo(Player.CurrentTile.xPos, Player.CurrentTile.yPos - 1))
+                if (board.CanMoveTo(Player.CurrentTile.xPos, Player.CurrentTile.yPos - steps))
                 {
-                    tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos - 1);
+                    tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos - steps);
                 }
                 break;
             case Direction.Right:
-                if (board.CanMoveTo(Player.CurrentTile.xPos + 1, Player.CurrentTile.yPos))
+                if (board.CanMoveTo(Player.CurrentTile.xPos + steps, Player.CurrentTile.yPos))
                 {
-                    tile = board.GetTile(Player.CurrentTile.xPos + 1, Player.CurrentTile.yPos);
+                    tile = board.GetTile(Player.CurrentTile.xPos + steps, Player.CurrentTile.yPos);
                 }
                 break;
             case Direction.Left:
-                if (board.CanMoveTo(Player.CurrentTile.xPos - 1, Player.CurrentTile.yPos))
+                if (board.CanMoveTo(Player.CurrentTile.xPos - steps, Player.CurrentTile.yPos))
                 {
-                    tile = board.GetTile(Player.CurrentTile.xPos - 1, Player.CurrentTile.yPos);
+                    tile = board.GetTile(Player.CurrentTile.xPos - steps, Player.CurrentTile.yPos);
                 }
                 break;
         }
@@ -99,8 +142,27 @@ public class CharacterController : MonoBehaviour
             Player.EnterTile(tile);
             if (tile.tileType == TileType.Ice)
             {
-                Move(direction);
+                Move(direction, 1);
             }
         }
+    }
+
+    public void PrepareSpell(Spell spell)
+    {
+        m_PlayerState = PlayerState.PreparingSpell;
+        //m_DirectionalArrows.SetActive(true);
+        m_PreparedSpell = spell;
+    }
+
+    private void PlayerCastSpell()
+    {
+        Player.CastSpell(m_PreparedSpell);
+        m_PlayerState = PlayerState.Idle;
+        //m_DirectionalArrows.SetActive(true);
+    }
+
+    public void Teleport()
+    {
+        Move(Direction.Up, 3);
     }
 }

@@ -13,11 +13,11 @@ public class FireBall : Spell
         m_ID = (int)GameVariables.SPELL_NAMES.FireBall;
     }
 
-    public override void CastSpell(Inventory inventory)
+    public override void CastSpell()
     {
         //TODO: Perform your spell here!
-        Instantiate(m_FireballProjectile, inventory.transform.position + new Vector3(0,0,-0.5f), Quaternion.identity);
-        //GameObject.FindWithTag("Boss").GetComponent<Boss>().TakeDamage(10);
-        base.CastSpell(inventory);
+        Vector3 pos = GameObject.FindWithTag("Player").transform.position + new Vector3(0, 0, -0.5f);
+        Instantiate(m_FireballProjectile, pos, Quaternion.identity);
+        base.CastSpell();
     }
 }

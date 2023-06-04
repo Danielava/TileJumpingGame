@@ -4,6 +4,13 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum SpellType
+{
+    Normal, //Immidiate?
+    Directional,
+    Channel
+}
+
 public class Spell : MonoBehaviour
 {
     protected int m_ID;
@@ -12,6 +19,8 @@ public class Spell : MonoBehaviour
     public string m_SpellName;
 
     protected Dictionary<Element, int> spellCastCost = new Dictionary<Element, int>();
+
+    public SpellType m_SpellType = SpellType.Normal;
 
     //Has to be called by GameVariable!
     public virtual void InitSpell() {}
@@ -26,13 +35,27 @@ public class Spell : MonoBehaviour
         return spellCastCost.Select(e => inventory.GetElementCount(e.Key) / e.Value).Min();
     }
 
-    public virtual void CastSpell(Inventory inventory)
+    public virtual void CastSpell()
     {
-        foreach (var elementCost in spellCastCost)
-        {
-            inventory.IncrementElement(elementCost.Key, -elementCost.Value);
+
+    }
+
+    public void PickSpell()
+    {
+        switch(m_SpellType)
+        { 
+            case SpellType.Directional:
+                GameObject.FindWithTag("Player").GetComponent<CharacterController>().PrepareSpell(this);
+                break;
+            default:
+                GameObject.FindWithTag("Player").GetComponent<Player>().CastSpell(this);
+                break;
         }
-        //inventory.ComputeAndShowAvailableSpells(); //The reason we call this here is because this will lead to this being called less times!
+    }
+
+    public Dictionary<Element, int> GetSpellCastCost()
+    {
+        return spellCastCost;
     }
 
     public Image GetSpellImage()

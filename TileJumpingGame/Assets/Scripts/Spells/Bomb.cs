@@ -12,10 +12,10 @@ public class Bomb : Spell
         m_ID = (int)GameVariables.SPELL_NAMES.Bomb;
     }
 
-    public override void CastSpell(Inventory inventory)
+    public override void CastSpell()
     {
         //TODO: Perform your spell here!
         GameObject.FindWithTag("Boss").GetComponent<Boss>().TakeDamage(20);
-        base.CastSpell(inventory);
+        base.CastSpell();
     }
 }
