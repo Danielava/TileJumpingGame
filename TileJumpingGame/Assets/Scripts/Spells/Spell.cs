@@ -40,6 +40,11 @@ public class Spell : MonoBehaviour
 
     }
 
+    public virtual void CastDirectionalSpell(Direction direction)
+    {
+
+    }
+
     public void PickSpell()
     {
         switch(m_SpellType)

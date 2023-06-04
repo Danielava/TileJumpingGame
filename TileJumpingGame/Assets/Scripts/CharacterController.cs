@@ -62,7 +62,7 @@ public class CharacterController : MonoBehaviour
         {
             if (m_PlayerState == PlayerState.PreparingSpell)
             {
-                PlayerCastSpell();
+                PlayerCastPreparedSpell(Direction.Up);
             }
             else
             {
@@ -74,7 +74,7 @@ public class CharacterController : MonoBehaviour
         {
             if (m_PlayerState == PlayerState.PreparingSpell)
             {
-                PlayerCastSpell();
+                PlayerCastPreparedSpell(Direction.Down);
             }
             else
             {
@@ -86,7 +86,7 @@ public class CharacterController : MonoBehaviour
         {
             if (m_PlayerState == PlayerState.PreparingSpell)
             {
-                PlayerCastSpell();
+                PlayerCastPreparedSpell(Direction.Right);
             }
             else
             {
@@ -98,7 +98,7 @@ public class CharacterController : MonoBehaviour
         {
             if (m_PlayerState == PlayerState.PreparingSpell)
             {
-                PlayerCastSpell();
+                PlayerCastPreparedSpell(Direction.Left);
             }
             else
             {
@@ -109,6 +109,11 @@ public class CharacterController : MonoBehaviour
 
     private void Move(Direction direction, int steps)
     {
+        if (steps == 0)
+        {
+            return;
+        }
+
         Tile tile = null;
         switch (direction)
         {
@@ -116,6 +121,9 @@ public class CharacterController : MonoBehaviour
                 if (board.CanMoveTo(Player.CurrentTile.xPos, Player.CurrentTile.yPos + steps))
                 {
                     tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos + steps);
+                } else
+                {
+                    Move(direction, steps - 1);
                 }
                 break;
             case Direction.Down:
@@ -123,17 +131,29 @@ public class CharacterController : MonoBehaviour
                 {
                     tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos - steps);
                 }
+                else
+                {
+                    Move(direction, steps - 1);
+                }
                 break;
             case Direction.Right:
                 if (board.CanMoveTo(Player.CurrentTile.xPos + steps, Player.CurrentTile.yPos))
                 {
                     tile = board.GetTile(Player.CurrentTile.xPos + steps, Player.CurrentTile.yPos);
                 }
+                else
+                {
+                    Move(direction, steps - 1);
+                }
                 break;
             case Direction.Left:
                 if (board.CanMoveTo(Player.CurrentTile.xPos - steps, Player.CurrentTile.yPos))
                 {
                     tile = board.GetTile(Player.CurrentTile.xPos - steps, Player.CurrentTile.yPos);
+                }
+                else
+                {
+                    Move(direction, steps - 1);
                 }
                 break;
         }
@@ -154,15 +174,15 @@ public class CharacterController : MonoBehaviour
         m_PreparedSpell = spell;
     }
 
-    private void PlayerCastSpell()
+    private void PlayerCastPreparedSpell(Direction direction)
     {
-        Player.CastSpell(m_PreparedSpell);
+        Player.CastSpell(m_PreparedSpell, direction);
         m_PlayerState = PlayerState.Idle;
         //m_DirectionalArrows.SetActive(true);
     }
 
-    public void Teleport()
+    public void Teleport(Direction direction)
     {
-        Move(Direction.Up, 3);
+        Move(direction, 3);
     }
 }

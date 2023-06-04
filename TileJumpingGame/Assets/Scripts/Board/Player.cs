@@ -40,9 +40,15 @@ public class Player : MonoBehaviour
         //Debug.Log("oowie noo i got hit :(");
     }
 
-    public void CastSpell(Spell spell)
+    public void CastSpell(Spell spell, Direction? direction = null)
     {
-        spell.CastSpell();
+        if (direction.HasValue)
+        {
+            spell.CastDirectionalSpell(direction.Value);
+        } else
+        {
+            spell.CastSpell();
+        }
 
         foreach (var elementCost in spell.GetSpellCastCost())
         {

@@ -25,7 +25,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        AttackHandler = GameObject.Find("NecessaryGameObjects/AttackHandler").GetComponent<AttackHandler>();
+        AttackHandler = GameObject.Find("GameManager").GetComponent<AttackHandler>();
         Board = GameObject.Find("Board").GetComponent<TileBoard>();
         StartCoroutine(StartMove(MoveTimer, true, () => { MoveRandom(); }));
 

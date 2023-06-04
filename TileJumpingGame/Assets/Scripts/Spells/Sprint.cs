@@ -11,11 +11,11 @@ public class Sprint : Spell
         m_ID = (int)GameVariables.SPELL_NAMES.Sprint;
     }
 
-    public override void CastSpell()
+    public override void CastDirectionalSpell(Direction direction)
     {
         //TODO: Perform your spell here!
         CharacterController characterController = GameObject.FindWithTag("Player").GetComponent<CharacterController>();
-        characterController.Teleport();
+        characterController.Teleport(direction);
         base.CastSpell();
     }
 }
