@@ -988,8 +988,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SPELLS:
-  - {fileID: 5626714010961442114, guid: c7f130273ca74474bb5e75a47d3c99fa, type: 3}
+  - {fileID: 5626714010961442114, guid: eff0f2c85d31b44b5b8dbb2c7c8c44d4, type: 3}
   - {fileID: -7582554724382066553, guid: c8e345ce444944e3ea49dfdf42b13d38, type: 3}
+  - {fileID: 5285901290106768531, guid: c7f130273ca74474bb5e75a47d3c99fa, type: 3}
 --- !u!850595691 &1802581513
 LightingSettings:
   m_ObjectHideFlags: 0

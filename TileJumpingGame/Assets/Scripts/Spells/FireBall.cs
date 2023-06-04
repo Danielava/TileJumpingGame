@@ -11,7 +11,6 @@ public class FireBall : Spell
     {
         spellCastCost.Add(Element.Fire, 3);
         m_ID = (int)GameVariables.SPELL_NAMES.FireBall;
-        m_SpellImage = Resources.Load<GameObject>("FireBallImage").GetComponent<Image>();
     }
 
     public override void CastSpell(Inventory inventory)

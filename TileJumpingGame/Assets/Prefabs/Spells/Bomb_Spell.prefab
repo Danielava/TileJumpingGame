@@ -44,4 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cbc365df5ef54f24aeb8f8d810eb080, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_SpellImage: {fileID: 7273070126994156962, guid: fda58a440e25c48319ab2e115c2051e5,
+    type: 3}
   m_SpellName: Bomb

@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class Spell : MonoBehaviour
 {
     protected int m_ID;
-    protected Image m_SpellImage;
+    public Image m_SpellImage;
 
     public string m_SpellName;
 
@@ -28,11 +28,11 @@ public class Spell : MonoBehaviour
 
     public virtual void CastSpell(Inventory inventory)
     {
-        inventory.ComputeAndShowAvailableSpells(); //The reason we call this here is because this will lead to this being called less times!
         foreach (var elementCost in spellCastCost)
         {
             inventory.IncrementElement(elementCost.Key, -elementCost.Value);
         }
+        //inventory.ComputeAndShowAvailableSpells(); //The reason we call this here is because this will lead to this being called less times!
     }
 
     public Image GetSpellImage()
