@@ -47,3 +47,6 @@ MonoBehaviour:
   m_SpellImage: {fileID: 7273070126994156962, guid: fda58a440e25c48319ab2e115c2051e5,
     type: 3}
   m_SpellName: Bomb
+  m_SpellType: 0
+  m_BombObject: {fileID: 5639318649032444230, guid: ad8ae99bba452439297fea5b6909fdbd,
+    type: 3}
