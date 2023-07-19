@@ -78,7 +78,7 @@ public class AttackHandler : MonoBehaviour
     {
         //var rowNr = Random.Range(0, Board.GetSizeY());
 
-        var tiles = Board.tiles.Where(t => t.yPos == rowNr && t.canWalkOn).ToList();
+        var tiles = Board.tiles.Where(t => t.yPos == rowNr).ToList();
         if (reverse)
         {
             tiles.Reverse();
@@ -88,7 +88,8 @@ public class AttackHandler : MonoBehaviour
         foreach(var tile in tiles)
         {
             i++;
-            Attacks.Add(new Attack(flatDelay + delay + i * speed, damage, tile, flatDelay + i * speed));
+            if (tile.canWalkOn)
+             Attacks.Add(new Attack(flatDelay + delay + i * speed, damage, tile, flatDelay + i * speed));
         }
     }
 
@@ -96,7 +97,7 @@ public class AttackHandler : MonoBehaviour
     {
         //var rowNr = Random.Range(0, Board.GetSizeY());
 
-        var tiles = Board.tiles.Where(t => t.xPos == columnNr && t.canWalkOn).ToList();
+        var tiles = Board.tiles.Where(t => t.xPos == columnNr).ToList();
         if (reverse)
         {
             tiles.Reverse();
@@ -106,7 +107,8 @@ public class AttackHandler : MonoBehaviour
         foreach (var tile in tiles)
         {
             i++;
-            Attacks.Add(new Attack(flatDelay + delay + i * speed, damage, tile, flatDelay + i * speed));
+            if(tile.canWalkOn)
+                Attacks.Add(new Attack(flatDelay + delay + i * speed, damage, tile, flatDelay + i * speed));
         }
     }
 

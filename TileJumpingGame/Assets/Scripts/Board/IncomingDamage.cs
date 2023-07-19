@@ -23,6 +23,10 @@ public class IncomingDamage : MonoBehaviour
 
             var ratio = timer / delay;
             transform.localScale = new Vector3(ratio, ratio, ratio);
+
+            if (ratio >= 0.9f)
+                GetComponent<MeshRenderer>().material.color = new Color(1, 0.2f, 0);
+
             if (ratio >= 1)
             {
                 Destroy(gameObject);
