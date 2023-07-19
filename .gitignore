@@ -59,6 +59,6 @@ sysinfo.txt
 crashlytics-build.properties
 
 # Extra setting files
-TileJumpingGame/UserSettings/EditorUserSettings.asset
-TileJumpingGame/UserSettings/Layouts/default-2021.dwlt
+*/UserSettings/EditorUserSettings.asset
+*/UserSettings/Layouts/default-2021.dwlt
 
