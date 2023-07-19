@@ -67,4 +67,14 @@ public class Spell : MonoBehaviour
     {
         return m_SpellImage;
     }
+
+    public int GetSpellID()
+    {
+        return m_ID;
+    }
+
+    public string GetSpellName()
+    {
+        return m_SpellName;
+    }
 }

@@ -13,6 +13,8 @@ public class SpellPanel : MonoBehaviour
     private int m_CurrentSelectedSpell; //The spell the cursor is hovering at!
     private Inventory m_Inventory;
 
+    public Text m_Text;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -34,10 +36,48 @@ public class SpellPanel : MonoBehaviour
         m_Inventory = inv;
     }
 
-    public void AddSpellToPanel(Spell spell)
+    public void AddSpellToPanel(int spellIndex)
     {
+        Spell spell = GameVariables.instance.SPELLS[spellIndex];
         m_Spells.Add(spell);
         RenderSpellToPanel(spell);
+    }
+
+    public void UpdateSpellPanelNumbers()
+    {
+        int childIdx = 0;
+        foreach (Transform child in transform)
+        {
+            if (child.tag == "Cursor")
+            {
+                continue;
+            }
+
+            int spellIndex = m_Spells[childIdx].GetSpellID();
+            int nrOfTheSpellAvailable = GameVariables.instance.SPELLS[spellIndex].CheckIfSpellAvailable(m_Inventory);
+            m_Inventory.m_AvailablePlayerSpellsPrevious[spellIndex] = nrOfTheSpellAvailable;
+
+            //Update spell text number
+            child.transform.GetChild(0).GetComponent<Text>().text = "" + nrOfTheSpellAvailable;
+            childIdx++;
+        }
+
+        int childCount = transform.childCount;
+        for (int i = childCount - 1; i >= 0; i--)
+        {
+            if (transform.GetChild(i).tag == "Cursor")
+            {
+                continue;
+            }
+
+            int nrOfTheSpellAvailable;
+            int.TryParse(transform.GetChild(i).GetChild(0).GetComponent<Text>().text, out nrOfTheSpellAvailable);
+
+            if (nrOfTheSpellAvailable == 0)
+            {
+                RemoveSpellFromPanel(i);
+            }
+        }
     }
 
     // Update is called once per frame
@@ -88,6 +128,11 @@ public class SpellPanel : MonoBehaviour
     private void CastSpell(int spellNr)
     {
         m_Spells[spellNr].PickSpell();
+    }
+
+    private void RemoveSpellFromPanel(int spellNr)
+    {
+        //If nrOfSpellLeft has reached 0, then we want to destroy this spell completely
         m_Spells.RemoveAt(spellNr);
 
         //Destroy spell child from the panel
@@ -102,7 +147,7 @@ public class SpellPanel : MonoBehaviour
 
         //adjust cursor
         int nextSpellIdx = m_CurrentSelectedSpell;
-        if(nextSpellIdx >= m_Spells.Count)
+        if (nextSpellIdx >= m_Spells.Count)
         {
             nextSpellIdx = m_Spells.Count - 1;
         }
@@ -127,6 +172,12 @@ public class SpellPanel : MonoBehaviour
     private void RenderSpellToPanel(Spell spell)
     {
         Image image = Instantiate(spell.GetSpellImage(), new Vector2(-45.0f, 0.0f), Quaternion.identity);
+        //Add a text object to our image as well.
+        Text spellNumberText = Instantiate(m_Text);
+        spellNumberText.rectTransform.anchoredPosition = image.rectTransform.anchoredPosition - new Vector2(-image.rectTransform.rect.width/2.0f, image.rectTransform.rect.height/2.0f);
+        spellNumberText.text = "" + 1;
+        spellNumberText.transform.parent = image.transform;
+
         image.transform.parent = this.transform;
 
         //You need to loop through all panel spells to beautifully sort them visually.
@@ -168,7 +219,7 @@ public class SpellPanel : MonoBehaviour
     /*
      * UNUSED FOR NOW!!
      */
-        public void RenderSpellPanel()
+     public void RenderSpellPanel()
     {
         for(int i = 0; i < m_Spells.Count; i++)
         {

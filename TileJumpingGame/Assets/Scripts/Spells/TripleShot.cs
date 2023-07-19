@@ -19,7 +19,7 @@ public class TripleShot : Spell
     public override void InitSpell()
     {
         spellCastCost.Add(Element.Fire, 1);
-        m_ID = (int)GameVariables.SPELL_NAMES.FireBall;
+        m_ID = (int)GameVariables.SPELL_NAMES.TripleShot;
     }
 
     public override void CastSpell()

@@ -27,7 +27,7 @@ public class Inventory : MonoBehaviour
      * Call ComputeAndShowAvailableSpells() to fill this list with available spells and visualize them in the UI.   
      */
     private int[] m_AvailablePlayerSpells = new int[GameVariables.TOTAL_NR_OF_SPELLS];
-    private int[] m_AvailablePlayerSpellsPrevious = new int[GameVariables.TOTAL_NR_OF_SPELLS];
+    public int[] m_AvailablePlayerSpellsPrevious = new int[GameVariables.TOTAL_NR_OF_SPELLS];
     private SpellPanel m_SpellPanel; //The spell UI basically where you select spells to cast.
 
     static bool setup = false; //TODO: Might not be needed! Remove
@@ -95,28 +95,23 @@ public class Inventory : MonoBehaviour
         {
             //print(GameVariables.instance.SPELLS.Length);
             m_AvailablePlayerSpells[i] = GameVariables.instance.SPELLS[i].CheckIfSpellAvailable(this);
-        }
 
-        for (int i = 0; i < GameVariables.TOTAL_NR_OF_SPELLS; i++)
-        {
-            /*
-             * TODO: A clever solution here would be to have a m_AvailablePlayerSpellsPrevious
-             * which holds the previous amount of spells! Compare your newly computed m_AvailablePlayerSpells
-             * to the m_AvailablePlayerSpellsPrevious, and only if the number between index i in these lists differ
-             * do we want to AddSpellToPanel().. i.e we turn that index i to Dirty!
-             * 
-             * This m_AvailablePlayerSpellsPrevious list will then update after this process, i.e below here! 
-             */
             if (m_AvailablePlayerSpellsPrevious[i] < m_AvailablePlayerSpells[i])
             {
-                m_SpellPanel.AddSpellToPanel(GameVariables.instance.SPELLS[i]);
+                if(m_AvailablePlayerSpellsPrevious[i] == 0)
+                {
+                    m_SpellPanel.AddSpellToPanel(i); //Spell appeared for the first time, add it to our panel
+                }
             }
-        }
-
-        for (int i = 0; i < GameVariables.TOTAL_NR_OF_SPELLS; i++)
-        {
             m_AvailablePlayerSpellsPrevious[i] = m_AvailablePlayerSpells[i];
         }
+
+        UpdateSpellPanelNumbers();
+    }
+
+    public void UpdateSpellPanelNumbers()
+    {
+        m_SpellPanel.UpdateSpellPanelNumbers();
     }
 
     private void ResetAvailableSpellsList()

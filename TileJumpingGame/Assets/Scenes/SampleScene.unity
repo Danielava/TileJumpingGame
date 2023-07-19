@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641228, b: 0.57481676, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1509,5 +1509,63 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 16.090027
       objectReference: {fileID: 0}
+    - target: {fileID: 2770711958251839055, guid: bce7ef572d92c4434a7d03268b8d9467,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4185315450682771217, guid: bce7ef572d92c4434a7d03268b8d9467,
+        type: 3}
+      propertyPath: m_Text
+      value: 
+      objectReference: {fileID: 2335516468675932189}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bce7ef572d92c4434a7d03268b8d9467, type: 3}
+--- !u!1 &2335516468675932188 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6341033520876430099, guid: bce7ef572d92c4434a7d03268b8d9467,
+    type: 3}
+  m_PrefabInstance: {fileID: 2335516468675932187}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2335516468675932189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2335516468675932188}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 40
+    m_FontStyle: 1
+    m_BestFit: 0
+    m_MinSize: 4
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 
+--- !u!222 &2335516468675932190
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2335516468675932188}
+  m_CullTransparentMesh: 1

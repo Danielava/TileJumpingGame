@@ -54,5 +54,6 @@ public class Player : MonoBehaviour
         {
             inventory.IncrementElement(elementCost.Key, -elementCost.Value);
         }
+        inventory.UpdateSpellPanelNumbers();
     }
 }
