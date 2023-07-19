@@ -74,25 +74,44 @@ public class AttackHandler : MonoBehaviour
         Attacks.Add(new Attack(delay, damage, tiles));
     }
 
-    //public void DamageXPattern(int x, int y, int damage, float delay)
-    //{
-    //    int diff = x - y;
+    public void DamageWaveRow(int damage, int rowNr, float delay, float speed, bool reverse, float flatDelay = 0)
+    {
+        //var rowNr = Random.Range(0, Board.GetSizeY());
 
-    //    for (int i = 0; i < Board.GetSizeY(); i++)
-    //    {
-    //        if (diff >= 0 && diff < Board.GetSizeX())
-    //            tiles[diff, i].AddIncomingDamage(delay);
-    //        diff++;
-    //    }
+        var tiles = Board.tiles.Where(t => t.yPos == rowNr).ToList();
+        if (reverse)
+        {
+            tiles.Reverse();
+        }
 
-    //    int sum = x + y;
-    //    for (int i = 0; i < Board.GetSizeY(); i++)
-    //    {
-    //        if (sum < Board.GetSizeX() && sum >= 0)
-    //            tiles[sum, i].AddIncomingDamage(delay);
-    //        sum--;
-    //    }
-    //}
+        int i = 1;
+        foreach(var tile in tiles)
+        {
+            i++;
+            if (tile.canWalkOn)
+             Attacks.Add(new Attack(flatDelay + delay + i * speed, damage, tile, flatDelay + i * speed));
+        }
+    }
+
+    public void DamageWaveColumn(int damage, int columnNr, float delay, float speed, bool reverse, float flatDelay = 0)
+    {
+        //var rowNr = Random.Range(0, Board.GetSizeY());
+
+        var tiles = Board.tiles.Where(t => t.xPos == columnNr).ToList();
+        if (reverse)
+        {
+            tiles.Reverse();
+        }
+
+        int i = 0;
+        foreach (var tile in tiles)
+        {
+            i++;
+            if(tile.canWalkOn)
+                Attacks.Add(new Attack(flatDelay + delay + i * speed, damage, tile, flatDelay + i * speed));
+        }
+    }
+
 
     public void DamageRandomXPattern(int damage, float delay)
     {
