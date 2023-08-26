@@ -24,14 +24,14 @@ public class CharacterController : MonoBehaviour
     public int[] start_tile = new int[2]; //The tile to start at. They are 0-indexed.
     private TileBoard board;
     public Player Player;
-    
+
     public Inventory m_Inventory;
 
     public GameObject m_DirectionalArrows; //Activated when player picks a directional spell
-    public PlayerState m_PlayerState;
+    public PlayerState m_PlayerState = PlayerState.Idle;
     private Spell m_PreparedSpell;
 
-
+    public float MoveSpeed;
     // Start is called before the first frame update
     void Start()
     {
@@ -66,7 +66,7 @@ public class CharacterController : MonoBehaviour
             }
             else
             {
-                Move(Direction.Up, 1);
+                StartCoroutine(Move(Direction.Up, 1));
             }
         }
         //Down
@@ -78,7 +78,7 @@ public class CharacterController : MonoBehaviour
             }
             else
             {
-                Move(Direction.Down, 1);
+                StartCoroutine(Move(Direction.Down, 1));
             }
         }
         //Right
@@ -90,7 +90,7 @@ public class CharacterController : MonoBehaviour
             }
             else
             {
-                Move(Direction.Right, 1);
+                StartCoroutine(Move(Direction.Right, 1));
             }
         }
         //Left
@@ -102,68 +102,58 @@ public class CharacterController : MonoBehaviour
             }
             else
             {
-                Move(Direction.Left, 1);
+                StartCoroutine(Move(Direction.Left, 1));
             }
         }
     }
 
-    private void Move(Direction direction, int steps)
+    private IEnumerator Move(Direction direction, int steps, float speed = 1)
     {
-        if (steps == 0)
+        if (m_PlayerState != PlayerState.Idle || steps == 0) yield break;
+        
+        Tile tile = null;
+        while (tile == null && steps != 0)
         {
-            return;
+            switch (direction)
+            {
+                case Direction.Up:
+                    if (board.CanMoveTo(Player.CurrentTile.xPos, Player.CurrentTile.yPos + steps))
+                    {
+                        tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos + steps);
+                        break;
+                    }
+                    break;
+                case Direction.Down:
+                    if (board.CanMoveTo(Player.CurrentTile.xPos, Player.CurrentTile.yPos - steps))
+                    {
+                        tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos - steps);
+                        break;
+                    }
+                    break;
+                case Direction.Right:
+                    if (board.CanMoveTo(Player.CurrentTile.xPos + steps, Player.CurrentTile.yPos))
+                    {
+                        tile = board.GetTile(Player.CurrentTile.xPos + steps, Player.CurrentTile.yPos);
+                        break;
+                    }
+                    break;
+                case Direction.Left:
+                    if (board.CanMoveTo(Player.CurrentTile.xPos - steps, Player.CurrentTile.yPos))
+                    {
+                        tile = board.GetTile(Player.CurrentTile.xPos - steps, Player.CurrentTile.yPos);
+                        break;
+                    }
+                    break;
+            }
+            steps--;
         }
 
-        Tile tile = null;
-        switch (direction)
-        {
-            case Direction.Up:
-                if (board.CanMoveTo(Player.CurrentTile.xPos, Player.CurrentTile.yPos + steps))
-                {
-                    tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos + steps);
-                } else
-                {
-                    Move(direction, steps - 1);
-                }
-                break;
-            case Direction.Down:
-                if (board.CanMoveTo(Player.CurrentTile.xPos, Player.CurrentTile.yPos - steps))
-                {
-                    tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos - steps);
-                }
-                else
-                {
-                    Move(direction, steps - 1);
-                }
-                break;
-            case Direction.Right:
-                if (board.CanMoveTo(Player.CurrentTile.xPos + steps, Player.CurrentTile.yPos))
-                {
-                    tile = board.GetTile(Player.CurrentTile.xPos + steps, Player.CurrentTile.yPos);
-                }
-                else
-                {
-                    Move(direction, steps - 1);
-                }
-                break;
-            case Direction.Left:
-                if (board.CanMoveTo(Player.CurrentTile.xPos - steps, Player.CurrentTile.yPos))
-                {
-                    tile = board.GetTile(Player.CurrentTile.xPos - steps, Player.CurrentTile.yPos);
-                }
-                else
-                {
-                    Move(direction, steps - 1);
-                }
-                break;
-        }
         if (tile != null)
         {
-            Player.EnterTile(tile);
-            if (tile.tileType == TileType.Ice)
-            {
-                Move(direction, 1);
-            }
+            var moveLockDuration = MoveSpeed * (steps + 1) * speed;
+            gameObject.AddComponent<Move>().Init(tile.gameObject.transform.position, moveLockDuration, null);
+            m_PlayerState = PlayerState.Moving;
+            StartCoroutine(EnterTile(moveLockDuration, direction, tile));
         }
     }
 
@@ -183,6 +173,20 @@ public class CharacterController : MonoBehaviour
 
     public void Teleport(Direction direction)
     {
-        Move(direction, 3);
+        m_PlayerState = PlayerState.Idle;
+        StartCoroutine(Move(direction, 3, 0.1f));
+    }
+
+    private IEnumerator EnterTile(float waitTime, Direction direction, Tile tile)
+    {
+
+        yield return new WaitForSeconds(waitTime);
+
+        Player.EnterTile(tile);
+        m_PlayerState = PlayerState.Idle;
+        if (tile.tileType == TileType.Ice)
+        {
+            StartCoroutine(Move(direction, 1));
+        }
     }
 }

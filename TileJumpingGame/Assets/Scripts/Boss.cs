@@ -13,8 +13,9 @@ public class Boss : MonoBehaviour
 
     public float AttackInterval;
     public float AttackDelay;
-    private float attackTimer;
+    protected float attackTimer;
 
+    public TileBoard Board;
     //make list of premade attacks for each boss
     public int Attacks = 3;
     void Start()

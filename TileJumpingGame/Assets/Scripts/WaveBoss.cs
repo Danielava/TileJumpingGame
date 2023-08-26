@@ -2,22 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaveBoss : MonoBehaviour
+public class WaveBoss : Boss
 {
-    public BossHealthUI bossHealthUI;
-
-    public float CurrentHealth;
-    public float MaxHealth = 100f;
-    public int Damage;
-    public AttackHandler AttackHandler;
-
-    public float AttackInterval;
-    public float AttackDelay;
-    private float attackTimer;
-
-    public TileBoard Board;
     //make list of premade attacks for each boss
-    public int Attacks = 3;
     void Start()
     {
         CurrentHealth = MaxHealth;
@@ -32,12 +19,6 @@ public class WaveBoss : MonoBehaviour
             SpawnWaves();
             attackTimer = 0;
         }
-    }
-
-    public void TakeDamage(float damage)
-    {
-        CurrentHealth -= damage;
-        bossHealthUI.SetHealth(CurrentHealth, MaxHealth);
     }
 
     public void SpawnWaves()

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657838, g: 0.49641228, b: 0.57481676, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -197,7 +197,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 101310532}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.35, y: 1.86, z: -0.05}
+  m_LocalPosition: {x: 4.35, y: 1.86, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -222,6 +222,7 @@ MonoBehaviour:
   m_Inventory: {fileID: 101310539}
   m_DirectionalArrows: {fileID: 0}
   m_PlayerState: 0
+  MoveSpeed: 0.1
 --- !u!114 &101310538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -598,6 +599,7 @@ MonoBehaviour:
   AttackHandler: {fileID: 1548650389}
   AttackInterval: 0.5
   AttackDelay: 0.8
+  Board: {fileID: 0}
   Attacks: 3
 --- !u!61 &771927082
 BoxCollider2D:
@@ -872,7 +874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab13cfb910bad704f994d1e40088f522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossHealthUI: {fileID: 0}
+  bossHealthUI: {fileID: 1047182042}
   CurrentHealth: 100
   MaxHealth: 100
   Damage: 1
@@ -1229,7 +1231,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1946854054}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: 0}
+  m_LocalPosition: {x: 0, y: 0.25, z: -0.1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
