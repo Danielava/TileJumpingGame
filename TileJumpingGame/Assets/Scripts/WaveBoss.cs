@@ -23,41 +23,30 @@ public class WaveBoss : Boss
 
     public void SpawnWaves()
     {
-        var rowNr = Random.Range(1, Board.GetSizeY() - 1);
-
-        if(Random.Range(0, 1f) > 0.5f)
+        var r = Random.Range(0, 1f);
+        if (r > 0.75f)
         {
-            //AttackHandler.DamageWaveRow(Damage, rowNr, AttackDelay, 0.25f, true);
-            //AttackHandler.DamageWaveRow(Damage, rowNr + 1, AttackDelay, 0.25f, true);
-            //AttackHandler.DamageWaveRow(Damage, rowNr - 1, AttackDelay, 0.25f, true);
-            //AttackHandler.DamageWaveRow(Damage, rowNr, AttackDelay, 0.25f, true, 1.25f);
-            //AttackHandler.DamageWaveRow(Damage, rowNr + 1, AttackDelay, 0.25f, true, 1.25f);
-            //AttackHandler.DamageWaveRow(Damage, rowNr - 1, AttackDelay, 0.25f, true, 1.25f);
-            //AttackHandler.DamageWaveRow(Damage, rowNr, AttackDelay, 0.25f, true, 2.5f);
-            //AttackHandler.DamageWaveRow(Damage, rowNr + 1, AttackDelay, 0.25f, true, 2.5f);
-            //AttackHandler.DamageWaveRow(Damage, rowNr - 1, AttackDelay, 0.25f, true, 2.5f);
-            for(int i = 0; i < Board.GetSizeY(); i++)
+            for (int i = 0; i < Board.GetSizeY(); i++)
             {
                 AttackHandler.DamageWaveRow(Damage, i, AttackDelay, 0.25f, i % 2 == 0);
                 AttackHandler.DamageWaveRow(Damage, i, AttackDelay, 0.25f, i % 2 == 0, 1.25f);
             }
-        } 
-        else
+        }
+        else if (r > 0.5f)
         {
-            //AttackHandler.DamageWaveColumn(Damage, rowNr, AttackDelay, 0.25f, true);
-            //AttackHandler.DamageWaveColumn(Damage, rowNr + 1, AttackDelay, 0.25f, true);
-            //AttackHandler.DamageWaveColumn(Damage, rowNr - 1, AttackDelay, 0.25f, true);
-            //AttackHandler.DamageWaveColumn(Damage, rowNr, AttackDelay, 0.25f, true, 1.25f);
-            //AttackHandler.DamageWaveColumn(Damage, rowNr + 1, AttackDelay, 0.25f, true, 1.25f);
-            //AttackHandler.DamageWaveColumn(Damage, rowNr - 1, AttackDelay, 0.25f, true, 1.25f);
-            //AttackHandler.DamageWaveColumn(Damage, rowNr, AttackDelay, 0.25f, true, 2.5f);
-            //AttackHandler.DamageWaveColumn(Damage, rowNr + 1, AttackDelay, 0.25f, true, 2.5f);
-            //AttackHandler.DamageWaveColumn(Damage, rowNr - 1, AttackDelay, 0.25f, true, 2.5f);
             for (int i = 0; i < Board.GetSizeY(); i++)
             {
                 AttackHandler.DamageWaveColumn(Damage, i, AttackDelay, 0.25f, i % 2 == 0);
                 AttackHandler.DamageWaveColumn(Damage, i, AttackDelay, 0.25f, i % 2 == 0, 1.25f);
             }
+        }
+        else if (r > 0.25f)
+        {
+            AttackHandler.DamageWaveSpiral(Damage, AttackDelay, 0.05f, 0.5f);
+        }
+        else
+        {
+            AttackHandler.DamageWaveDiagonal(Damage, AttackDelay, 0.25f);
         }
     }
 }

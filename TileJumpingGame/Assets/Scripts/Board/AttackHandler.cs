@@ -19,7 +19,7 @@ public class AttackHandler : MonoBehaviour
     void Update()
     {
         var t = Time.deltaTime;
-        foreach(var attack in Attacks.ToList())
+        foreach (var attack in Attacks.ToList())
         {
             var attackDone = attack.ReduceTimer(t);
 
@@ -34,7 +34,7 @@ public class AttackHandler : MonoBehaviour
             }
         }
     }
-    
+
     public void DamageRandomColumn(int damage, float delay)
     {
         var columnNr = Random.Range(0, Board.GetSizeX());
@@ -56,7 +56,7 @@ public class AttackHandler : MonoBehaviour
     public void DamagePlus(int xPos, int yPos, int damage, float delay, int range)
     {
         var tiles = Board.tiles
-            .Where(t => 
+            .Where(t =>
                 (t.yPos == yPos && Mathf.Abs(t.xPos - xPos) <= range ||
                 t.xPos == xPos && Mathf.Abs(t.yPos - yPos) <= range)
                 && t.canWalkOn)
@@ -85,11 +85,11 @@ public class AttackHandler : MonoBehaviour
         }
 
         int i = 1;
-        foreach(var tile in tiles)
+        foreach (var tile in tiles)
         {
             i++;
             if (tile.canWalkOn)
-             Attacks.Add(new Attack(flatDelay + delay + i * speed, damage, tile, flatDelay + i * speed));
+                Attacks.Add(new Attack(flatDelay + delay + i * speed, damage, tile, flatDelay + i * speed));
         }
     }
 
@@ -107,8 +107,94 @@ public class AttackHandler : MonoBehaviour
         foreach (var tile in tiles)
         {
             i++;
-            if(tile.canWalkOn)
+            if (tile.canWalkOn)
                 Attacks.Add(new Attack(flatDelay + delay + i * speed, damage, tile, flatDelay + i * speed));
+        }
+    }
+
+    public void DamageWaveDiagonal(int damage, float delay, float speed, float flatDelay = 0)
+    {
+        var tiles = Board.tiles.ToList();
+
+        foreach (var tile in tiles)
+        {
+            if (tile.canWalkOn)
+                Attacks.Add(new Attack(flatDelay + delay + (tile.xPos + tile.yPos) * speed, damage, tile, flatDelay + (tile.xPos + tile.yPos) * speed));
+        }
+    }
+
+    public void DamageWaveSpiral(int damage, float delay, float speed, float flatDelay = 0)
+    {
+        int top = 0, bottom = Board.TILE_COUNT_X - 1, left = 0, right = Board.TILE_COUNT_Y - 1;
+
+        int i = 0;
+        while (top <= bottom && left <= right)
+        {
+            for (int col = left; col <= right; col++)
+            {
+                Attacks.Add(new Attack(flatDelay + delay + i * speed, damage, Board.tiles[top * Board.TILE_COUNT_Y + col], flatDelay + i * speed));
+                i++;
+            }
+            top++;
+
+            for (int row = top; row <= bottom; row++)
+            {
+                Attacks.Add(new Attack(flatDelay + delay + i * speed, damage, Board.tiles[row * Board.TILE_COUNT_Y + right], flatDelay + i * speed));
+                i++;
+            }
+            right--;
+
+            if (top <= bottom)
+            {
+                for (int col = right; col >= left; col--)
+                {
+                    Attacks.Add(new Attack(flatDelay + delay + i * speed, damage, Board.tiles[bottom * Board.TILE_COUNT_Y + col], flatDelay + i * speed));
+                    i++;
+                }
+                bottom--;
+            }
+
+            if (left <= right)
+            {
+                for (int row = bottom; row >= top; row--)
+                {
+                    Attacks.Add(new Attack(flatDelay + delay + i * speed, damage, Board.tiles[row * Board.TILE_COUNT_Y + left], flatDelay + i * speed));
+                    i++;
+                }
+                left++;
+            }
+        }
+
+    }
+
+
+    public void DamageWaveSpiral2(int damage, float delay, float speed, float flatDelay = 0)
+    {
+
+        var tiles = Board.tiles.ToList();
+
+        var tileOrder = tiles.Select(t =>
+        (
+            t,
+            SpiralOrder(t.xPos, t.yPos)
+        ));
+
+        foreach(var tile in tileOrder)
+        {
+            Attacks.Add(new Attack(flatDelay + delay + tile.Item2 * speed, damage, tile.Item1, flatDelay + tile.Item2 * speed));
+        }
+    }
+    
+    //doesnt work
+    public int SpiralOrder(int x, int y)
+    {
+        var layer = Mathf.Min(x, y, Board.TILE_COUNT_X - 1 - x, Board.TILE_COUNT_Y - 1 - y);
+        if (x <= y)
+        {
+            return layer * (Board.TILE_COUNT_Y - 2 * layer) + y - layer + 1;
+        } else
+        {
+            return layer * (Board.TILE_COUNT_Y - 2 * layer) + Board.TILE_COUNT_X - 2 * layer + x - layer + y - layer + 1;
         }
     }
 
@@ -144,4 +230,5 @@ public class AttackHandler : MonoBehaviour
     {
 
     }
+
 }
