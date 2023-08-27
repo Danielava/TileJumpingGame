@@ -599,6 +599,7 @@ MonoBehaviour:
   AttackHandler: {fileID: 1548650389}
   AttackInterval: 0.5
   AttackDelay: 0.8
+  attackTimer: 0
   Board: {fileID: 0}
   Attacks: 3
 --- !u!61 &771927082
@@ -750,6 +751,7 @@ GameObject:
   - component: {fileID: 1041554656}
   - component: {fileID: 1041554654}
   - component: {fileID: 1041554659}
+  - component: {fileID: 1041554660}
   m_Layer: 0
   m_Name: Boss2
   m_TagString: Boss
@@ -875,14 +877,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bossHealthUI: {fileID: 1047182042}
-  CurrentHealth: 100
-  MaxHealth: 100
-  Damage: 1
-  AttackHandler: {fileID: 1548650389}
-  AttackInterval: 5
-  AttackDelay: 1
+  currentHealth: 0
+  maxHealth: 100
+  damage: 0
+  attackHandler: {fileID: 0}
+  attackInterval: 0
+  attackDelay: 0
+  attackTimer: 0
   Board: {fileID: 234397548}
-  Attacks: 3
+  attacks: 3
+--- !u!114 &1041554660
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041554653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6df2c2d9b3dd81540bc883524fcad716, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bossHealthUI: {fileID: 1047182042}
+  currentHealth: 0
+  maxHealth: 100
+  damage: 1
+  attackHandler: {fileID: 1548650389}
+  attackInterval: 5
+  attackDelay: 1
+  board: {fileID: 234397548}
 --- !u!1 &1047182040
 GameObject:
   m_ObjectHideFlags: 0

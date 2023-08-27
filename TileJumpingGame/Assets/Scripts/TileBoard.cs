@@ -18,12 +18,6 @@ public class TileBoard : MonoBehaviour
     public GameObject IceTilePrefab;
     public Tile[] tiles { get; private set; }
 
-    //to test, move to enemy once fixed
-    private void Update()
-    {
-        
-    }
-
     private void Awake()
     {
         GenerateAllTiles();
@@ -49,7 +43,8 @@ public class TileBoard : MonoBehaviour
                     tile.Init(x + (int)m_TileSize / 2, y + (int)m_TileSize / 2);
 
                     tiles[x * TILE_COUNT_Y + y] = tile;
-                } else if (r > 0.8f)
+                }
+                else if (r > 0.8f)
                 {
 
                     var tile = Instantiate(EmptyTilePrefab, transform).GetComponent<Tile>();
@@ -57,7 +52,8 @@ public class TileBoard : MonoBehaviour
                     tile.Init(x + (int)m_TileSize / 2, y + (int)m_TileSize / 2);
 
                     tiles[x * TILE_COUNT_Y + y] = tile;
-                } else
+                }
+                else
                 {
                     var tile = Instantiate(TilePrefab, transform).GetComponent<Tile>();
 
@@ -82,8 +78,8 @@ public class TileBoard : MonoBehaviour
         Vector3[] vertices = new Vector3[4];
         vertices[0] = new Vector3(x * tilesize, y * tilesize, 0);
         vertices[1] = new Vector3(x * tilesize, (y + 1) * tilesize, 0);
-        vertices[2] = new Vector3((x+1) * tilesize, y * tilesize, 0);
-        vertices[3] = new Vector3((x+1) * tilesize, (y + 1) * tilesize, 0);
+        vertices[2] = new Vector3((x + 1) * tilesize, y * tilesize, 0);
+        vertices[3] = new Vector3((x + 1) * tilesize, (y + 1) * tilesize, 0);
 
         int[] triangles = new int[] { 0, 1, 2, 1, 3, 2 }; //The two triangles of the quad are defines by these vertices
 
@@ -117,7 +113,7 @@ public class TileBoard : MonoBehaviour
 
     public Tile GetTile(int x, int y)
     {
-        return tiles[x * TILE_COUNT_Y +  y];
+        return tiles[x * TILE_COUNT_Y + y];
     }
 
     public bool CanMoveTo(int x, int y)

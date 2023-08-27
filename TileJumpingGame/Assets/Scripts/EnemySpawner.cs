@@ -11,7 +11,7 @@ public class EnemySpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -25,7 +25,7 @@ public class EnemySpawner : MonoBehaviour
 
     void SpawnEnemy()
     {
-        if(transform.childCount < MaxEnemyAmount)
+        if (transform.childCount < MaxEnemyAmount)
         {
             var tile = TileBoard.GetValidSpawnPoint();
 

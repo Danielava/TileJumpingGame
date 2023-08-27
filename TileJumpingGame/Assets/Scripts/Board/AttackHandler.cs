@@ -179,12 +179,12 @@ public class AttackHandler : MonoBehaviour
             SpiralOrder(t.xPos, t.yPos)
         ));
 
-        foreach(var tile in tileOrder)
+        foreach (var tile in tileOrder)
         {
             Attacks.Add(new Attack(flatDelay + delay + tile.Item2 * speed, damage, tile.Item1, flatDelay + tile.Item2 * speed));
         }
     }
-    
+
     //doesnt work
     public int SpiralOrder(int x, int y)
     {
@@ -192,7 +192,8 @@ public class AttackHandler : MonoBehaviour
         if (x <= y)
         {
             return layer * (Board.TILE_COUNT_Y - 2 * layer) + y - layer + 1;
-        } else
+        }
+        else
         {
             return layer * (Board.TILE_COUNT_Y - 2 * layer) + Board.TILE_COUNT_X - 2 * layer + x - layer + y - layer + 1;
         }

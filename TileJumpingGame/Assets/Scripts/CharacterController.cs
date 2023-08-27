@@ -110,7 +110,7 @@ public class CharacterController : MonoBehaviour
     private IEnumerator Move(Direction direction, int steps, float speed = 1)
     {
         if (m_PlayerState != PlayerState.Idle || steps == 0) yield break;
-        
+
         Tile tile = null;
         while (tile == null && steps != 0)
         {

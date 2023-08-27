@@ -30,13 +30,13 @@ public class Enemy : MonoBehaviour
         StartCoroutine(StartMove(MoveTimer, true, () => { MoveRandom(); }));
 
         var attacktypes = AttackType.GetValues(typeof(AttackType));
-        AttackType = (AttackType) attacktypes.GetValue(UnityEngine.Random.Range(0, attacktypes.Length));
+        AttackType = (AttackType)attacktypes.GetValue(UnityEngine.Random.Range(0, attacktypes.Length));
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void MoveRandom()
@@ -79,7 +79,8 @@ public class Enemy : MonoBehaviour
 
     private void Attack()
     {
-        switch (AttackType) {
+        switch (AttackType)
+        {
             case AttackType.Plus:
                 AttackHandler.DamagePlus(CurrentTile.xPos, CurrentTile.yPos, 1, MoveTimer / 2, 2);
                 break;
@@ -93,7 +94,7 @@ public class Enemy : MonoBehaviour
     private void EnterTile(Tile tile)
     {
         float zPos = transform.position.z;
-        transform.position = tile.transform.position + new Vector3(0,0,zPos);
+        transform.position = tile.transform.position + new Vector3(0, 0, zPos);
         CurrentTile = tile;
     }
     public static IEnumerator StartMove(float duration, bool repeat, Action callback)
