@@ -7,6 +7,7 @@ public class Projectile : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Destroy(gameObject, 8.0f); //Automatically destroy the object after 8 seconds
     }
 
     public void Init(float speed, Vector2 direction, float rotation)

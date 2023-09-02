@@ -18,8 +18,19 @@ public class TileBoard : MonoBehaviour
     public GameObject IceTilePrefab;
     public Tile[] tiles { get; private set; }
 
+    public static TileBoard instance; //singleton
+
     private void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            instance = this;
+        }
+
         GenerateAllTiles();
     }
 

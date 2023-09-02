@@ -9,6 +9,7 @@ TagManager:
   - Cursor
   - Boss
   - Enemy
+  - Bomb
   layers:
   - Default
   - TransparentFX
