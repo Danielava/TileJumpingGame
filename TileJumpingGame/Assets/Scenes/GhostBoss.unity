@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -788,11 +788,12 @@ MonoBehaviour:
   bossHealthUI: {fileID: 1047182042}
   currentHealth: 0
   maxHealth: 100
-  damage: 0
-  attackHandler: {fileID: 0}
-  attackInterval: 0
-  attackDelay: 0
-  board: {fileID: 0}
+  damage: 1
+  attackHandler: {fileID: 1548650389}
+  attackInterval: 5
+  attackDelay: 1
+  board: {fileID: 234397548}
+  Fog: {fileID: 1059364899}
 --- !u!1 &1047182040
 GameObject:
   m_ObjectHideFlags: 0
@@ -913,7 +914,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!212 &1059364900
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -934,7 +935,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: f6963d7fff81ee843af36510f0557e0d, type: 2}
+  - {fileID: 2100000, guid: ef30276957e8c57439b5070286c4ed60, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -974,7 +975,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1059364899}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.06}
   m_LocalScale: {x: 50, y: 50, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -994,6 +995,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Player: {fileID: 101310532}
+  VisionRadius: 2
 --- !u!1 &1197852416
 GameObject:
   m_ObjectHideFlags: 0

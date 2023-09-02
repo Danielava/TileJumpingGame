@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: FogMatieral
-  m_Shader: {fileID: -6465566751694194690, guid: e0e8af95ddb1ca542b7c82fd53a76b45,
+  m_Name: PogMaterial
+  m_Shader: {fileID: -6465566751694194690, guid: b2e593dd7b719b3439e2c2ff2e28184c,
     type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
@@ -45,11 +45,11 @@ Material:
     m_Ints: []
     m_Floats:
     - _FogSize: 15
-    - _HardCutOff: 1
+    - _HardCutOff: 4
     - _QueueControl: -1
     - _QueueOffset: 0
-    - _SoftCutoff: 2.5
-    - _VisionRange: 2.5
+    - _SoftCutoff: 2
+    - _VisionRange: 1
     m_Colors:
     - Color_6D7B4CA8: {r: 0.09433961, g: 0.09433961, b: 0.09433961, a: 1}
     - _CharacterPosition: {r: 0.26, g: 0, b: 0, a: 0}

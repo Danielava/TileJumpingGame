@@ -23,7 +23,7 @@ public class Boss : MonoBehaviour
     }
 
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         currentHealth -= damage;
         bossHealthUI.SetHealth(currentHealth, maxHealth);
