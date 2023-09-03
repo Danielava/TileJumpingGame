@@ -45,11 +45,11 @@ Material:
     m_Ints: []
     m_Floats:
     - _FogSize: 15
-    - _HardCutOff: 1
+    - _HardCutOff: 4
     - _QueueControl: -1
     - _QueueOffset: 0
-    - _SoftCutoff: 2.5
-    - _VisionRange: 2.5
+    - _SoftCutoff: 3
+    - _VisionRange: 0
     m_Colors:
     - Color_6D7B4CA8: {r: 0.09433961, g: 0.09433961, b: 0.09433961, a: 1}
     - _CharacterPosition: {r: 0.26, g: 0, b: 0, a: 0}

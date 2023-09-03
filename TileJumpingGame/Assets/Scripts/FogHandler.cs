@@ -6,6 +6,9 @@ public class FogHandler : MonoBehaviour
     public GameObject Player;
 
     public int VisionRadius;
+
+    float duration = 2.0f;
+    float startTime;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,6 +29,16 @@ public class FogHandler : MonoBehaviour
 
 
         material.SetVector("_CharacterPosition", Player.transform.position);
+
+
+
+        UpdateLight();
+    }
+
+    public void ActivateFog()
+    {
+        startTime = Time.time;
+        VisionRadius = 2;
     }
 
     public void SetPosition()
@@ -35,19 +48,28 @@ public class FogHandler : MonoBehaviour
 
     private void UpdateLight()
     {
-        material.SetFloat("_HardCutOff", VisionRadius * 2);
-        material.SetFloat("_SoftCutoff", VisionRadius);
+        //material.SetFloat("_HardCutOff", VisionRadius + 1);
+        //material.SetFloat("_SoftCutoff", VisionRadius);
+        //float shininess = Mathf.PingPong(Time.time, 1.0f);
+
+        float t = (Time.time - startTime) / duration;
+        float lerp = Mathf.Lerp(material.GetFloat("_HardCutOff"), VisionRadius  + 1, t);
+        float lerp2 = Mathf.Lerp(material.GetFloat("_SoftCutoff"), VisionRadius, t);
+
+        material.SetFloat("_HardCutOff", lerp);
+        material.SetFloat("_SoftCutoff", lerp2);
     }
 
     public void IncreaseLight()
     {
         VisionRadius++;
-        UpdateLight();
+        startTime = Time.time;
     }
 
     public void DecreaseLight()
     {
-        VisionRadius++;
-        UpdateLight();
+        VisionRadius--;
+
+        startTime = Time.time;
     }
 }

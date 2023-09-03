@@ -19,17 +19,17 @@ public class EnemySpawner : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.G))
         {
-            SpawnEnemy();
+            SpawnEnemy(Enemy.GetComponent<Enemy>());
         }
     }
 
-    void SpawnEnemy()
+    public void SpawnEnemy(Enemy enemy)
     {
         if (transform.childCount < MaxEnemyAmount)
         {
             var tile = TileBoard.GetValidSpawnPoint();
 
-            var enemyObj = Instantiate(Enemy, new Vector3(tile.xPos, tile.yPos, -0.04f), Quaternion.identity, transform);
+            var enemyObj = Instantiate(enemy, new Vector3(tile.xPos, tile.yPos, -0.04f), Quaternion.identity, transform);
 
             enemyObj.GetComponent<Enemy>().CurrentTile = tile;
         }

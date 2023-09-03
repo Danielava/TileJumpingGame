@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class GhostBoss : Boss
 {
-    public GameObject Fog;
+    public FogHandler Fog;
+    public EnemySpawner EnemySpawner;
     // Start is called before the first frame update
 
+    public GameObject LampAdd;
     void Update()
     {
         attackTimer += Time.deltaTime;
@@ -28,11 +30,13 @@ public class GhostBoss : Boss
         }
         else if (r > 0.5f)
         {
-            for (int i = 0; i < board.GetSizeY(); i++)
-            {
-                attackHandler.DamageWaveColumn(damage, i, attackDelay, 0.25f, i % 2 == 0);
-                attackHandler.DamageWaveColumn(damage, i, attackDelay, 0.25f, i % 2 == 0, 1.25f);
-            }
+            //for (int i = 0; i < board.GetSizeY(); i++)
+            //{
+            //    attackHandler.DamageWaveColumn(damage, i, attackDelay, 0.25f, i % 2 == 0);
+            //    attackHandler.DamageWaveColumn(damage, i, attackDelay, 0.25f, i % 2 == 0, 1.25f);
+            //}
+
+            SpawnLampAdd();
         }
         else if (r > 0.25f)
         {
@@ -55,6 +59,11 @@ public class GhostBoss : Boss
 
     private void ActivateFog()
     {
-        Fog.SetActive(true);
+        Fog.ActivateFog();
+    }
+
+    private void SpawnLampAdd()
+    {
+        EnemySpawner.SpawnEnemy(LampAdd.GetComponent<Enemy>());
     }
 }
