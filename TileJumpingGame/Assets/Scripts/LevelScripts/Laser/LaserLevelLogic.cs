@@ -59,24 +59,21 @@ public class LaserLevelLogic : MonoBehaviour
             float offset = 0.05f;
             if (side == SpawnSide.Left)
             {
-                spawnPosition.x = -tileSize;
-                spawnPosition.y = indexToSpawnAt * tileSize;
+                spawnPosition = board.GetVirtualTilePosition(-1, indexToSpawnAt);
 
                 initPosition = Camera.main.ViewportToWorldPoint(new Vector2(0.0f - offset, 0.0f));// 0.0f in x pos represents left of viewport, we offset it a bit to end up slightly outisde of it!
                 initPosition.y = spawnPosition.y; //TODO: Offset this a bit to make the flying into the screen cooler
             }
             else if (side == SpawnSide.Right)
             {
-                spawnPosition.x = boardWidth;
-                spawnPosition.y = indexToSpawnAt * tileSize;
+                spawnPosition = board.GetVirtualTilePosition(board.TILE_COUNT_X, indexToSpawnAt);
 
                 initPosition = Camera.main.ViewportToWorldPoint(new Vector2(1.0f + offset, 0.0f));
                 initPosition.y = spawnPosition.y; //TODO: Offset this a bit to make the flying into the screen cooler
             }
             else if (side == SpawnSide.Down)
             {
-                spawnPosition.y = -tileSize;
-                spawnPosition.x = indexToSpawnAt * tileSize;
+                spawnPosition = board.GetVirtualTilePosition(indexToSpawnAt, -1);
 
                 initPosition = Camera.main.ViewportToWorldPoint(new Vector2(0.0f, 0.0f));
                 initPosition.y -= halfWidth/2.0f;
@@ -84,8 +81,7 @@ public class LaserLevelLogic : MonoBehaviour
             }
             else //SpawnSide.Up
             {
-                spawnPosition.y = boardHeight;
-                spawnPosition.x = indexToSpawnAt * tileSize;
+                spawnPosition = board.GetVirtualTilePosition(indexToSpawnAt, board.TILE_COUNT_Y);
 
                 initPosition.y = halfWidth + tileSize;
                 initPosition.x = spawnPosition.x;

@@ -154,4 +154,21 @@ public class TileBoard : MonoBehaviour
     {
         return tiles[x * y].transform.position;
     }
+
+    //This function returns a virtual position, i.e positions of tiles that might not even exist, so you can input stuff like x=-2, y=0 and it will compute its position
+    public Vector2 GetVirtualTilePosition(int x, int y)
+    {
+        /*
+        if(x >= 0 && x < TILE_COUNT_X && y >= 0 && y <= TILE_COUNT_Y)
+        {
+            return GetTilePosition(x, y);
+        }
+        */
+
+        Vector2 resPos;
+        resPos.x = m_TileSize * x;
+        resPos.y = m_TileSize * y;
+
+        return resPos;
+    }
 }
