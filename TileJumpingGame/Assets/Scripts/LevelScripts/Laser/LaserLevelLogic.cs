@@ -91,6 +91,7 @@ public class LaserLevelLogic : MonoBehaviour
                 initPosition.x = spawnPosition.x;
             }
 
+            //Debug.Log("InitPos: " + initPosition + " SpawnPos: " + spawnPosition);
             Instantiate(m_LaserShooterEnemy, initPosition, Quaternion.identity).Init(side, spawnPosition);
         }
     }

@@ -26,8 +26,12 @@ public class Projectile : MonoBehaviour
 
         if (col.tag == "Enemy")
         {
-            col.GetComponent<Enemy>().TakeDamage(10);
-            Destroy(gameObject);
+            Enemy enemy = col.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(10);
+                Destroy(gameObject);
+            }
         }
     }
 }

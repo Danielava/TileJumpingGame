@@ -843,9 +843,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2fb5db68e7f0514dbad810ac262d911, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossHealthUI: {fileID: 0}
-  currentHealth: 0
-  maxHealth: 100
+  bossHealthUI: {fileID: 1047182042}
+  currentHealth: 200
+  maxHealth: 200
   damage: 0
   attackHandler: {fileID: 0}
   attackInterval: 0
