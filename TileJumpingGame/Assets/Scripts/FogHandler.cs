@@ -38,7 +38,7 @@ public class FogHandler : MonoBehaviour
     public void ActivateFog()
     {
         startTime = Time.time;
-        VisionRadius = 2;
+        VisionRadius = 3;
     }
 
     public void SetPosition()

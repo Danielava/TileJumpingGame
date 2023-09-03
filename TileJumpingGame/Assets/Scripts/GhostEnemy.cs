@@ -16,7 +16,7 @@ public class GhostEnemy : Enemy
     {
         var tile = CurrentTile;
 
-        var powerObj = Instantiate(Lamp, new Vector3(tile.xPos, tile.yPos, 0), Quaternion.identity, tile.transform);
+        var powerObj = Instantiate(Lamp, new Vector3(tile.transform.position.x, tile.transform.position.y, 0), Quaternion.identity, tile.transform);
         tile.AddPowerUp(powerObj.GetComponent<Powerup>());
     }
 }

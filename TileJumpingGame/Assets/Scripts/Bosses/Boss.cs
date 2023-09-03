@@ -16,6 +16,8 @@ public class Boss : MonoBehaviour
     protected float attackTimer;
 
     public GridTileBoard board;
+
+    public int Phase;
     //make list of premade attacks for each boss
     void Start()
     {
@@ -31,6 +33,11 @@ public class Boss : MonoBehaviour
         {
             Die();
         }
+    }
+
+    protected virtual void AdvancePhase()
+    {
+        Phase++;
     }
 
     public void Die()

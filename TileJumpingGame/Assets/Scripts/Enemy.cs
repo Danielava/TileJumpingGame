@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour
     public bool RandomMovement;
     public float MoveTimer;
 
-    public TileBoard Board;
+    public GridTileBoard Board;
     public Tile CurrentTile;
     public AttackHandler AttackHandler;
 
@@ -26,7 +26,7 @@ public class Enemy : MonoBehaviour
     void Start()
     {
         AttackHandler = GameObject.Find("GameManager").GetComponent<AttackHandler>();
-        Board = GameObject.Find("Board").GetComponent<TileBoard>();
+        Board = GameObject.Find("Board").GetComponent<GridTileBoard>();
         StartCoroutine(StartMove(MoveTimer, true, () => { MoveRandom(); }));
 
         var attacktypes = AttackType.GetValues(typeof(AttackType));

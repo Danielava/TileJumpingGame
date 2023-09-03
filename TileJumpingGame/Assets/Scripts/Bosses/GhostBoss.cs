@@ -51,7 +51,16 @@ public class GhostBoss : Boss
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
-        if (currentHealth < maxHealth / 2)
+        if (currentHealth < maxHealth / 2 && Phase == 0)
+        {
+            AdvancePhase();
+        }
+    }
+
+    protected override void AdvancePhase()
+    {
+        Phase++;
+        if(Phase == 1)
         {
             ActivateFog();
         }

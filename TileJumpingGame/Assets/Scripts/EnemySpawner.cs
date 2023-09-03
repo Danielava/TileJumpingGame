@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject Enemy;
-    public TileBoard TileBoard;
+    public GridTileBoard TileBoard;
 
     public int MaxEnemyAmount;
     // Start is called before the first frame update
