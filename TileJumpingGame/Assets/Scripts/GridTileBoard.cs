@@ -20,6 +20,9 @@ public class GridTileBoard : MonoBehaviour
 
     void Awake()
     {
+        firstTile = GameObject.FindGameObjectsWithTag("Tile").ToList().OrderBy(tile => tile.transform.position.x + tile.transform.position.y).First();
+
+
         var startXpos = firstTile.transform.position.x;
 
         var rayOrigin = firstTile.transform.position + new Vector3(0, 0, -1);
