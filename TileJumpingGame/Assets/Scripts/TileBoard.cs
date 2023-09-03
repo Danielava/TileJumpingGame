@@ -18,6 +18,9 @@ public class TileBoard : MonoBehaviour
     public GameObject IceTilePrefab;
     public Tile[] tiles { get; private set; }
 
+    //TODO: An idea to generate a separate list of invisible tiles that are used for flying enemies to spawn on
+    //public Tile[] laserShooterTiles { get; private set; }
+
     public static TileBoard instance; //singleton
 
     private void Awake()
@@ -145,5 +148,10 @@ public class TileBoard : MonoBehaviour
     {
         var rnd = new System.Random();
         return tiles.Where(t => t.canWalkOn).OrderBy(x => rnd.Next()).First();
+    }
+
+    public Vector2 GetTilePosition(int x, int y)
+    {
+        return tiles[x * y].transform.position;
     }
 }
