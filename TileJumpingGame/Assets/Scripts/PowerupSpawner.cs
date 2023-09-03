@@ -23,7 +23,7 @@ public class PowerupSpawner : MonoBehaviour
     //A list of powerups that can potentially spawn.
     public List<PowerUpWrapper> m_PowerUps;
 
-    private TileBoard board;
+    private GridTileBoard board;
     private GameObject[,] tiles;
 
     private float m_SpawnFreq; //Put nr between 0-1, if 0 -> no spawns.
@@ -43,7 +43,7 @@ public class PowerupSpawner : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        board = GameObject.Find("Board").GetComponent<TileBoard>();
+        board = GameObject.Find("Board").GetComponent<GridTileBoard>();
         //tiles = board.GetTileList(); //Do we need this?
         totalWeight = m_PowerUps.Sum(it => it.spawnWeight);
 
@@ -71,7 +71,7 @@ public class PowerupSpawner : MonoBehaviour
             {
                 if (randomInt < powerUpWrapper.spawnWeight)
                 {
-                    var powerObj = Instantiate(powerUpWrapper.powerup, new Vector3(tile.xPos, tile.yPos, 0), Quaternion.identity, tile.transform);
+                    var powerObj = Instantiate(powerUpWrapper.powerup, new Vector3(tile.transform.position.x, tile.transform.position.y, 0), Quaternion.identity, tile.transform);
                     tile.AddPowerUp(powerObj.GetComponent<Powerup>());
                     break;
                 }

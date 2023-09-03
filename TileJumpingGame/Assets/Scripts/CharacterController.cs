@@ -22,7 +22,7 @@ public enum PlayerState
 public class CharacterController : MonoBehaviour
 {
     public int[] start_tile = new int[2]; //The tile to start at. They are 0-indexed.
-    private TileBoard board;
+    private GridTileBoard board;
     public Player Player;
 
     public Inventory m_Inventory;
@@ -35,8 +35,8 @@ public class CharacterController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        board = GameObject.Find("Board").GetComponent<TileBoard>();
-        var firstTile = board.GetTile(0, 0);
+        board = GameObject.Find("Board").GetComponent<GridTileBoard>();
+        var firstTile = board.GetTile(1, 1);
         Player.EnterTile(firstTile);
         //m_DirectionalArrows.SetActive(false);
         m_PlayerState = PlayerState.Idle;

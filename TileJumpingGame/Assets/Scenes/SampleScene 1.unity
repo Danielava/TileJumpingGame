@@ -592,16 +592,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06da3e9d0959e344ebeb5a9141eadb58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossHealthUI: {fileID: 1047182042}
-  CurrentHealth: 0
-  MaxHealth: 100
-  Damage: 1
-  AttackHandler: {fileID: 1548650389}
-  AttackInterval: 0.5
-  AttackDelay: 0.8
-  attackTimer: 0
-  Board: {fileID: 0}
-  Attacks: 3
 --- !u!61 &771927082
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -876,16 +866,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab13cfb910bad704f994d1e40088f522, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bossHealthUI: {fileID: 1047182042}
-  currentHealth: 0
-  maxHealth: 100
-  damage: 0
-  attackHandler: {fileID: 0}
-  attackInterval: 0
-  attackDelay: 0
-  attackTimer: 0
-  Board: {fileID: 234397548}
-  attacks: 3
 --- !u!114 &1041554660
 MonoBehaviour:
   m_ObjectHideFlags: 0

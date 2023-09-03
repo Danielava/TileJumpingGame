@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class AttackHandler : MonoBehaviour
 {
-    public TileBoard Board;
+    public GridTileBoard Board;
     public List<Attack> Attacks;
 
     public Player Player;
@@ -114,7 +114,7 @@ public class AttackHandler : MonoBehaviour
 
     public void DamageWaveDiagonal(int damage, float delay, float speed, float flatDelay = 0)
     {
-        var tiles = Board.tiles.ToList();
+        var tiles = Board.tiles;
 
         foreach (var tile in tiles)
         {
