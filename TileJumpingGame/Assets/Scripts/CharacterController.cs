@@ -8,7 +8,8 @@ public enum Direction
     Up,
     Left,
     Down,
-    Right
+    Right,
+    NONE
 }
 
 public enum PlayerState
@@ -32,6 +33,9 @@ public class CharacterController : MonoBehaviour
     private Spell m_PreparedSpell;
 
     public float MoveSpeed;
+
+    public Direction bufferedMove;
+    private float bufferTime = 0.2f;
     // Start is called before the first frame update
     void Start()
     {
@@ -64,6 +68,11 @@ public class CharacterController : MonoBehaviour
             {
                 PlayerCastPreparedSpell(Direction.Up);
             }
+            else if (m_PlayerState == PlayerState.Moving)
+            {
+                bufferedMove = Direction.Up;
+                StartCoroutine(ClearBuffer(bufferTime));
+            }
             else
             {
                 StartCoroutine(Move(Direction.Up, 1));
@@ -76,6 +85,11 @@ public class CharacterController : MonoBehaviour
             {
                 PlayerCastPreparedSpell(Direction.Down);
             }
+            else if(m_PlayerState == PlayerState.Moving)
+            {
+                bufferedMove = Direction.Down;
+                StartCoroutine(ClearBuffer(bufferTime));
+            } 
             else
             {
                 StartCoroutine(Move(Direction.Down, 1));
@@ -88,6 +102,11 @@ public class CharacterController : MonoBehaviour
             {
                 PlayerCastPreparedSpell(Direction.Right);
             }
+            else if (m_PlayerState == PlayerState.Moving)
+            {
+                bufferedMove = Direction.Right;
+                StartCoroutine(ClearBuffer(bufferTime));
+            }
             else
             {
                 StartCoroutine(Move(Direction.Right, 1));
@@ -99,6 +118,11 @@ public class CharacterController : MonoBehaviour
             if (m_PlayerState == PlayerState.PreparingSpell)
             {
                 PlayerCastPreparedSpell(Direction.Left);
+            }
+            else if (m_PlayerState == PlayerState.Moving)
+            {
+                bufferedMove = Direction.Left;
+                StartCoroutine(ClearBuffer(bufferTime));
             }
             else
             {
@@ -187,6 +211,20 @@ public class CharacterController : MonoBehaviour
         if (tile.tileType == TileType.Ice)
         {
             StartCoroutine(Move(direction, 1));
+        } else if (bufferedMove != Direction.NONE)
+        {
+            StartCoroutine(Move(bufferedMove, 1));
+            bufferedMove = Direction.NONE;
+        }
+    }
+
+    private IEnumerator ClearBuffer(float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+
+        if(bufferedMove != Direction.NONE)
+        {
+            bufferedMove = Direction.NONE;
         }
     }
 }

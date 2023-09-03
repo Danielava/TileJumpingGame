@@ -10,6 +10,7 @@ TagManager:
   - Boss
   - Enemy
   - Tile
+  - Bomb
   layers:
   - Default
   - TransparentFX
