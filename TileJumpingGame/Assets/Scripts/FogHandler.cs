@@ -35,10 +35,10 @@ public class FogHandler : MonoBehaviour
         UpdateLight();
     }
 
-    public void ActivateFog()
+    public void SetFog(int visionRange)
     {
         startTime = Time.time;
-        VisionRadius = 3;
+        VisionRadius = visionRange;
     }
 
     public void SetPosition()

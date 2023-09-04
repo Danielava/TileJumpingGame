@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 public class GhostBoss : Boss
@@ -30,17 +31,22 @@ public class GhostBoss : Boss
         }
         else if (r > 0.5f)
         {
-            //for (int i = 0; i < board.GetSizeY(); i++)
-            //{
-            //    attackHandler.DamageWaveColumn(damage, i, attackDelay, 0.25f, i % 2 == 0);
-            //    attackHandler.DamageWaveColumn(damage, i, attackDelay, 0.25f, i % 2 == 0, 1.25f);
-            //}
-
-            SpawnLampAdd();
+            for (int i = 0; i < board.GetSizeY(); i++)
+            {
+                attackHandler.DamageWaveColumn(damage, i, attackDelay, 0.25f, i % 2 == 0);
+                attackHandler.DamageWaveColumn(damage, i, attackDelay, 0.25f, i % 2 == 0, 1.25f);
+            }
         }
         else if (r > 0.25f)
         {
-            attackHandler.DamageWaveSpiral(damage, attackDelay, 0.05f, 0.5f);
+            if (Phase < 2)
+            {
+                SpawnLampAdd();
+
+            } else
+            {
+                attackHandler.DamageWaveSpiral(damage, attackDelay, 0.05f, 0.5f);
+            }
         }
         else
         {
@@ -51,24 +57,25 @@ public class GhostBoss : Boss
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
-        if (currentHealth < maxHealth / 2 && Phase == 0)
-        {
-            AdvancePhase();
-        }
     }
 
     protected override void AdvancePhase()
     {
-        Phase++;
         if(Phase == 1)
         {
-            ActivateFog();
+            ActivateFog(3);
+        }
+        if(Phase == 2)
+        {
+            ActivateFog(2);
+            //GameObject.FindGameObjectsWithTag("Lamp").ToList().ForEach(e => GameObject.Destroy(e));
+            attackInterval *= 0.75f;
         }
     }
 
-    private void ActivateFog()
+    private void ActivateFog(int visionRange)
     {
-        Fog.ActivateFog();
+        Fog.SetFog(visionRange);
     }
 
     private void SpawnLampAdd()

@@ -320,7 +320,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Enemy: {fileID: 2302260359824201070, guid: 2f3d5d038d2507d4ca8a065b441b716b, type: 3}
   TileBoard: {fileID: 234397550}
-  MaxEnemyAmount: 5
+  MaxEnemyAmount: 2
 --- !u!1001 &79392576
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4425,13 +4425,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bossHealthUI: {fileID: 1047182042}
   currentHealth: 0
-  maxHealth: 100
+  maxHealth: 200
   damage: 1
   attackHandler: {fileID: 1548650389}
   attackInterval: 5
   attackDelay: 1
+  SpeedMultiplier: 1
   board: {fileID: 234397550}
   Phase: 0
+  PhaseCutoffs:
+  - 0.8
+  - 0.25
   Fog: {fileID: 1059364902}
   EnemySpawner: {fileID: 65256176}
   LampAdd: {fileID: 2302260359824201070, guid: f4e7328067315fa43b677bfb5bd17fe1, type: 3}

@@ -15,9 +15,12 @@ public class Boss : MonoBehaviour
     public float attackDelay;
     protected float attackTimer;
 
+    public float SpeedMultiplier = 1f;
+
     public GridTileBoard board;
 
     public int Phase;
+    public float[] PhaseCutoffs;
     //make list of premade attacks for each boss
     void Start()
     {
@@ -29,6 +32,13 @@ public class Boss : MonoBehaviour
     {
         currentHealth -= damage;
         bossHealthUI.SetHealth(currentHealth, maxHealth);
+
+        if (currentHealth / maxHealth < PhaseCutoffs[Phase])
+        {
+            Phase++;
+            AdvancePhase();
+        }
+
         if (currentHealth <= 0)
         {
             Die();
@@ -37,7 +47,7 @@ public class Boss : MonoBehaviour
 
     protected virtual void AdvancePhase()
     {
-        Phase++;
+
     }
 
     public void Die()

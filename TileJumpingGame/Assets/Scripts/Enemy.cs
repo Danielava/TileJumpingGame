@@ -15,7 +15,10 @@ public class Enemy : MonoBehaviour
     public int CurrentHealth;
 
     public bool RandomMovement;
-    public float MoveTimer;
+    public float AttackInterval;
+    public float AttackDelay;
+
+    public float SpeedMultiplier = 1;
 
     public GridTileBoard Board;
     public Tile CurrentTile;
@@ -27,7 +30,7 @@ public class Enemy : MonoBehaviour
     {
         AttackHandler = GameObject.Find("GameManager").GetComponent<AttackHandler>();
         Board = GameObject.Find("Board").GetComponent<GridTileBoard>();
-        StartCoroutine(StartMove(MoveTimer, true, () => { MoveRandom(); }));
+        StartCoroutine(StartMove(AttackInterval * SpeedMultiplier, true, () => { MoveRandom(); }));
 
         var attacktypes = AttackType.GetValues(typeof(AttackType));
         AttackType = (AttackType)attacktypes.GetValue(UnityEngine.Random.Range(0, attacktypes.Length));
@@ -82,10 +85,10 @@ public class Enemy : MonoBehaviour
         switch (AttackType)
         {
             case AttackType.Plus:
-                AttackHandler.DamagePlus(CurrentTile.xPos, CurrentTile.yPos, 1, MoveTimer / 2, 2);
+                AttackHandler.DamagePlus(CurrentTile.xPos, CurrentTile.yPos, 1, AttackDelay * SpeedMultiplier, 2);
                 break;
             case AttackType.Circle:
-                AttackHandler.DamageCircle(CurrentTile.xPos, CurrentTile.yPos, 1, MoveTimer / 2, 1);
+                AttackHandler.DamageCircle(CurrentTile.xPos, CurrentTile.yPos, 1, AttackDelay * SpeedMultiplier, 1);
                 break;
 
         }
