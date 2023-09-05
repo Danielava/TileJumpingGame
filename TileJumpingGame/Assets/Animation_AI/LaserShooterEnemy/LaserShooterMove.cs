@@ -19,28 +19,28 @@ public class LaserShooterMove : StateMachineBehaviour
         m_Rb = animator.GetComponent<Rigidbody2D>();
         m_SpawnSide = m_LaserShooter.GetSpawnSide();
 
-        TileBoard board = TileBoard.instance;
+        GridTileBoard board = GridTileBoard.instance;
         //TODO: Pick a pos and speed
         int randomIndex = 0;
         if (m_SpawnSide == SpawnSide.Left)
         {
             randomIndex = Random.Range(0, board.TILE_COUNT_X);
-            m_NewPos = TileBoard.instance.GetVirtualTilePosition(-1, randomIndex);
+            m_NewPos = board.GetVirtualTilePosition(-1, randomIndex);
         }
         else if(m_SpawnSide == SpawnSide.Right)
         {
             randomIndex = Random.Range(0, board.TILE_COUNT_X);
-            m_NewPos = TileBoard.instance.GetVirtualTilePosition(board.TILE_COUNT_X, randomIndex);
+            m_NewPos = board.GetVirtualTilePosition(board.TILE_COUNT_X, randomIndex);
         }
         else if (m_SpawnSide == SpawnSide.Up)
         {
             randomIndex = Random.Range(0, board.TILE_COUNT_Y);
-            m_NewPos = TileBoard.instance.GetVirtualTilePosition(randomIndex, board.TILE_COUNT_Y);
+            m_NewPos = board.GetVirtualTilePosition(randomIndex, board.TILE_COUNT_Y);
         }
         else //Down
         {
             randomIndex = Random.Range(0, board.TILE_COUNT_Y);
-            m_NewPos = TileBoard.instance.GetVirtualTilePosition(randomIndex, -1);
+            m_NewPos = board.GetVirtualTilePosition(randomIndex, -1);
         }
     }
 

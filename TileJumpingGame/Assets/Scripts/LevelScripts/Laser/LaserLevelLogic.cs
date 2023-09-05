@@ -26,8 +26,8 @@ public class LaserLevelLogic : MonoBehaviour
     public void SpawnLaserShooter(int amount, SpawnSide side)
     {
         //Spawn a few LaserShooterEnemies at given positions
-        TileBoard board = TileBoard.instance;
-        float tileSize = board.m_TileSize;
+        GridTileBoard board = GridTileBoard.instance;
+        float tileSize = board.tileSize;
 
         int boardSize = ((side == SpawnSide.Up) || (side == SpawnSide.Left)) ? board.TILE_COUNT_X : board.TILE_COUNT_Y;
 

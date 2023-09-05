@@ -12,14 +12,25 @@ public class GridTileBoard : MonoBehaviour
     public GameObject firstTile;
     public List<Tile> tiles;
 
+    public static GridTileBoard instance; //singleton
+
     private int rayStep = 1;
 
-    public float tileSize = 1;
+    public float tileSize = 1; //TODO: Doesn't do anything?
     public int TILE_COUNT_X = 0;
     public int TILE_COUNT_Y = 0;
 
     void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            instance = this;
+        }
+
         firstTile = GameObject.FindGameObjectsWithTag("Tile").ToList().OrderBy(tile => tile.transform.position.x + tile.transform.position.y).First();
 
 
@@ -81,8 +92,6 @@ public class GridTileBoard : MonoBehaviour
 
     public Tile GetTile(int x, int y)
     {
-
-
         return tiles[x + TILE_COUNT_X * y];
     }
 
@@ -107,5 +116,19 @@ public class GridTileBoard : MonoBehaviour
     {
         var rnd = new System.Random();
         return tiles.Where(t => t.canWalkOn).OrderBy(x => rnd.Next()).First();
+    }
+
+    public Vector2 GetTilePosition(int x, int y)
+    {
+        return tiles[x * y].transform.position;
+    }
+
+    public Vector2 GetVirtualTilePosition(int x, int y)
+    {
+        Vector2 resPos;
+        resPos.x = tileSize * x;
+        resPos.y = tileSize * y;
+
+        return resPos;
     }
 }

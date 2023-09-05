@@ -43,7 +43,7 @@ public class BombObject : MonoBehaviour
 
     private void TriggerExplosion(float lifetime, int power)
     {
-        TileBoard gameBoard = TileBoard.instance;
+        GridTileBoard gameBoard = GridTileBoard.instance;
         //Distance between tiles = gameBoard.m_TileSize;
         List<Tile> tilesHorizontalUp; //The tiles where the explosion happens
         List<Tile> tilesHorizontalDown;
@@ -65,6 +65,8 @@ public class BombObject : MonoBehaviour
         int maxRowSize = Mathf.Max(tilesHorizontalUp.Count, tilesHorizontalDown.Count);
         int maxColSize = Mathf.Max(tilesVerticalLeft.Count, tilesVerticalRight.Count);
         int maxListSize = Mathf.Max(maxColSize, maxRowSize);
+
+        Debug.Log(maxRowSize);
 
         //We add the +1 because of the explosion sprite we create where the bomb is placed
         m_NrOfExplosionSprites = 1 + Mathf.Min(power, tilesHorizontalUp.Count) + Mathf.Min(power, tilesHorizontalDown.Count) + Mathf.Min(power, tilesVerticalLeft.Count) + Mathf.Min(power, tilesVerticalRight.Count);
