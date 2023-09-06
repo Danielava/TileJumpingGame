@@ -50,7 +50,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex_:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: ce5f11cd993284c4f9c54f854bdc8c9c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -97,9 +97,10 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _LaserEdgeSmoothness: 8.81
-    - _LaserScale: 5
-    - _LaserThickness: 10
+    - _LaserEdgeSmoothness: 4.41
+    - _LaserEndPointSmooth: 20
+    - _LaserScale: 3
+    - _LaserThickness: 1.7
     - _Metallic: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.005
@@ -114,9 +115,9 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0, g: 1, b: 0.96201396, a: 1}
+    - _Color: {r: 0, g: 0.2867696, b: 1.3041189, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _LaserSpeed: {r: -0.2, g: 0, b: 0, a: 0}
+    - _LaserSpeed: {r: 3, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &1661434117261843745
