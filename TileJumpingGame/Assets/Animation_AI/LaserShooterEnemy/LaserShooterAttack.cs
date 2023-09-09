@@ -29,6 +29,7 @@ public class LaserShooterAttack : StateMachineBehaviour
         m_Rb = animator.GetComponent<Rigidbody2D>();
         m_SpawnSide = m_LaserShooter.GetSpawnSide();
         m_LaserShot = false;
+        m_Laser = null;
         attackPreparationTimerOG = attackPreparationTimer;
         //laserLifeTime = 0.5f;
 
@@ -40,7 +41,7 @@ public class LaserShooterAttack : StateMachineBehaviour
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         attackPreparationTimer -= 1.0f * Time.deltaTime;
-        if(attackPreparationTimer <= 0 && !m_LaserShot)
+        if(!m_Laser && attackPreparationTimer <= 0 && !m_LaserShot)
         {
             //TODO: Turn off the preparation VFX here
             m_Laser = m_LaserShooter.ShootLaserReturn(laserLifeTime);

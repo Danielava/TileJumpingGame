@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using Unity.Mathematics;
 using UnityEngine;
 
@@ -15,22 +14,31 @@ public class Laser : MonoBehaviour
 
     private bool shutDownLaser;
     private bool shootingLaser;
-    private float laserLifetime;
+    private float m_LaserLifetime;
 
-    private float laserExtendSpeed = 80.0f;
+    private float laserExtendSpeed = 80.0f; //80.0f is optimal, set lower to debug laser
+
+    private bool m_IsThisEnemyLaser;
+
+    private GameObject m_Collider;
+    private SpawnSide m_LaserDirection;
     // Start is called before the first frame update
     void Awake()
     {
         m_LineRenderer = GetComponent<LineRenderer>();
         shutDownLaser = false;
         shootingLaser = true;
+        m_IsThisEnemyLaser = true;
     }
 
-    public void Init(Vector2 firePos, int2 currentTilePos, SpawnSide direction, float lifetime)
+    public void Init(Vector2 firePos, int2 currentTilePos, SpawnSide direction, float lifetime, bool enemyLaser)
     {
-        laserLifetime = lifetime;
+        //m_LaserLifetime = 100.0f; //OBS use for debug purposes
+        m_LaserLifetime = lifetime;
         shutDownLaser = false;
         shootingLaser = true;
+        m_IsThisEnemyLaser = enemyLaser;
+        m_LaserDirection = direction;
 
         m_FirePosDirection = new Vector3(firePos.x, firePos.y, 0.0f);
         switch (direction)
@@ -80,26 +88,69 @@ public class Laser : MonoBehaviour
         }
         m_LaserEndPos = laserEndPos;
         m_LineRenderer.SetPosition(1, m_FirePosition);
+
+        CreateColliderForLaser();
+    }
+
+    //To get collision working on the laser, we need to create and attach a mesh object to it and a BoxCollider2D to that meshObject!
+    private void CreateColliderForLaser()
+    {
+        m_Collider = new GameObject();
+        m_Collider.transform.parent = transform;
+        m_Collider.transform.localPosition = new Vector3(0, 0, 0);
+
+        Mesh mesh = new Mesh();
+        m_Collider.AddComponent<MeshFilter>().mesh = mesh;
+        BoxCollider2D boxCollider = m_Collider.AddComponent<BoxCollider2D>();
+        boxCollider.isTrigger = true;
+        
+        m_Collider.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
+
+        //This offsets the collision box perfectly
+        if(m_LaserDirection == SpawnSide.Left || m_LaserDirection == SpawnSide.Right)
+        {
+            m_Collider.transform.localScale -= new Vector3(1.0f, 0.0f, 0.0f);
+        }
+        else
+        {
+            m_Collider.transform.localScale -= new Vector3(0.0f, 1.0f, 0.0f);
+        }
+    }
+
+    public void ScaleCollider(Vector3 scaleDirection)
+    {
+        Vector3 absVector = new Vector3(Mathf.Abs(scaleDirection.x), Mathf.Abs(scaleDirection.y), Mathf.Abs(scaleDirection.z));
+        m_Collider.transform.localScale += absVector;
+        m_Collider.transform.localPosition += scaleDirection / 2.0f;
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if(shootingLaser)
         {
             Vector3 currLaserEndPos = m_LineRenderer.GetPosition(1);
             //Extend the laser until it reaches the m_LaserEndPos
             if (Vector2.Distance(currLaserEndPos, m_LaserEndPos) > 1e-2)
             {
-                currLaserEndPos = currLaserEndPos + Vector3.Scale(new Vector3(1.0f, 1.0f, 1.0f), m_FirePosDirection) * laserExtendSpeed * Time.deltaTime;
+                Vector3 scaleDirection = Vector3.Scale(new Vector3(1.0f, 1.0f, 1.0f), m_FirePosDirection) * laserExtendSpeed * Time.deltaTime;
+                currLaserEndPos = currLaserEndPos + scaleDirection;
                 m_LineRenderer.SetPosition(1, currLaserEndPos);
+
+                ScaleCollider(scaleDirection);
             }
         }
         else
         {
+            //Laser is done
             float LineWidth = m_LineRenderer.widthMultiplier;
             m_LineRenderer.widthMultiplier = LineWidth - 0.01f;
+
+            //Destroy the collider
+            if(m_Collider)
+            {
+                Destroy(m_Collider);
+            }
         }
 
         if(m_LineRenderer.widthMultiplier <= 0.0f)
@@ -107,8 +158,8 @@ public class Laser : MonoBehaviour
             Destroy(gameObject);
         }
 
-        laserLifetime -= 1.0f * Time.deltaTime;
-        if(laserLifetime <= 0.0f)
+        m_LaserLifetime -= 1.0f * Time.deltaTime;
+        if(m_LaserLifetime <= 0.0f)
         {
             shootingLaser = false;
         }
@@ -123,5 +174,30 @@ public class Laser : MonoBehaviour
     {
         shutDownLaser = true; //Might not be needed
         shootingLaser = false;
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if (!m_IsThisEnemyLaser && col.tag == "Boss")
+        {
+            col.GetComponent<Boss>().TakeDamage(10);
+            Destroy(gameObject);
+        }
+
+        if (!m_IsThisEnemyLaser && col.tag == "Enemy")
+        {
+            Enemy enemy = col.GetComponent<Enemy>();
+            if (enemy != null)
+            {
+                enemy.TakeDamage(10);
+                Destroy(gameObject);
+            }
+        }
+
+        if (m_IsThisEnemyLaser && col.tag == "Player")
+        {
+            col.GetComponent<Player>().TakeDamage(10);
+            Destroy(gameObject);
+        }
     }
 }
