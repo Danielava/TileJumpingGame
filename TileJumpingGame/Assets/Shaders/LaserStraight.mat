@@ -115,7 +115,7 @@ Material:
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 0, g: 0.2867696, b: 1.3041189, a: 1}
+    - _Color: {r: 0, g: 0.34115472, b: 1.3041189, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _LaserSpeed: {r: 3, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}

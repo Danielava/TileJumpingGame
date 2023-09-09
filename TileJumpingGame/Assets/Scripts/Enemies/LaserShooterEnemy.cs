@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 
-public enum SpawnSide
+public enum SpawnSide //TODO Move to GameVariables perhaps
 {
     Up,
     Down,
@@ -16,17 +18,21 @@ public class LaserShooterEnemy : EnemyRoot
     private SpawnSide m_SpawnedSide;
     private Vector3 m_SpawnPosition;
     private Rigidbody2D m_Rb;
+    private int2 m_TilePos;
 
-    public void Init(SpawnSide side, Vector3 spawnPos)
+    public Laser m_Laser;
+
+    public void Init(SpawnSide side, Vector3 spawnPos, int2 tilePos)
     {
         m_Animator = gameObject.GetComponent<Animator>();
         m_SpawnedSide = side;
         m_SpawnPosition = spawnPos;
         m_Rb = gameObject.GetComponent<Rigidbody2D>();
+        m_TilePos = tilePos;
 
         //Assign a random force
         Vector2 force;
-        float forceIntensity = Random.Range(-10.0f, 10.0f);
+        float forceIntensity = UnityEngine.Random.Range(-10.0f, 10.0f);
         if ((m_SpawnedSide == SpawnSide.Left) || (m_SpawnedSide == SpawnSide.Right))
         {
             force = new Vector2(0.0f, forceIntensity);
@@ -47,5 +53,21 @@ public class LaserShooterEnemy : EnemyRoot
     public SpawnSide GetSpawnSide()
     {
         return m_SpawnedSide;
+    }
+
+    public void SetTilePosition(int2 tilePos)
+    {
+        m_TilePos = tilePos;
+    }
+
+    public int2 GetTilePosition()
+    {
+        return m_TilePos;
+    }
+
+    public void ShootLaser()
+    {
+        float laserLifetime = 0.5f;
+        Instantiate(m_Laser, transform.position, Quaternion.identity).Init(transform.position, m_TilePos, m_SpawnedSide, laserLifetime);
     }
 }

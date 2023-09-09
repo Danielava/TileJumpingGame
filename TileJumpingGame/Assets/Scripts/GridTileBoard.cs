@@ -131,4 +131,44 @@ public class GridTileBoard : MonoBehaviour
 
         return resPos;
     }
+
+    public List<Tile> GetRowOrColOfTiles(Direction dir, Tile tilePos, bool sortList)
+    {
+        List<Tile> res;
+        //TODO: Only also retreive tiles that are blocked by something, either a rock or a wall!
+        switch (dir)
+        {
+            case Direction.Up:
+                res = tiles.Where(t => (t.xPos == tilePos.xPos) && (t.yPos > tilePos.yPos)).ToList();
+                res.Sort((t1, t2) => t1.yPos.CompareTo(t2.yPos));
+                break;
+            case Direction.Down:
+                res = tiles.Where(t => (t.xPos == tilePos.xPos) && (t.yPos < tilePos.yPos)).ToList();
+                res.Sort((t1, t2) => t2.yPos.CompareTo(t1.yPos));
+                break;
+            case Direction.Left:
+                res = tiles.Where(t => (t.yPos == tilePos.yPos) && (t.xPos < tilePos.xPos)).ToList();
+                res.Sort((t1, t2) => t2.xPos.CompareTo(t1.xPos));
+                break;
+            default: //Direction.Right:
+                res = tiles.Where(t => (t.yPos == tilePos.yPos) && (t.xPos > tilePos.xPos)).ToList();
+                res.Sort((t1, t2) => t1.xPos.CompareTo(t2.xPos));
+                break;
+        }
+        return res;
+    }
+
+    public Tile GetClosestObstacleOnPath(Direction dir, Tile tilePos)
+    {
+        List<Tile> tilesOnPath = GetRowOrColOfTiles(dir, tilePos, true); //Should now be sorted from closest to farthest
+        List<Tile> obstaclesOnPath = tilesOnPath.Where(t=> (t.tileType == Assets.Scripts.Board.TileType.Rock)).ToList(); //TODO: Also if there is a wall there
+
+        if (obstaclesOnPath.Count > 0)
+        {
+            Tile closestObstacleTile = obstaclesOnPath[0];
+            return closestObstacleTile;
+        }
+
+        return null;
+    }
 }

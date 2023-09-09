@@ -11,6 +11,7 @@ namespace Assets.Scripts.Board
         Normal,
         Hole,
         Ice,
-        Mud
+        Mud,
+        Rock
     }
 }

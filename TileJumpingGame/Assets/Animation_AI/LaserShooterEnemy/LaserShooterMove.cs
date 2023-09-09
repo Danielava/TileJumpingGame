@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class LaserShooterMove : StateMachineBehaviour
@@ -10,6 +11,7 @@ public class LaserShooterMove : StateMachineBehaviour
     private SpawnSide m_SpawnSide;
 
     private Vector2 m_NewPos;
+    private int2 m_TilePos;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
@@ -24,24 +26,30 @@ public class LaserShooterMove : StateMachineBehaviour
         int randomIndex = 0;
         if (m_SpawnSide == SpawnSide.Left)
         {
-            randomIndex = Random.Range(0, board.TILE_COUNT_X);
-            m_NewPos = board.GetVirtualTilePosition(-1, randomIndex);
+            randomIndex = UnityEngine.Random.Range(0, board.TILE_COUNT_X);
+            m_TilePos = new int2(-1, randomIndex);
+            m_NewPos = board.GetVirtualTilePosition(m_TilePos.x, m_TilePos.y);
         }
         else if(m_SpawnSide == SpawnSide.Right)
         {
-            randomIndex = Random.Range(0, board.TILE_COUNT_X);
-            m_NewPos = board.GetVirtualTilePosition(board.TILE_COUNT_X, randomIndex);
+            randomIndex = UnityEngine.Random.Range(0, board.TILE_COUNT_X);
+            m_TilePos = new int2(board.TILE_COUNT_X, randomIndex);
+            m_NewPos = board.GetVirtualTilePosition(m_TilePos.x, m_TilePos.y);
         }
         else if (m_SpawnSide == SpawnSide.Up)
         {
-            randomIndex = Random.Range(0, board.TILE_COUNT_Y);
-            m_NewPos = board.GetVirtualTilePosition(randomIndex, board.TILE_COUNT_Y);
+            randomIndex = UnityEngine.Random.Range(0, board.TILE_COUNT_Y);
+            m_TilePos = new int2(randomIndex, board.TILE_COUNT_Y);
+            m_NewPos = board.GetVirtualTilePosition(m_TilePos.x, m_TilePos.y);
         }
         else //Down
         {
-            randomIndex = Random.Range(0, board.TILE_COUNT_Y);
-            m_NewPos = board.GetVirtualTilePosition(randomIndex, -1);
+            randomIndex = UnityEngine.Random.Range(0, board.TILE_COUNT_Y);
+            m_TilePos = new int2(randomIndex, -1);
+            m_NewPos = board.GetVirtualTilePosition(m_TilePos.x, m_TilePos.y);
         }
+
+        m_LaserShooter.SetTilePosition(m_TilePos);
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
@@ -55,7 +63,9 @@ public class LaserShooterMove : StateMachineBehaviour
         if (Vector2.Distance(m_Rb.position, m_NewPos) < 1e-5f)
         {
             //Switch to Idle stance
-            animator.SetTrigger("Idle");
+            //TODO: 50% chance to stay Idle or Attack
+            animator.SetTrigger("Attack");
+            //animator.SetTrigger("Idle");
             m_Rb.velocity = new Vector2(0.0f, 0.0f);
         }
     }
@@ -65,5 +75,6 @@ public class LaserShooterMove : StateMachineBehaviour
     {
         animator.SetBool("IsMoving", false);
         animator.ResetTrigger("Idle");
+        animator.ResetTrigger("Attack");
     }
 }

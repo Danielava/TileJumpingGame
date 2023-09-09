@@ -50,16 +50,23 @@ public class BombObject : MonoBehaviour
         List<Tile> tilesVerticalLeft;
         List<Tile> tilesVerticalRight;
         //Filling up our explosion lists
-        tilesVerticalRight = gameBoard.tiles.Where(t => (t.yPos == m_CurrentTile.yPos) && (t.xPos > m_CurrentTile.xPos)/* && t.canWalkOn*/).ToList(); //This will give us an explosion on the x row
-        tilesVerticalLeft = gameBoard.tiles.Where(t => (t.yPos == m_CurrentTile.yPos) && (t.xPos < m_CurrentTile.xPos)).ToList();
-        tilesHorizontalDown = gameBoard.tiles.Where(t => (t.xPos == m_CurrentTile.xPos) && (t.yPos < m_CurrentTile.yPos)).ToList();
-        tilesHorizontalUp = gameBoard.tiles.Where(t => (t.xPos == m_CurrentTile.xPos) && (t.yPos > m_CurrentTile.yPos)).ToList();
+
+        bool sortList = true;
+        tilesHorizontalUp = gameBoard.GetRowOrColOfTiles(Direction.Up, m_CurrentTile, sortList);
+        tilesHorizontalDown = gameBoard.GetRowOrColOfTiles(Direction.Down, m_CurrentTile, sortList);
+        tilesVerticalLeft = gameBoard.GetRowOrColOfTiles(Direction.Left, m_CurrentTile, sortList);
+        tilesVerticalRight = gameBoard.GetRowOrColOfTiles(Direction.Right, m_CurrentTile, sortList);
+
+        //tilesVerticalRight = gameBoard.tiles.Where(t => (t.yPos == m_CurrentTile.yPos) && (t.xPos > m_CurrentTile.xPos)/* && t.canWalkOn*/).ToList(); //This will give us an explosion on the x row
+        //tilesVerticalLeft = gameBoard.tiles.Where(t => (t.yPos == m_CurrentTile.yPos) && (t.xPos < m_CurrentTile.xPos)).ToList();
+        //tilesHorizontalDown = gameBoard.tiles.Where(t => (t.xPos == m_CurrentTile.xPos) && (t.yPos < m_CurrentTile.yPos)).ToList();
+        //tilesHorizontalUp = gameBoard.tiles.Where(t => (t.xPos == m_CurrentTile.xPos) && (t.yPos > m_CurrentTile.yPos)).ToList();
 
         //Sort the lists
-        tilesVerticalRight.Sort((t1, t2) => t1.xPos.CompareTo(t2.xPos));
-        tilesVerticalLeft.Sort((t1, t2) => t2.xPos.CompareTo(t1.xPos));
-        tilesHorizontalDown.Sort((t1, t2) => t2.yPos.CompareTo(t1.yPos));
-        tilesHorizontalUp.Sort((t1, t2) => t1.yPos.CompareTo(t2.yPos));
+        //tilesVerticalRight.Sort((t1, t2) => t1.xPos.CompareTo(t2.xPos));
+        //tilesVerticalLeft.Sort((t1, t2) => t2.xPos.CompareTo(t1.xPos));
+        //tilesHorizontalDown.Sort((t1, t2) => t2.yPos.CompareTo(t1.yPos));
+        //tilesHorizontalUp.Sort((t1, t2) => t1.yPos.CompareTo(t2.yPos));
 
 
         int maxRowSize = Mathf.Max(tilesHorizontalUp.Count, tilesHorizontalDown.Count);

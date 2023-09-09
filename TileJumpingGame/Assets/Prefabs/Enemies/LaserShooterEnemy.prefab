@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HP: 10
+  m_Laser: {fileID: 515674575447991973, guid: 5cb8c43092ef8024a939f76ae6a62aff, type: 3}
 --- !u!50 &2618186223318100498
 Rigidbody2D:
   serializedVersion: 4
