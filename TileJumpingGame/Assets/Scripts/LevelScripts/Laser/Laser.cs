@@ -104,6 +104,9 @@ public class Laser : MonoBehaviour
         BoxCollider2D boxCollider = m_Collider.AddComponent<BoxCollider2D>();
         boxCollider.isTrigger = true;
         
+        LaserCollision laserColScript = m_Collider.AddComponent<LaserCollision>();
+        laserColScript.SetIsEnemyLaser(m_IsThisEnemyLaser);
+
         m_Collider.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
         //This offsets the collision box perfectly
@@ -174,30 +177,5 @@ public class Laser : MonoBehaviour
     {
         shutDownLaser = true; //Might not be needed
         shootingLaser = false;
-    }
-
-    private void OnTriggerEnter2D(Collider2D col)
-    {
-        if (!m_IsThisEnemyLaser && col.tag == "Boss")
-        {
-            col.GetComponent<Boss>().TakeDamage(10);
-            Destroy(gameObject);
-        }
-
-        if (!m_IsThisEnemyLaser && col.tag == "Enemy")
-        {
-            Enemy enemy = col.GetComponent<Enemy>();
-            if (enemy != null)
-            {
-                enemy.TakeDamage(10);
-                Destroy(gameObject);
-            }
-        }
-
-        if (m_IsThisEnemyLaser && col.tag == "Player")
-        {
-            col.GetComponent<Player>().TakeDamage(10);
-            Destroy(gameObject);
-        }
     }
 }
