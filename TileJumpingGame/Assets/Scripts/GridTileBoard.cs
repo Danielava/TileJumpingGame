@@ -129,6 +129,8 @@ public class GridTileBoard : MonoBehaviour
         resPos.x = tileSize * x;
         resPos.y = tileSize * y;
 
+        resPos += new Vector2(tileSize / 2.0f, tileSize / 2.0f); //Pos need to be offseted a bit with the new Grid system
+
         return resPos;
     }
 

@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52e3ba8619c831841b89348e5b257fe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackPreparationTimer: 1
+  laserLifeTime: 1
 --- !u!1102 &-7499573582893731617
 AnimatorState:
   serializedVersion: 6

@@ -65,7 +65,7 @@ public class LaserLevelLogic : MonoBehaviour
                 spawnPosition = board.GetVirtualTilePosition(tilePos.x, tilePos.y);
 
                 initPosition = Camera.main.ViewportToWorldPoint(new Vector2(0.0f - offset, 0.0f));// 0.0f in x pos represents left of viewport, we offset it a bit to end up slightly outisde of it!
-                initPosition.y = spawnPosition.y; //TODO: Offset this a bit to make the flying into the screen cooler
+                initPosition.y = spawnPosition.y;
             }
             else if (side == SpawnSide.Right)
             {
@@ -73,7 +73,7 @@ public class LaserLevelLogic : MonoBehaviour
                 spawnPosition = board.GetVirtualTilePosition(tilePos.x, tilePos.y);
 
                 initPosition = Camera.main.ViewportToWorldPoint(new Vector2(1.0f + offset, 0.0f));
-                initPosition.y = spawnPosition.y; //TODO: Offset this a bit to make the flying into the screen cooler
+                initPosition.y = spawnPosition.y;
             }
             else if (side == SpawnSide.Down)
             {

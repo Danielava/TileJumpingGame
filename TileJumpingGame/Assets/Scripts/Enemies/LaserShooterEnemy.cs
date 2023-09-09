@@ -65,9 +65,18 @@ public class LaserShooterEnemy : EnemyRoot
         return m_TilePos;
     }
 
-    public void ShootLaser()
+    public void ShootLaser(float laserLifetime)
     {
-        float laserLifetime = 0.5f;
+        //float laserLifetime = 0.5f;
         Instantiate(m_Laser, transform.position, Quaternion.identity).Init(transform.position, m_TilePos, m_SpawnedSide, laserLifetime);
+    }
+
+    //Returns the laser gameObject that was shot, this is to track its status for AI, so they know when it's been destroyed
+    public Laser ShootLaserReturn(float laserLifetime)
+    {
+        //float laserLifetime = 0.5f;
+        Laser laser = Instantiate(m_Laser, transform.position, Quaternion.identity);
+        laser.Init(transform.position, m_TilePos, m_SpawnedSide, laserLifetime);
+        return laser;
     }
 }
