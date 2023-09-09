@@ -32,7 +32,11 @@ public class LaserCollision : MonoBehaviour
         if (m_IsThisEnemyLaser && col.tag == "Player")
         {
             col.GetComponent<Player>().TakeDamage(1);
-            //Destroy(gameObject);
+        }
+
+        if (col.tag == "Boulder")
+        {
+            col.GetComponent<Boulder>().GetTile().GetComponent<BoulderTile>().TakeDamage(10);
         }
     }
 }

@@ -4,12 +4,13 @@ using Unity.Mathematics;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
-public enum SpawnSide //TODO Move to GameVariables perhaps
+//This is ridiculous, keep this actually. It's oposite to the Direction enum
+public enum SpawnSide //TODO Move to GameVariables perhaps (no just keep it here for now)
 {
-    Up,
     Down,
-    Left,
-    Right
+    Right,
+    Up,
+    Left
 };
 
 public class LaserShooterEnemy : EnemyRoot

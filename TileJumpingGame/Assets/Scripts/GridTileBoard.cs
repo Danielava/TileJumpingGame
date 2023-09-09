@@ -20,6 +20,11 @@ public class GridTileBoard : MonoBehaviour
     public int TILE_COUNT_X = 0;
     public int TILE_COUNT_Y = 0;
 
+    public GameObject DefaultTilePrefab;
+    public GameObject EmptyTilePrefab;
+    public GameObject IceTilePrefab;
+    public GameObject BoulderTilePrefab;
+
     void Awake()
     {
         if (instance != null && instance != this)
@@ -137,7 +142,6 @@ public class GridTileBoard : MonoBehaviour
     public List<Tile> GetRowOrColOfTiles(Direction dir, Tile tilePos, bool sortList)
     {
         List<Tile> res;
-        //TODO: Only also retreive tiles that are blocked by something, either a rock or a wall!
         switch (dir)
         {
             case Direction.Up:
@@ -163,7 +167,7 @@ public class GridTileBoard : MonoBehaviour
     public Tile GetClosestObstacleOnPath(Direction dir, Tile tilePos)
     {
         List<Tile> tilesOnPath = GetRowOrColOfTiles(dir, tilePos, true); //Should now be sorted from closest to farthest
-        List<Tile> obstaclesOnPath = tilesOnPath.Where(t=> (t.tileType == Assets.Scripts.Board.TileType.Rock)).ToList(); //TODO: Also if there is a wall there
+        List<Tile> obstaclesOnPath = tilesOnPath.Where(t=> (t.tileType == Assets.Scripts.Board.TileType.Boulder)).ToList(); //TODO: Also if there is a wall there
 
         if (obstaclesOnPath.Count > 0)
         {

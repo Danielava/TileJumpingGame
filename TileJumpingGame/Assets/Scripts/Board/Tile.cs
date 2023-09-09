@@ -10,7 +10,7 @@ public class Tile : MonoBehaviour
     public List<Powerup> powerUps;
     public List<Hazard> hazards;
     public bool canWalkOn { 
-        get { return tileType != TileType.Hole; } 
+        get { return (tileType != TileType.Hole) && (tileType != TileType.Boulder); } 
         private set { canWalkOn = value; } 
     }
 
@@ -35,6 +35,13 @@ public class Tile : MonoBehaviour
         xPos = x;
         yPos = y;
         transform.localPosition = new Vector3(x, y, 0);
+    }
+
+    public void Init(int x, int y, Vector3 pos)
+    {
+        xPos = x;
+        yPos = y;
+        transform.localPosition = pos;
     }
 
     public void AddPowerUp(Powerup powerup)

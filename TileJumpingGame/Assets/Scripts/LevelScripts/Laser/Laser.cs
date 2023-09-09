@@ -75,12 +75,18 @@ public class Laser : MonoBehaviour
         Tile tempTile = new Tile();
         tempTile.xPos = currentTilePos.x;
         tempTile.yPos = currentTilePos.y;
+        /*
+         * Damn it: That GetClosestObstacleOnPath needs to take in a direction. And the direction is actually
+         * supposed to be oposite to where the bird is facing..
+         * So if you ever refactor and remove SpawnDir enum, then keep this in mind. It will ruin things right here.
+         */
         Tile closestObstacleTile = GridTileBoard.instance.GetClosestObstacleOnPath((Direction) direction, tempTile);
         Vector3 laserEndPos;
         if (closestObstacleTile != null)
         {
             Vector2 closest = closestObstacleTile.transform.position;
-            laserEndPos = new Vector3(0.0f, closest.x, closest.y); //TODO: This is wrong!
+            laserEndPos = new Vector3(closest.x, closest.y, 0.0f);
+            //TODO: This will make the laser stop at the middle of the collided tile, we might want to offset a little bit so it's a bit before the middle.
         }
         else
         {
@@ -110,17 +116,23 @@ public class Laser : MonoBehaviour
         m_Collider.transform.localScale = new Vector3(1.0f, 1.0f, 1.0f);
 
         //This offsets the collision box perfectly
-        if(m_LaserDirection == SpawnSide.Left || m_LaserDirection == SpawnSide.Right)
+        /*
+         * Bugfix: We multiply localscale by the 0.5f here to make it's collision width/thickness smaller.
+         * Otherwise it might cover more that one row (e.g hit rocks on multiple rows/cols)
+         */
+        if (m_LaserDirection == SpawnSide.Left || m_LaserDirection == SpawnSide.Right)
         {
             m_Collider.transform.localScale -= new Vector3(1.0f, 0.0f, 0.0f);
+            m_Collider.transform.localScale = Vector3.Scale(m_Collider.transform.localScale, new Vector3(1.0f, 0.5f, 1.0f));
         }
         else
         {
             m_Collider.transform.localScale -= new Vector3(0.0f, 1.0f, 0.0f);
+            m_Collider.transform.localScale = Vector3.Scale(m_Collider.transform.localScale, new Vector3(0.5f, 1.0f, 1.0f));
         }
     }
 
-    public void ScaleCollider(Vector3 scaleDirection)
+    public void ScaleCollider(Vector3 scaleDirection) //ScaleDirection should be a vector that only has value in the direction of scaling
     {
         Vector3 absVector = new Vector3(Mathf.Abs(scaleDirection.x), Mathf.Abs(scaleDirection.y), Mathf.Abs(scaleDirection.z));
         m_Collider.transform.localScale += absVector;
@@ -134,7 +146,7 @@ public class Laser : MonoBehaviour
         {
             Vector3 currLaserEndPos = m_LineRenderer.GetPosition(1);
             //Extend the laser until it reaches the m_LaserEndPos
-            if (Vector2.Distance(currLaserEndPos, m_LaserEndPos) > 1e-2)
+            if (Vector2.Distance(currLaserEndPos, m_LaserEndPos) > 0.4f) //WARNING: This is pretty dangerous because we're using incrementation to offset the laserBeam!
             {
                 Vector3 scaleDirection = Vector3.Scale(new Vector3(1.0f, 1.0f, 1.0f), m_FirePosDirection) * laserExtendSpeed * Time.deltaTime;
                 currLaserEndPos = currLaserEndPos + scaleDirection;

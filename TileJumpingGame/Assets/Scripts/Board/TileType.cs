@@ -12,6 +12,6 @@ namespace Assets.Scripts.Board
         Hole,
         Ice,
         Mud,
-        Rock
+        Boulder
     }
 }

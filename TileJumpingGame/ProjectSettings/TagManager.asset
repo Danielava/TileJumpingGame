@@ -12,6 +12,7 @@ TagManager:
   - Tile
   - Bomb
   - Lamp
+  - Boulder
   layers:
   - Default
   - TransparentFX
