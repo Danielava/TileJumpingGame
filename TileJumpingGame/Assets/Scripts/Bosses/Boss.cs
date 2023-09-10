@@ -20,7 +20,7 @@ public class Boss : MonoBehaviour
     public GridTileBoard board;
 
     public int Phase;
-    public float[] PhaseCutoffs;
+    public float[] PhaseCutoffs = new float[] { 0 };
     //make list of premade attacks for each boss
     void Start()
     {
