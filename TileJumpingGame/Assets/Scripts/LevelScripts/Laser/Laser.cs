@@ -92,6 +92,13 @@ public class Laser : MonoBehaviour
         {
             laserEndPos = m_FirePosition + Vector3.Scale(new Vector3(20.0f, 20.0f, 20.0f), m_FirePosDirection); //Vector3.Scale is vector multiplication
         }
+
+        /*
+         *  Daniel: Massive TODO!
+         *  Store the closest gameObject. Because sometimes a laser should be able to destroy it,
+         *  and then move along on the road!
+         */
+
         m_LaserEndPos = laserEndPos;
         m_LineRenderer.SetPosition(1, m_FirePosition);
 

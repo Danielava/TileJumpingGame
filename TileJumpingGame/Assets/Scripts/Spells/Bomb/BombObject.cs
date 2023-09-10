@@ -65,13 +65,6 @@ public class BombObject : MonoBehaviour
         tilesVerticalLeft = gameBoard.GetRowOrColOfTiles(Direction.Left, m_CurrentTile, sortList);
         tilesVerticalRight = gameBoard.GetRowOrColOfTiles(Direction.Right, m_CurrentTile, sortList);
 
-        //Cut the bomb off at closest obstacle on path
-        //Tile cutoffUp = GridTileBoard.instance.GetClosestObstacleOnPath(Direction.Up, tempTile);
-        //Tile cutoffDown = GridTileBoard.instance.GetClosestObstacleOnPath(Direction.Down, tempTile);
-        //Tile cutoffLeft = GridTileBoard.instance.GetClosestObstacleOnPath(Direction.Left, tempTile);
-        //Tile cutoffDown = GridTileBoard.instance.GetClosestObstacleOnPath(Direction.Right, tempTile);
-
-
         int maxRowSize = Mathf.Max(tilesHorizontalUp.Count, tilesHorizontalDown.Count);
         int maxColSize = Mathf.Max(tilesVerticalLeft.Count, tilesVerticalRight.Count);
         int maxListSize = Mathf.Max(maxColSize, maxRowSize);
