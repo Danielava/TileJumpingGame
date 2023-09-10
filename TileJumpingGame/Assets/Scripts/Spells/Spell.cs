@@ -53,7 +53,7 @@ public class Spell : MonoBehaviour
                 GameObject.FindWithTag("Player").GetComponent<CharacterController>().PrepareSpell(this);
                 break;
             default:
-                GameObject.FindWithTag("Player").GetComponent<Player>().CastSpell(this);
+                GameObject.FindWithTag("Player").GetComponent<CharacterController>().CastSpell(this);
                 break;
         }
     }

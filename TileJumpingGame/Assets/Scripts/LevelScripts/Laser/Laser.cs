@@ -192,7 +192,7 @@ public class Laser : MonoBehaviour
         shootingLaser = true; //Might not be needed? We just automatically shoot laser on init!
     }
 
-    void DisableLaser()
+    public void DisableLaser()
     {
         shutDownLaser = true; //Might not be needed
         shootingLaser = false;

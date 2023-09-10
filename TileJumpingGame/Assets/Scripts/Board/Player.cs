@@ -47,6 +47,8 @@ public class Player : MonoBehaviour
         currentHealth -= damage;
         playerHealthUI.SetCurrentHealth(currentHealth);
         //Debug.Log("oowie noo i got hit :(");
+
+        GetComponent<CharacterController>().StopChanneling();
     }
 
     public void CastSpell(Spell spell, Direction? direction = null)

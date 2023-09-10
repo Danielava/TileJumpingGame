@@ -112,7 +112,7 @@ public class Enemy : MonoBehaviour
         } while (repeat);
     }
 
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(float damage)
     {
         Destroy(gameObject);
     }

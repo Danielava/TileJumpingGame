@@ -6,7 +6,7 @@ public class GhostEnemy : Enemy
     public GameObject Lamp;
     // Start is called before the first frame update
     
-    public override void TakeDamage(int damage)
+    public override void TakeDamage(float damage)
     {
         SpawnLamp();
         Destroy(gameObject);
