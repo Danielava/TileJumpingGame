@@ -5,7 +5,7 @@ using UnityEngine;
 public class LaserCollision : MonoBehaviour
 {
     private bool m_IsThisEnemyLaser;
-    private float m_DamagePerSecond = 50;
+    private float m_DamagePerSecond = 20;
     
     public void SetIsEnemyLaser(bool value)
     {
@@ -48,6 +48,7 @@ public class LaserCollision : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D col)
     {
+        print("collision");
         if (!m_IsThisEnemyLaser && col.tag == "Boss")
         {
             col.GetComponent<Boss>().TakeDamage(m_DamagePerSecond * Time.deltaTime);

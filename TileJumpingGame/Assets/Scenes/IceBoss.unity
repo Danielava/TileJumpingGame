@@ -5137,6 +5137,7 @@ GameObject:
   - component: {fileID: 1041554656}
   - component: {fileID: 1041554654}
   - component: {fileID: 1041554659}
+  - component: {fileID: 1041554660}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Boss
@@ -5273,6 +5274,27 @@ MonoBehaviour:
   Phase: 0
   PhaseCutoffs:
   - 0
+--- !u!50 &1041554660
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041554653}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 0.0001
+  m_LinearDrag: 0
+  m_AngularDrag: 0
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 0
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &1047182040
 GameObject:
   m_ObjectHideFlags: 0

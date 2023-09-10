@@ -33,7 +33,7 @@ public class Boss : MonoBehaviour
         currentHealth -= damage;
         bossHealthUI.SetHealth(currentHealth, maxHealth);
 
-        if (currentHealth / maxHealth < PhaseCutoffs[Phase])
+        if (PhaseCutoffs.Length > Phase && currentHealth / maxHealth < PhaseCutoffs[Phase])
         {
             Phase++;
             AdvancePhase();
