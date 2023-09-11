@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
 
@@ -26,8 +27,8 @@ public class LaserLevelLogic : MonoBehaviour
     public void SpawnLaserShooter(int amount, SpawnSide side)
     {
         //Spawn a few LaserShooterEnemies at given positions
-        TileBoard board = TileBoard.instance;
-        float tileSize = board.m_TileSize;
+        GridTileBoard board = GridTileBoard.instance;
+        float tileSize = board.tileSize;
 
         int boardSize = ((side == SpawnSide.Up) || (side == SpawnSide.Left)) ? board.TILE_COUNT_X : board.TILE_COUNT_Y;
 
@@ -42,7 +43,7 @@ public class LaserLevelLogic : MonoBehaviour
             {
                 break;
             }
-            int rndIndex = Random.Range(0, numbers.Count);
+            int rndIndex = UnityEngine.Random.Range(0, numbers.Count);
             int indexToSpawnAt = numbers[rndIndex];
             numbers.RemoveAt(rndIndex);
 
@@ -56,24 +57,28 @@ public class LaserLevelLogic : MonoBehaviour
 
             Vector2 spawnPosition;
             Vector2 initPosition; //Init pos is a pos outisde the screen which our enemies will spawn, and then they will fly towards their given spawnPosition.
+            int2 tilePos;
             float offset = 0.05f;
             if (side == SpawnSide.Left)
             {
-                spawnPosition = board.GetVirtualTilePosition(-1, indexToSpawnAt);
+                tilePos.x = -1; tilePos.y = indexToSpawnAt;
+                spawnPosition = board.GetVirtualTilePosition(tilePos.x, tilePos.y);
 
                 initPosition = Camera.main.ViewportToWorldPoint(new Vector2(0.0f - offset, 0.0f));// 0.0f in x pos represents left of viewport, we offset it a bit to end up slightly outisde of it!
-                initPosition.y = spawnPosition.y; //TODO: Offset this a bit to make the flying into the screen cooler
+                initPosition.y = spawnPosition.y;
             }
             else if (side == SpawnSide.Right)
             {
-                spawnPosition = board.GetVirtualTilePosition(board.TILE_COUNT_X, indexToSpawnAt);
+                tilePos.x = board.TILE_COUNT_X; tilePos.y = indexToSpawnAt;
+                spawnPosition = board.GetVirtualTilePosition(tilePos.x, tilePos.y);
 
                 initPosition = Camera.main.ViewportToWorldPoint(new Vector2(1.0f + offset, 0.0f));
-                initPosition.y = spawnPosition.y; //TODO: Offset this a bit to make the flying into the screen cooler
+                initPosition.y = spawnPosition.y;
             }
             else if (side == SpawnSide.Down)
             {
-                spawnPosition = board.GetVirtualTilePosition(indexToSpawnAt, -1);
+                tilePos.x = indexToSpawnAt; tilePos.y = -1;
+                spawnPosition = board.GetVirtualTilePosition(tilePos.x, tilePos.y);
 
                 initPosition = Camera.main.ViewportToWorldPoint(new Vector2(0.0f, 0.0f));
                 initPosition.y -= halfWidth/2.0f;
@@ -81,14 +86,15 @@ public class LaserLevelLogic : MonoBehaviour
             }
             else //SpawnSide.Up
             {
-                spawnPosition = board.GetVirtualTilePosition(indexToSpawnAt, board.TILE_COUNT_Y);
+                tilePos.x = indexToSpawnAt; tilePos.y = board.TILE_COUNT_Y;
+                spawnPosition = board.GetVirtualTilePosition(tilePos.x, tilePos.y);
 
                 initPosition.y = halfWidth + tileSize;
                 initPosition.x = spawnPosition.x;
             }
 
             //Debug.Log("InitPos: " + initPosition + " SpawnPos: " + spawnPosition);
-            Instantiate(m_LaserShooterEnemy, initPosition, Quaternion.identity).Init(side, spawnPosition);
+            Instantiate(m_LaserShooterEnemy, initPosition, Quaternion.identity).Init(side, spawnPosition, tilePos);
         }
     }
 }

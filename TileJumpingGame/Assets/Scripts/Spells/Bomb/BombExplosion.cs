@@ -35,5 +35,10 @@ public class BombExplosion : MonoBehaviour
         {
             col.GetComponent<BombObject>().Explode();
         }
+
+        if (col.tag == "Boulder")
+        {
+            col.GetComponent<Boulder>().GetTile().GetComponent<BoulderTile>().TakeDamage(10);
+        }
     }
 }

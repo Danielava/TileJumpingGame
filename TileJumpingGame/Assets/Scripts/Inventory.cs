@@ -27,7 +27,7 @@ public class Inventory : MonoBehaviour
      * Call ComputeAndShowAvailableSpells() to fill this list with available spells and visualize them in the UI.   
      */
     private int[] m_AvailablePlayerSpells = new int[GameVariables.TOTAL_NR_OF_SPELLS];
-    public int[] m_AvailablePlayerSpellsPrevious = new int[GameVariables.TOTAL_NR_OF_SPELLS];
+    private int[] m_AvailablePlayerSpellsPrevious = new int[GameVariables.TOTAL_NR_OF_SPELLS];
     private SpellPanel m_SpellPanel; //The spell UI basically where you select spells to cast.
 
     static bool setup = false; //TODO: Might not be needed! Remove
@@ -53,6 +53,7 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < GameVariables.TOTAL_NR_OF_SPELLS; i++)
         {
+
             m_AvailablePlayerSpells[i] = 0;
             m_AvailablePlayerSpellsPrevious[i] = 0;
         }
@@ -98,7 +99,7 @@ public class Inventory : MonoBehaviour
 
             if (m_AvailablePlayerSpellsPrevious[i] < m_AvailablePlayerSpells[i])
             {
-                if(m_AvailablePlayerSpellsPrevious[i] == 0)
+                if (m_AvailablePlayerSpellsPrevious[i] == 0)
                 {
                     m_SpellPanel.AddSpellToPanel(i); //Spell appeared for the first time, add it to our panel
                 }
@@ -142,5 +143,10 @@ public class Inventory : MonoBehaviour
     {
         m_NrOfCoins += value;
         m_NrOfCoins = Mathf.Max(m_NrOfCoins, 0);
+    }
+
+    public void SetAvailableSpellsAvailablePreviously(int spellIndex, int nrOfTheSpellAvailable)
+    {
+        m_AvailablePlayerSpellsPrevious[spellIndex] = nrOfTheSpellAvailable;
     }
 }

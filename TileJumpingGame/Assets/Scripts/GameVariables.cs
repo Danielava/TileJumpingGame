@@ -8,14 +8,16 @@ using UnityEngine;
  * I) Create and add the new spell prefab to the GameVariable SPELLS list!
  * II) Increment the static variable TOTAL_NR_OF_SPELLS
  * III) Add your spell to the enum SPELL_NAMES
- * IV) That's it!
+ * IV) It's very important that you in your spell script assign this enum to the m_ID! E.g: "m_ID = (int)GameVariables.SPELL_NAMES.Counter;"
+ * V) IF IT'S STILL NOT WORKING!!! Then please repeat these steps, there is a chance unity reverted something for you (e.g removed the prefab from this object when you edited the spell)
+ * VI) That's it!
  */
 public class GameVariables : MonoBehaviour
 {
 
     public static GameVariables instance; //singleton
 
-    public static int TOTAL_NR_OF_SPELLS = 4; //Change this when adding spells
+    public static int TOTAL_NR_OF_SPELLS = 6; //Change this when adding spells
     public static int NR_LEVELS = 1;
     public static int TOTAL_NR_OF_COLLECTIBLES = 3; //E.g of collectibles: Fire, stone, coins (that is 3)
 
@@ -60,6 +62,8 @@ public class GameVariables : MonoBehaviour
         Bomb,
         Sprint,
         TripleShot,
+        Counter,
+        Laser,
         count // = TOTAL_NR_OF_SPELLS
     }
 }

@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     private int currentHealth;
     public Inventory inventory;
 
+    private GameObject m_CounterCharged; //E.g charged with counter spell
+
     public Tile CurrentTile { get; private set; }
     // Start is called before the first frame update
     void Awake()
@@ -35,9 +37,18 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if(InCounterState()) //
+        {
+            Debug.Log("Countered!!");
+            Destroy(m_CounterCharged);
+            m_CounterCharged = null;
+            return;
+        }
         currentHealth -= damage;
         playerHealthUI.SetCurrentHealth(currentHealth);
         //Debug.Log("oowie noo i got hit :(");
+
+        GetComponent<CharacterController>().StopChanneling();
     }
 
     public void CastSpell(Spell spell, Direction? direction = null)
@@ -55,5 +66,16 @@ public class Player : MonoBehaviour
             inventory.IncrementElement(elementCost.Key, -elementCost.Value);
         }
         inventory.UpdateSpellPanelNumbers();
+    }
+
+
+    public void SetCounterState(GameObject charge)
+    {
+        m_CounterCharged = charge;
+    }
+
+    public bool InCounterState()
+    {
+        return (m_CounterCharged != null);
     }
 }

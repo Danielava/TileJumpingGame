@@ -12,14 +12,30 @@ public class GridTileBoard : MonoBehaviour
     public GameObject firstTile;
     public List<Tile> tiles;
 
+    public static GridTileBoard instance; //singleton
+
     private int rayStep = 1;
 
-    public float tileSize = 1;
+    public float tileSize = 1; //TODO: Doesn't do anything?
     public int TILE_COUNT_X = 0;
     public int TILE_COUNT_Y = 0;
 
+    public GameObject DefaultTilePrefab;
+    public GameObject EmptyTilePrefab;
+    public GameObject IceTilePrefab;
+    public GameObject BoulderTilePrefab;
+
     void Awake()
     {
+        if (instance != null && instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            instance = this;
+        }
+
         firstTile = GameObject.FindGameObjectsWithTag("Tile").ToList().OrderBy(tile => tile.transform.position.x + tile.transform.position.y).First();
 
 
@@ -81,8 +97,6 @@ public class GridTileBoard : MonoBehaviour
 
     public Tile GetTile(int x, int y)
     {
-
-
         return tiles[x + TILE_COUNT_X * y];
     }
 
@@ -107,5 +121,60 @@ public class GridTileBoard : MonoBehaviour
     {
         var rnd = new System.Random();
         return tiles.Where(t => t.canWalkOn).OrderBy(x => rnd.Next()).First();
+    }
+
+    public Vector2 GetTilePosition(int x, int y)
+    {
+        return tiles[x * y].transform.position;
+    }
+
+    public Vector2 GetVirtualTilePosition(int x, int y)
+    {
+        Vector2 resPos;
+        resPos.x = tileSize * x;
+        resPos.y = tileSize * y;
+
+        resPos += new Vector2(tileSize / 2.0f, tileSize / 2.0f); //Pos need to be offseted a bit with the new Grid system
+
+        return resPos;
+    }
+
+    public List<Tile> GetRowOrColOfTiles(Direction dir, Tile tilePos, bool sortList)
+    {
+        List<Tile> res;
+        switch (dir)
+        {
+            case Direction.Up:
+                res = tiles.Where(t => (t.xPos == tilePos.xPos) && (t.yPos > tilePos.yPos)).ToList();
+                res.Sort((t1, t2) => t1.yPos.CompareTo(t2.yPos));
+                break;
+            case Direction.Down:
+                res = tiles.Where(t => (t.xPos == tilePos.xPos) && (t.yPos < tilePos.yPos)).ToList();
+                res.Sort((t1, t2) => t2.yPos.CompareTo(t1.yPos));
+                break;
+            case Direction.Left:
+                res = tiles.Where(t => (t.yPos == tilePos.yPos) && (t.xPos < tilePos.xPos)).ToList();
+                res.Sort((t1, t2) => t2.xPos.CompareTo(t1.xPos));
+                break;
+            default: //Direction.Right:
+                res = tiles.Where(t => (t.yPos == tilePos.yPos) && (t.xPos > tilePos.xPos)).ToList();
+                res.Sort((t1, t2) => t1.xPos.CompareTo(t2.xPos));
+                break;
+        }
+        return res;
+    }
+
+    public Tile GetClosestObstacleOnPath(Direction dir, Tile tilePos)
+    {
+        List<Tile> tilesOnPath = GetRowOrColOfTiles(dir, tilePos, true); //Should now be sorted from closest to farthest
+        List<Tile> obstaclesOnPath = tilesOnPath.Where(t=> (t.tileType == Assets.Scripts.Board.TileType.Boulder)).ToList(); //TODO: Also if there is a wall there
+
+        if (obstaclesOnPath.Count > 0)
+        {
+            Tile closestObstacleTile = obstaclesOnPath[0];
+            return closestObstacleTile;
+        }
+
+        return null;
     }
 }

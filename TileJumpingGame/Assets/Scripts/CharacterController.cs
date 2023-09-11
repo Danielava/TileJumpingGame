@@ -17,7 +17,8 @@ public enum PlayerState
     Idle,
     Moving,
     PreparingSpell,
-    CastingSpell
+    CastingSpell,
+    Channeling
 }
 
 public class CharacterController : MonoBehaviour
@@ -31,6 +32,7 @@ public class CharacterController : MonoBehaviour
     public GameObject m_DirectionalArrows; //Activated when player picks a directional spell
     public PlayerState m_PlayerState = PlayerState.Idle;
     private Spell m_PreparedSpell;
+    private ChanneledSpell channeledSpell;
 
     public float MoveSpeed;
 
@@ -85,11 +87,11 @@ public class CharacterController : MonoBehaviour
             {
                 PlayerCastPreparedSpell(Direction.Down);
             }
-            else if(m_PlayerState == PlayerState.Moving)
+            else if (m_PlayerState == PlayerState.Moving)
             {
                 bufferedMove = Direction.Down;
                 StartCoroutine(ClearBuffer(bufferTime));
-            } 
+            }
             else
             {
                 StartCoroutine(Move(Direction.Down, 1));
@@ -133,6 +135,11 @@ public class CharacterController : MonoBehaviour
 
     private IEnumerator Move(Direction direction, int steps, float speed = 1)
     {
+        if (m_PlayerState == PlayerState.Channeling)
+        {
+            StopChanneling();
+        }
+
         if (m_PlayerState != PlayerState.Idle || steps == 0) yield break;
 
         Tile tile = null;
@@ -181,6 +188,15 @@ public class CharacterController : MonoBehaviour
         }
     }
 
+    public void CastSpell(Spell spell)
+    {
+        if (m_PlayerState == PlayerState.Channeling)
+        {
+            StopChanneling();
+        }
+        Player.CastSpell(spell);
+    }
+
     public void PrepareSpell(Spell spell)
     {
         m_PlayerState = PlayerState.PreparingSpell;
@@ -190,9 +206,30 @@ public class CharacterController : MonoBehaviour
 
     private void PlayerCastPreparedSpell(Direction direction)
     {
+        if (m_PlayerState == PlayerState.Channeling)
+        {
+            StopChanneling();
+        }
         Player.CastSpell(m_PreparedSpell, direction);
         m_PlayerState = PlayerState.Idle;
         //m_DirectionalArrows.SetActive(true);
+    }
+
+    public void BeginChanneling(ChanneledSpell spell)
+    {
+        m_PlayerState = PlayerState.Channeling;
+        channeledSpell = spell;
+    }
+
+    public void StopChanneling()
+    {
+        if(channeledSpell != null && m_PlayerState == PlayerState.Channeling)
+        {
+            m_PlayerState = PlayerState.Idle;
+            channeledSpell.StopChanneling();
+
+            channeledSpell = null;
+        }
     }
 
     public void Teleport(Direction direction)
@@ -211,7 +248,8 @@ public class CharacterController : MonoBehaviour
         if (tile.tileType == TileType.Ice)
         {
             StartCoroutine(Move(direction, 1));
-        } else if (bufferedMove != Direction.NONE)
+        }
+        else if (bufferedMove != Direction.NONE)
         {
             StartCoroutine(Move(bufferedMove, 1));
             bufferedMove = Direction.NONE;
@@ -222,7 +260,7 @@ public class CharacterController : MonoBehaviour
     {
         yield return new WaitForSeconds(waitTime);
 
-        if(bufferedMove != Direction.NONE)
+        if (bufferedMove != Direction.NONE)
         {
             bufferedMove = Direction.NONE;
         }

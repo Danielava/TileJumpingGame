@@ -14,10 +14,18 @@ public class BombObject : MonoBehaviour
     private int m_NrOfExplosionSprites; //We use this to track how many explosion sprites have been queued for trigger, and once all of them have been, we can safely destroy this gameObject.
     private int m_NrOfExplosionSpritesCounter;
 
+    private bool[] m_PathBlocked = new bool[4];
+
     public void Init(Tile playerTile)
     {
         m_Exploded = false;
         m_CurrentTile = playerTile;
+
+        m_PathBlocked[0] = false;
+        m_PathBlocked[1] = false;
+        m_PathBlocked[2] = false;
+        m_PathBlocked[3] = false;
+
         StartCoroutine(RunBombTimer());
     }
 
@@ -43,24 +51,19 @@ public class BombObject : MonoBehaviour
 
     private void TriggerExplosion(float lifetime, int power)
     {
-        TileBoard gameBoard = TileBoard.instance;
+        GridTileBoard gameBoard = GridTileBoard.instance;
         //Distance between tiles = gameBoard.m_TileSize;
         List<Tile> tilesHorizontalUp; //The tiles where the explosion happens
         List<Tile> tilesHorizontalDown;
         List<Tile> tilesVerticalLeft;
         List<Tile> tilesVerticalRight;
         //Filling up our explosion lists
-        tilesVerticalRight = gameBoard.tiles.Where(t => (t.yPos == m_CurrentTile.yPos) && (t.xPos > m_CurrentTile.xPos)/* && t.canWalkOn*/).ToList(); //This will give us an explosion on the x row
-        tilesVerticalLeft = gameBoard.tiles.Where(t => (t.yPos == m_CurrentTile.yPos) && (t.xPos < m_CurrentTile.xPos)).ToList();
-        tilesHorizontalDown = gameBoard.tiles.Where(t => (t.xPos == m_CurrentTile.xPos) && (t.yPos < m_CurrentTile.yPos)).ToList();
-        tilesHorizontalUp = gameBoard.tiles.Where(t => (t.xPos == m_CurrentTile.xPos) && (t.yPos > m_CurrentTile.yPos)).ToList();
 
-        //Sort the lists
-        tilesVerticalRight.Sort((t1, t2) => t1.xPos.CompareTo(t2.xPos));
-        tilesVerticalLeft.Sort((t1, t2) => t2.xPos.CompareTo(t1.xPos));
-        tilesHorizontalDown.Sort((t1, t2) => t2.yPos.CompareTo(t1.yPos));
-        tilesHorizontalUp.Sort((t1, t2) => t1.yPos.CompareTo(t2.yPos));
-
+        bool sortList = true;
+        tilesHorizontalUp = gameBoard.GetRowOrColOfTiles(Direction.Up, m_CurrentTile, sortList);
+        tilesHorizontalDown = gameBoard.GetRowOrColOfTiles(Direction.Down, m_CurrentTile, sortList);
+        tilesVerticalLeft = gameBoard.GetRowOrColOfTiles(Direction.Left, m_CurrentTile, sortList);
+        tilesVerticalRight = gameBoard.GetRowOrColOfTiles(Direction.Right, m_CurrentTile, sortList);
 
         int maxRowSize = Mathf.Max(tilesHorizontalUp.Count, tilesHorizontalDown.Count);
         int maxColSize = Mathf.Max(tilesVerticalLeft.Count, tilesVerticalRight.Count);
@@ -70,7 +73,7 @@ public class BombObject : MonoBehaviour
         m_NrOfExplosionSprites = 1 + Mathf.Min(power, tilesHorizontalUp.Count) + Mathf.Min(power, tilesHorizontalDown.Count) + Mathf.Min(power, tilesVerticalLeft.Count) + Mathf.Min(power, tilesVerticalRight.Count);
         m_NrOfExplosionSpritesCounter = 0;
 
-        StartCoroutine(InitExplosionSprite(m_CurrentTile, lifetime, 0));
+        StartCoroutine(InitExplosionSprite(m_CurrentTile, lifetime, 0, Direction.NONE)); //The explosion at the tile where the bomb is positioned
 
         for (int i = 0; i < maxListSize; i++)
         {
@@ -80,25 +83,42 @@ public class BombObject : MonoBehaviour
             }
             if(i < tilesHorizontalUp.Count)
             {
-                StartCoroutine(InitExplosionSprite(tilesHorizontalUp[i], lifetime, i));
+                if (!m_PathBlocked[(int)Direction.Up])
+                {
+                    StartCoroutine(InitExplosionSprite(tilesHorizontalUp[i], lifetime, i, Direction.Up));
+                }
             }
             if (i < tilesHorizontalDown.Count)
             {
-                StartCoroutine(InitExplosionSprite(tilesHorizontalDown[i], lifetime, i));
+                if (!m_PathBlocked[(int)Direction.Down])
+                {
+                    StartCoroutine(InitExplosionSprite(tilesHorizontalDown[i], lifetime, i, Direction.Down));
+                }
             }
             if (i < tilesVerticalLeft.Count)
             {
-                StartCoroutine(InitExplosionSprite(tilesVerticalLeft[i], lifetime, i));
+                if (!m_PathBlocked[(int)Direction.Left])
+                {
+                    StartCoroutine(InitExplosionSprite(tilesVerticalLeft[i], lifetime, i, Direction.Left));
+                }
             }
             if (i < tilesVerticalRight.Count)
             {
-                StartCoroutine(InitExplosionSprite(tilesVerticalRight[i], lifetime, i));
+                if (!m_PathBlocked[(int)Direction.Right])
+                {
+                    StartCoroutine(InitExplosionSprite(tilesVerticalRight[i], lifetime, i, Direction.Right));
+                }
             }
         }
     }
 
-    IEnumerator InitExplosionSprite(Tile t, float lifetime, int i)
+    IEnumerator InitExplosionSprite(Tile t, float lifetime, int i, Direction direction)
     {
+        if(t.tileType == Assets.Scripts.Board.TileType.Boulder)
+        {
+            m_PathBlocked[(int)direction] = true;
+        }
+
         yield return new WaitForSeconds(0.05f * i);
         Instantiate(m_Explosion, t.transform.position + new Vector3(0, 0, -0.05f), Quaternion.identity * Quaternion.Euler(0, 0, -90)).Init(lifetime, this);
         

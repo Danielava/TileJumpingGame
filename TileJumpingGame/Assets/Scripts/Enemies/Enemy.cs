@@ -15,6 +15,11 @@ public class Enemy : MonoBehaviour
     public int CurrentHealth;
 
     public float MoveTimer;
+    public bool RandomMovement;
+    public float AttackInterval;
+    public float AttackDelay;
+
+    public float SpeedMultiplier = 1;
 
     public GridTileBoard Board;
     public Tile CurrentTile;
@@ -30,6 +35,10 @@ public class Enemy : MonoBehaviour
         Player = GameObject.Find("Player").GetComponent<Player>();
         AttackHandler = GameObject.Find("GameManager").GetComponent<AttackHandler>();
         Board = GameObject.Find("Board").GetComponent<GridTileBoard>();
+        StartCoroutine(StartMove(AttackInterval * SpeedMultiplier, true, () => { MoveRandom(); }));
+
+        var attacktypes = AttackType.GetValues(typeof(AttackType));
+        AttackType = (AttackType)attacktypes.GetValue(UnityEngine.Random.Range(0, attacktypes.Length));
     }
 
     // Update is called once per frame
@@ -100,10 +109,10 @@ public class Enemy : MonoBehaviour
         switch (attackType)
         {
             case AttackType.Plus:
-                AttackHandler.DamagePlus(CurrentTile.xPos, CurrentTile.yPos, 1, MoveTimer / 2, 2);
+                AttackHandler.DamagePlus(CurrentTile.xPos, CurrentTile.yPos, 1, AttackDelay * SpeedMultiplier, 2);
                 break;
             case AttackType.Circle:
-                AttackHandler.DamageCircle(CurrentTile.xPos, CurrentTile.yPos, 1, MoveTimer / 2, 1);
+                AttackHandler.DamageCircle(CurrentTile.xPos, CurrentTile.yPos, 1, AttackDelay * SpeedMultiplier, 1);
                 break;
         }
     }
@@ -136,7 +145,7 @@ public class Enemy : MonoBehaviour
         } while (repeat);
     }
 
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(float damage)
     {
         Destroy(gameObject);
     }

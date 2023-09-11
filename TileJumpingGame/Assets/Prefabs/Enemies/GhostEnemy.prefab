@@ -172,7 +172,9 @@ MonoBehaviour:
   MaxHealth: 5
   CurrentHealth: 5
   RandomMovement: 1
-  MoveTimer: 1
+  AttackInterval: 2
+  AttackDelay: 0.75
+  SpeedMultiplier: 1
   Board: {fileID: 0}
   CurrentTile: {fileID: 0}
   AttackHandler: {fileID: 0}

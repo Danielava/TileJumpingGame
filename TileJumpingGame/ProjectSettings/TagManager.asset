@@ -11,6 +11,8 @@ TagManager:
   - Enemy
   - Tile
   - Bomb
+  - Lamp
+  - Boulder
   layers:
   - Default
   - TransparentFX

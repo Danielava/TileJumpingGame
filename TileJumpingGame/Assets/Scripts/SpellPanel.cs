@@ -55,7 +55,7 @@ public class SpellPanel : MonoBehaviour
 
             int spellIndex = m_Spells[childIdx].GetSpellID();
             int nrOfTheSpellAvailable = GameVariables.instance.SPELLS[spellIndex].CheckIfSpellAvailable(m_Inventory);
-            m_Inventory.m_AvailablePlayerSpellsPrevious[spellIndex] = nrOfTheSpellAvailable;
+            m_Inventory.SetAvailableSpellsAvailablePreviously(spellIndex, nrOfTheSpellAvailable);
 
             //Update spell text number
             child.transform.GetChild(0).GetComponent<Text>().text = "" + nrOfTheSpellAvailable;

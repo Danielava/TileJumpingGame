@@ -114,12 +114,16 @@ public class AttackHandler : MonoBehaviour
 
     public void DamageWaveDiagonal(int damage, float delay, float speed, float flatDelay = 0)
     {
+        int corner = Random.Range(0, 4);
+
         var tiles = Board.tiles;
 
+        print(corner);
         foreach (var tile in tiles)
         {
             if (tile.canWalkOn)
-                Attacks.Add(new Attack(flatDelay + delay + (tile.xPos + tile.yPos) * speed, damage, tile, flatDelay + (tile.xPos + tile.yPos) * speed));
+                Attacks.Add(new Attack(flatDelay + delay + ((corner % 2 == 0 ? tile.xPos : (Board.TILE_COUNT_X - tile.xPos)) + (corner > 1 ? tile.yPos : (Board.TILE_COUNT_Y - tile.yPos))) * speed,
+                    damage, tile, flatDelay + ((corner % 2 == 0 ? tile.xPos : (Board.TILE_COUNT_X - tile.xPos)) + (corner > 1 ? tile.yPos : (Board.TILE_COUNT_Y - tile.yPos))) * speed));
         }
     }
 
