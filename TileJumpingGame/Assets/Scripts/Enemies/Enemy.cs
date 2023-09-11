@@ -14,9 +14,7 @@ public class Enemy : MonoBehaviour
     public int MaxHealth;
     public int CurrentHealth;
 
-    public float MoveTimer;
-    public bool RandomMovement;
-    public float AttackInterval;
+    public float MoveInterval;
     public float AttackDelay;
 
     public float SpeedMultiplier = 1;
@@ -35,10 +33,6 @@ public class Enemy : MonoBehaviour
         Player = GameObject.Find("Player").GetComponent<Player>();
         AttackHandler = GameObject.Find("GameManager").GetComponent<AttackHandler>();
         Board = GameObject.Find("Board").GetComponent<GridTileBoard>();
-        StartCoroutine(StartMove(AttackInterval * SpeedMultiplier, true, () => { MoveRandom(); }));
-
-        var attacktypes = AttackType.GetValues(typeof(AttackType));
-        AttackType = (AttackType)attacktypes.GetValue(UnityEngine.Random.Range(0, attacktypes.Length));
     }
 
     // Update is called once per frame

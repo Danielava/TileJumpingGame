@@ -9,7 +9,7 @@ public class Chaser : Enemy
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(StartMove(MoveTimer, true, () =>
+        StartCoroutine(StartMove(MoveInterval, true, () =>
         {
             MoveTowardsPlayer();
             if (Mathf.Abs(Player.CurrentTile.xPos - CurrentTile.xPos) + Mathf.Abs(Player.CurrentTile.yPos - CurrentTile.yPos) <= 1)

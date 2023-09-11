@@ -166,13 +166,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 2302260359824201070}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6afe1269a96eba43b44d9cc6a8cab92, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a38d827e867bb84e86505ae6b1f2b93, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MaxHealth: 5
   CurrentHealth: 5
-  MoveTimer: 1
+  MoveInterval: 1
+  AttackDelay: 1
+  SpeedMultiplier: 1
   Board: {fileID: 0}
   CurrentTile: {fileID: 0}
   AttackHandler: {fileID: 0}
   AttackType: 0
+  Player: {fileID: 0}

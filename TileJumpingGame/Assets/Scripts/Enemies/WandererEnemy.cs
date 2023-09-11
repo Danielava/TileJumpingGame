@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestEnemy : Enemy
+public class WandererEnemy : Enemy
 {
 
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(StartMove(MoveTimer, true, () =>
+        StartCoroutine(StartMove(MoveInterval * SpeedMultiplier, true, () =>
         {
             MoveRandom();
             var attacktypes = AttackType.GetValues(typeof(AttackType));

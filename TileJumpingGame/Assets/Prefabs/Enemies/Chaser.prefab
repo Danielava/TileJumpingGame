@@ -171,7 +171,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxHealth: 5
   CurrentHealth: 5
-  MoveTimer: 0.5
+  MoveInterval: 1
+  AttackDelay: 1
+  SpeedMultiplier: 1
   Board: {fileID: 0}
   CurrentTile: {fileID: 0}
   AttackHandler: {fileID: 0}
