@@ -887,8 +887,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c694b39aa8fccaa45b88346b2b53aa70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy: {fileID: 2302260359824201070, guid: 2f3d5d038d2507d4ca8a065b441b716b, type: 3}
-  TileBoard: {fileID: 0}
+  Enemy: {fileID: 2302260359824201070, guid: a2d603cce8dad3240b9d206629d1d21d, type: 3}
+  TileBoard: {fileID: 234397550}
   MaxEnemyAmount: 5
 --- !u!1 &91034452 stripped
 GameObject:
@@ -1024,6 +1024,7 @@ MonoBehaviour:
   m_DirectionalArrows: {fileID: 0}
   m_PlayerState: 0
   MoveSpeed: 0.1
+  bufferedMove: 0
 --- !u!114 &101310538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2771,6 +2772,7 @@ GameObject:
   m_Component:
   - component: {fileID: 705507995}
   - component: {fileID: 705507994}
+  - component: {fileID: 705507996}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -2855,6 +2857,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!114 &705507996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705507993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1001 &756383964
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3832,6 +3854,7 @@ MonoBehaviour:
   attackInterval: 5
   attackDelay: 1
   board: {fileID: 234397550}
+  Phase: 0
 --- !u!1 &1047182040
 GameObject:
   m_ObjectHideFlags: 0
@@ -6730,8 +6753,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1946854054}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.25, z: -0.1}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0.2, z: -0.5}
+  m_LocalScale: {x: 2.5, y: 2.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 101310536}
@@ -6790,7 +6813,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e15b132b297f7cb4b808c91a6e6c5f2a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e788c06dc913bca4282f82ea85f54699, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

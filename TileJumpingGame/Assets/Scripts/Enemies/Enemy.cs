@@ -14,7 +14,6 @@ public class Enemy : MonoBehaviour
     public int MaxHealth;
     public int CurrentHealth;
 
-    public bool RandomMovement;
     public float MoveTimer;
 
     public GridTileBoard Board;
@@ -22,15 +21,15 @@ public class Enemy : MonoBehaviour
     public AttackHandler AttackHandler;
 
     public AttackType AttackType;
+
+    public Player Player;
     // Start is called before the first frame update
-    void Start()
+
+    void Awake()
     {
+        Player = GameObject.Find("Player").GetComponent<Player>();
         AttackHandler = GameObject.Find("GameManager").GetComponent<AttackHandler>();
         Board = GameObject.Find("Board").GetComponent<GridTileBoard>();
-        StartCoroutine(StartMove(MoveTimer, true, () => { MoveRandom(); }));
-
-        var attacktypes = AttackType.GetValues(typeof(AttackType));
-        AttackType = (AttackType)attacktypes.GetValue(UnityEngine.Random.Range(0, attacktypes.Length));
     }
 
     // Update is called once per frame
@@ -39,47 +38,66 @@ public class Enemy : MonoBehaviour
 
     }
 
-    private void MoveRandom()
+    protected void MoveRandom()
     {
         var dir = UnityEngine.Random.Range(0, 4);
         switch (dir)
         {
             case 0:
-                if (Board.CanMoveTo(CurrentTile.xPos, CurrentTile.yPos + 1))
-                {
-                    EnterTile(Board.GetTile(CurrentTile.xPos, CurrentTile.yPos + 1));
-                }
+                CheckAndEnterTile(CurrentTile.xPos, CurrentTile.yPos + 1);
                 break;
             case 1:
-                if (Board.CanMoveTo(CurrentTile.xPos, CurrentTile.yPos - 1))
-                {
-                    EnterTile(Board.GetTile(CurrentTile.xPos, CurrentTile.yPos - 1));
-                }
+                CheckAndEnterTile(CurrentTile.xPos, CurrentTile.yPos - 1);
                 break;
             case 2:
-                if (Board.CanMoveTo(CurrentTile.xPos + 1, CurrentTile.yPos))
-                {
-                    EnterTile(Board.GetTile(CurrentTile.xPos + 1, CurrentTile.yPos));
-                }
+
+                CheckAndEnterTile(CurrentTile.xPos + 1, CurrentTile.yPos);
                 break;
             case 3:
-                if (Board.CanMoveTo(CurrentTile.xPos - 1, CurrentTile.yPos))
-                {
-                    EnterTile(Board.GetTile(CurrentTile.xPos - 1, CurrentTile.yPos));
-                }
+                CheckAndEnterTile(CurrentTile.xPos - 1, CurrentTile.yPos);
                 break;
         }
-        Attack();
     }
 
-    private void MoveTowardsPlayer()
+    // Improve this simple SHIT algorithm
+    protected void MoveTowardsPlayer()
     {
-        //do a-star or some shit
+        var xDist = Player.CurrentTile.xPos - CurrentTile.xPos;
+        var yDist = Player.CurrentTile.yPos - CurrentTile.yPos;
+
+        if (Mathf.Abs(xDist) + Mathf.Abs(yDist) <= 1)
+        {
+            return;
+        }
+
+
+        if (Mathf.Abs(xDist) > Mathf.Abs(yDist))
+        {
+            if (xDist > 0)
+            {
+                CheckAndEnterTile(CurrentTile.xPos + 1, CurrentTile.yPos);
+            }
+            else
+            {
+                CheckAndEnterTile(CurrentTile.xPos - 1, CurrentTile.yPos);
+            }
+        }
+        else
+        {
+            if (yDist > 0)
+            {
+                CheckAndEnterTile(CurrentTile.xPos, CurrentTile.yPos + 1);
+            }
+            else
+            {
+                CheckAndEnterTile(CurrentTile.xPos, CurrentTile.yPos - 1);
+            }
+        }
     }
 
-    private void Attack()
+    protected void Attack(AttackType attackType)
     {
-        switch (AttackType)
+        switch (attackType)
         {
             case AttackType.Plus:
                 AttackHandler.DamagePlus(CurrentTile.xPos, CurrentTile.yPos, 1, MoveTimer / 2, 2);
@@ -87,7 +105,14 @@ public class Enemy : MonoBehaviour
             case AttackType.Circle:
                 AttackHandler.DamageCircle(CurrentTile.xPos, CurrentTile.yPos, 1, MoveTimer / 2, 1);
                 break;
+        }
+    }
 
+    protected void CheckAndEnterTile(int xPos, int yPos)
+    {
+        if (Board.CanMoveTo(xPos, yPos))
+        {
+            EnterTile(Board.GetTile(xPos, yPos));
         }
     }
 
@@ -97,6 +122,8 @@ public class Enemy : MonoBehaviour
         transform.position = tile.transform.position + new Vector3(0, 0, zPos);
         CurrentTile = tile;
     }
+
+
     public static IEnumerator StartMove(float duration, bool repeat, Action callback)
     {
         do

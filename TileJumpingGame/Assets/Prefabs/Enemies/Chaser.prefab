@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 2302260358731958456}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.25, z: 0}
-  m_LocalScale: {x: 2, y: 3, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2302260359824201071}
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5c395630aaaa8cf46928fa2a127fca48, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6110c537f30a19241bc4fe6742dd79e6, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -106,10 +106,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2302260359824201071}
-  - component: {fileID: 5528590531866121189}
   - component: {fileID: -264279098488332597}
+  - component: {fileID: 3278180172825066238}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: Chaser
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,26 +131,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5528590531866121189
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2302260359824201070}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6506012182910144587ee517a4a97474, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MaxHealth: 5
-  CurrentHealth: 5
-  RandomMovement: 1
-  MoveTimer: 1
-  Board: {fileID: 0}
-  CurrentTile: {fileID: 0}
-  AttackHandler: {fileID: 0}
-  AttackType: 0
 --- !u!61 &-264279098488332597
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -177,3 +157,23 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.28027245, y: 0.343167}
   m_EdgeRadius: 0
+--- !u!114 &3278180172825066238
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2302260359824201070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ada355da51b6eb04b9dfd108a26e5e43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MaxHealth: 5
+  CurrentHealth: 5
+  MoveTimer: 0.5
+  Board: {fileID: 0}
+  CurrentTile: {fileID: 0}
+  AttackHandler: {fileID: 0}
+  AttackType: 1
+  Player: {fileID: 0}
