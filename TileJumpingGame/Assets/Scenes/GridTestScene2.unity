@@ -887,7 +887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c694b39aa8fccaa45b88346b2b53aa70, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enemy: {fileID: 2302260359824201070, guid: a2d603cce8dad3240b9d206629d1d21d, type: 3}
+  Enemy: {fileID: 2302260359824201070, guid: 2f3d5d038d2507d4ca8a065b441b716b, type: 3}
   TileBoard: {fileID: 234397550}
   MaxEnemyAmount: 5
 --- !u!1 &91034452 stripped
