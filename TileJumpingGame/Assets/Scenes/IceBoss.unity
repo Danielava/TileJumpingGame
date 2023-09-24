@@ -979,7 +979,7 @@ MonoBehaviour:
   m_DirectionalArrows: {fileID: 0}
   m_PlayerState: 0
   MoveSpeed: 0.1
-  bufferedMove: 0
+  bufferedMove: 4
 --- !u!114 &101310538
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6078,6 +6078,27 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 560347435610292456, guid: ebc029ed85956db4398ab80ceb0af34b,
+        type: 3}
+      propertyPath: Board
+      value: 
+      objectReference: {fileID: 234397550}
+    - target: {fileID: 560347435610292456, guid: ebc029ed85956db4398ab80ceb0af34b,
+        type: 3}
+      propertyPath: Player
+      value: 
+      objectReference: {fileID: 101310538}
+    - target: {fileID: 560347435610292459, guid: ebc029ed85956db4398ab80ceb0af34b,
+        type: 3}
+      propertyPath: SPELLS.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 560347435610292459, guid: ebc029ed85956db4398ab80ceb0af34b,
+        type: 3}
+      propertyPath: SPELLS.Array.data[6]
+      value: 
+      objectReference: {fileID: 2396006029583848156, guid: 0269d6c3f713b1045af7253600b29a68,
+        type: 3}
     - target: {fileID: 560347435610292462, guid: ebc029ed85956db4398ab80ceb0af34b,
         type: 3}
       propertyPath: m_RootOrder
@@ -10031,3 +10052,77 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2335516468675932188}
   m_CullTransparentMesh: 1
+--- !u!1001 &6850507472973974723
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2005369089099970180, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 101310538}
+    - target: {fileID: 2005369089099970181, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: m_Name
+      value: PortalHandler
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970183, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970183, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970183, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970183, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970183, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970183, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970183, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970183, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970183, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970183, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970183, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1de170f4e3a5a584a88b5952198541d5, type: 3}

@@ -25,14 +25,14 @@ public class Player : MonoBehaviour
     {
     }
 
-    public void EnterTile(Tile tile)
+    public void EnterTile(Tile tile, bool direct = false)
     {
         float zPos = transform.position.z;
         transform.position = tile.transform.position + new Vector3(0,0,zPos);
         CurrentTile = tile;
 
         //pickups and shit
-        tile.PickUpPowerUps(inventory);
+        tile.EnterTile(inventory, direct);
     }
 
     public void TakeDamage(int damage)
