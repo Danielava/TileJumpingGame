@@ -9,9 +9,10 @@ public class Tile : MonoBehaviour
     public int yPos;
     public List<Powerup> powerUps;
     public List<Hazard> hazards;
-    public bool canWalkOn { 
-        get { return (tileType != TileType.Hole) && (tileType != TileType.Boulder); } 
-        private set { canWalkOn = value; } 
+    public bool canWalkOn
+    {
+        get { return (tileType != TileType.Hole) && (tileType != TileType.Boulder); }
+        private set { canWalkOn = value; }
     }
 
     public GameObject incomingDamage;
@@ -64,11 +65,12 @@ public class Tile : MonoBehaviour
         }
     }
 
-    public void EnterTile(Inventory inventory)
+    public void EnterTile(Inventory inventory, bool direct = false)
     {
         //add checks for hazards, items, etc
         PickUpPowerUps(inventory);
-        TriggerHazards();
+        if(direct)
+            TriggerHazards();
     }
 
     public void AddIncomingDamage(float delay)
@@ -95,8 +97,18 @@ public class Tile : MonoBehaviour
         foreach (Hazard hazard in hazards)
         {
             //do something with player
-
+            hazard.TriggerHazard();
             //clear hazard?
         }
+    }
+
+    public void AddHazard(Hazard hazard)
+    {
+        hazards.Add(hazard);
+    }
+
+    public void RemoveHazard(Hazard hazard)
+    {
+        hazards.Remove(hazard);
     }
 }

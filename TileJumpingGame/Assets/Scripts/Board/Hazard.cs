@@ -17,4 +17,9 @@ public class Hazard : MonoBehaviour
     {
         
     }
+
+    public virtual void TriggerHazard()
+    {
+
+    }
 }

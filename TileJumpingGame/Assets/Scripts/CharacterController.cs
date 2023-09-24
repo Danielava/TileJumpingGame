@@ -243,7 +243,7 @@ public class CharacterController : MonoBehaviour
 
         yield return new WaitForSeconds(waitTime);
 
-        Player.EnterTile(tile);
+        Player.EnterTile(tile, true);
         m_PlayerState = PlayerState.Idle;
         if (tile.tileType == TileType.Ice)
         {

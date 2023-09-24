@@ -17,7 +17,7 @@ public class GameVariables : MonoBehaviour
 
     public static GameVariables instance; //singleton
 
-    public static int TOTAL_NR_OF_SPELLS = 6; //Change this when adding spells
+    public static int TOTAL_NR_OF_SPELLS = 7; //Change this when adding spells
     public static int NR_LEVELS = 1;
     public static int TOTAL_NR_OF_COLLECTIBLES = 3; //E.g of collectibles: Fire, stone, coins (that is 3)
 
@@ -64,6 +64,7 @@ public class GameVariables : MonoBehaviour
         TripleShot,
         Counter,
         Laser,
+        Portal,
         count // = TOTAL_NR_OF_SPELLS
     }
 }
