@@ -48,3 +48,5 @@ MonoBehaviour:
     type: 3}
   m_SpellName: Sprint
   m_SpellType: 1
+  explosion: {fileID: 435149447973036694, guid: f152ebb3a31c3d542864226a1712250c,
+    type: 3}

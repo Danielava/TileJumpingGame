@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class Sprint : Spell
 {
+
+    public GameObject explosion;
+
     public override void InitSpell()
     {
         spellCastCost.Add(Element.Earth, 2);
@@ -16,6 +19,7 @@ public class Sprint : Spell
         //TODO: Perform your spell here!
         CharacterController characterController = GameObject.FindWithTag("Player").GetComponent<CharacterController>();
         characterController.Teleport(direction);
-        base.CastSpell();
+        Instantiate(explosion, GameObject.FindWithTag("Player").transform);
     }
+
 }
