@@ -55,7 +55,7 @@ MonoBehaviour:
   m_DirectionalArrows: {fileID: 0}
   m_PlayerState: 0
   MoveSpeed: 0.1
-  bufferedMove: 0
+  bufferedMove: 4
 --- !u!114 &122943531965170912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -83,7 +83,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acbde52d016654198967d99fdd365d78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AvailablePlayerSpellsPrevious: 00000000000000000000000000000000
 --- !u!61 &6834928820985620687
 BoxCollider2D:
   m_ObjectHideFlags: 0

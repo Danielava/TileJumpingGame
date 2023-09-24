@@ -753,7 +753,7 @@ MonoBehaviour:
   m_DirectionalArrows: {fileID: 0}
   m_PlayerState: 0
   MoveSpeed: 0.1
-  bufferedMove: 0
+  bufferedMove: 4
 --- !u!114 &101310538
 MonoBehaviour:
   m_ObjectHideFlags: 0

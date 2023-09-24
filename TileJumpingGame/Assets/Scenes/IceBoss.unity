@@ -5555,6 +5555,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 82318064}
     m_Modifications:
+    - target: {fileID: 1195102862033626686, guid: 42a926ee69b7e5842981df2f5334fb7e,
+        type: 3}
+      propertyPath: tileType
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 1488458291771159489, guid: 42a926ee69b7e5842981df2f5334fb7e,
         type: 3}
       propertyPath: m_RootOrder
