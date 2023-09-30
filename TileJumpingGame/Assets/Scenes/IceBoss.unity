@@ -10064,6 +10064,81 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 101310538}
+    - target: {fileID: 2005369089099970180, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: PortalColors.Array.data[1].b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970180, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: PortalColors.Array.data[1].g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970180, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: PortalColors.Array.data[1].r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970180, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: PortalColors.Array.data[2].b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970180, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: PortalColors.Array.data[2].g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970180, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: PortalColors.Array.data[2].r
+      value: 0.90933144
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970180, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: PortalColors.Array.data[3].b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970180, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: PortalColors.Array.data[3].g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970180, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: PortalColors.Array.data[3].r
+      value: 0.08167672
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970180, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: PortalColors.Array.data[4].b
+      value: 0.76618385
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970180, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: PortalColors.Array.data[4].g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970180, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: PortalColors.Array.data[4].r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970180, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: PortalColors.Array.data[5].b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970180, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: PortalColors.Array.data[5].g
+      value: 0.618978
+      objectReference: {fileID: 0}
+    - target: {fileID: 2005369089099970180, guid: 1de170f4e3a5a584a88b5952198541d5,
+        type: 3}
+      propertyPath: PortalColors.Array.data[5].r
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2005369089099970181, guid: 1de170f4e3a5a584a88b5952198541d5,
         type: 3}
       propertyPath: m_Name
