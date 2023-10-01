@@ -103,7 +103,7 @@ public class GridTileBoard : MonoBehaviour
         /*
         print("xy: " + x + ", " + y);
         print("tilepos: " + tiles[x * TILE_COUNT_Y + y].xPos + ", " + tiles[x * TILE_COUNT_Y + y].yPos);*/
-        var r = x >= TILE_COUNT_X || x < 0 || y >= TILE_COUNT_Y || y < 0 || !tiles[x + TILE_COUNT_X * y].canWalkOn;
+        var r = x >= TILE_COUNT_X || x < 0 || y >= TILE_COUNT_Y || y < 0 || !tiles[x + TILE_COUNT_X * y].canWalkOn || tiles[x + TILE_COUNT_X * y].entityOnTile;
         return !r;
     }
 
@@ -165,7 +165,7 @@ public class GridTileBoard : MonoBehaviour
     public Tile GetClosestObstacleOnPath(Direction dir, Tile tilePos)
     {
         List<Tile> tilesOnPath = GetRowOrColOfTiles(dir, tilePos, true); //Should now be sorted from closest to farthest
-        List<Tile> obstaclesOnPath = tilesOnPath.Where(t=> (t.tileType == Assets.Scripts.Board.TileType.Boulder)).ToList(); //TODO: Also if there is a wall there
+        List<Tile> obstaclesOnPath = tilesOnPath.Where(t => (t.tileType == Assets.Scripts.Board.TileType.Boulder)).ToList(); //TODO: Also if there is a wall there
 
         if (obstaclesOnPath.Count > 0)
         {

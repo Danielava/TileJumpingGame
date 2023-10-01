@@ -40,8 +40,6 @@ public class FurryBoss : Boss
         var tile = board.GetRandomTile();
         var seed = Instantiate(seedPrefab, transform.position + new Vector3(0, 0, -2), Quaternion.identity);
         Vector2 targetPos = tile.transform.position;
-        print(tile.transform.position);
-
         seed.GetComponent<Rigidbody2D>().AddForce((targetPos - new Vector2(transform.position.x, transform.position.y)) * 100);
         seed.GetComponent<SeedProjectile>().targetTile = tile;
     }

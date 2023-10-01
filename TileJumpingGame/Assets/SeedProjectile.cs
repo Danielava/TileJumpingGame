@@ -20,6 +20,7 @@ public class SeedProjectile : MonoBehaviour
         {
             var seed = Instantiate(seedPrefab, targetPos, Quaternion.identity);
             seed.GetComponent<Enemy>().CurrentTile = targetTile;
+            seed.GetComponent<Enemy>().CurrentTile.entityOnTile = seed.GetComponent<Enemy>();
             Destroy(gameObject);
         }
     }

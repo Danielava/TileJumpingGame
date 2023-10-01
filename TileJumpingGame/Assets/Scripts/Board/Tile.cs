@@ -9,6 +9,9 @@ public class Tile : MonoBehaviour
     public int yPos;
     public List<Powerup> powerUps;
     public List<Hazard> hazards;
+    public BoardEntity entityOnTile;
+
+
     public bool canWalkOn
     {
         get { return (tileType != TileType.Hole) && (tileType != TileType.Boulder); }
@@ -69,7 +72,7 @@ public class Tile : MonoBehaviour
     {
         //add checks for hazards, items, etc
         PickUpPowerUps(inventory);
-        if(direct)
+        if (direct)
             TriggerHazards();
     }
 

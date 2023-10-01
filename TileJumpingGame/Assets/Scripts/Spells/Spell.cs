@@ -23,7 +23,7 @@ public class Spell : MonoBehaviour
     public SpellType m_SpellType = SpellType.Normal;
 
     //Has to be called by GameVariable!
-    public virtual void InitSpell() {}
+    public virtual void InitSpell() { }
 
     /*
      * Every spell class will override this class and it
@@ -47,13 +47,13 @@ public class Spell : MonoBehaviour
 
     public void PickSpell()
     {
-        switch(m_SpellType)
-        { 
+        switch (m_SpellType)
+        {
             case SpellType.Directional:
-                GameObject.FindWithTag("Player").GetComponent<CharacterController>().PrepareSpell(this);
+                GameObject.FindWithTag("Player").GetComponent<Player>().PrepareSpell(this);
                 break;
             default:
-                GameObject.FindWithTag("Player").GetComponent<CharacterController>().CastSpell(this);
+                GameObject.FindWithTag("Player").GetComponent<Player>().CastSpell(this);
                 break;
         }
     }
