@@ -6,6 +6,8 @@ public class Portal : Hazard
 {
     public PortalHandler PortalHandler { get; private set; }
     public Tile Tile { get; private set; }
+
+    public Direction Direction { get; set; } = Direction.NONE;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,10 +20,11 @@ public class Portal : Hazard
 
     }
 
-    public void Init(PortalHandler portalHandler, Tile tile)
+    public void Init(PortalHandler portalHandler, Tile tile, Direction direction = Direction.NONE)
     {
         PortalHandler = portalHandler;
         Tile = tile;
+        Direction = direction;
     }
 
     public void OnDestroy()
@@ -37,9 +40,9 @@ public class Portal : Hazard
     private void OnTriggerEnter2D(Collider2D collision)
     {
         print("hit");
-        if(collision.gameObject.tag == "PortalBullet")
+        if(collision.gameObject.tag == "TeleportableProjectile")
         {
-            var portalBullet = collision.GetComponent<EnemyProjectile>();
+            var portalBullet = collision.GetComponent<TeleportableProjectile>();
 
             if (!portalBullet.RecentlyTeleported)
                 PortalHandler.Teleport(portalBullet, this);

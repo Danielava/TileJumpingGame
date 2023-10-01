@@ -89,7 +89,7 @@ public class PortalHandler : MonoBehaviour
         }
     }
 
-    public void CreatePortalPair(Tile tile1, Tile tile2)
+    public void CreatePortalPair(Tile tile1, Tile tile2, Direction direction1, Direction direction2)
     {
         var color = PortalColors[PortalPairs.Count];
 
@@ -98,13 +98,13 @@ public class PortalHandler : MonoBehaviour
         var firstPortal = Instantiate(PortalObject, pos1, Quaternion.identity).GetComponent<Portal>();
 
         firstPortal.GetComponent<SpriteRenderer>().color = color;
-        firstPortal.GetComponent<Portal>().Init(this, tile1);
+        firstPortal.GetComponent<Portal>().Init(this, tile1, direction1);
 
         Vector3 pos2 = tile2.transform.position + new Vector3(0, 0, -0.5f);
         var secondPortal = Instantiate(PortalObject, pos2, Quaternion.identity).GetComponent<Portal>();
 
         secondPortal.GetComponent<SpriteRenderer>().color = color;
-        secondPortal.GetComponent<Portal>().Init(this, tile2);
+        secondPortal.GetComponent<Portal>().Init(this, tile2, direction2);
 
         PortalPairs.Add(new PortalPair(firstPortal, secondPortal) { PlayerPortal = false });
     }
@@ -120,12 +120,16 @@ public class PortalHandler : MonoBehaviour
         }
     }
 
-    internal void Teleport(EnemyProjectile projectile, Portal entered)
+    internal void Teleport(TeleportableProjectile projectile, Portal entered)
     {
         var nextPortal = PortalPairs.First(p => p.Portals.Any(x => x == entered)).Portals.FirstOrDefault(p => p != entered);
-        //gameObject.transform.position = nextPortal.transform.position;
-
-        projectile.Teleport(nextPortal.transform.position, nextPortal.transform.position.x > Player.transform.position.x ? Vector2.left : Vector2.right);
+        if(nextPortal.Direction != Direction.NONE)
+        {
+            projectile.Teleport(nextPortal.transform.position, nextPortal.Direction.ToVector2());
+        } else
+        {
+            projectile.Teleport(nextPortal.transform.position);
+        };
 
     }
 }

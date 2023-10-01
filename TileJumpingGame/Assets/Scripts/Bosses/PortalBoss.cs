@@ -48,7 +48,7 @@ public class PortalBoss : Boss
         {
             var firstTile = board.GetTile(i + 2, 0);
             var secondTile = board.GetTile(positions[i].Item1, positions[i].Item2);
-            PortalHandler.CreatePortalPair(firstTile, secondTile);
+            PortalHandler.CreatePortalPair(firstTile, secondTile, Direction.Up, positions[i].Item1 > 0 ? Direction.Left :  Direction.Right);
         }
 
     }
