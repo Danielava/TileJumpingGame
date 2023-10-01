@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -58,10 +59,11 @@ public class PortalHandler : MonoBehaviour
         var portalPair = PortalPairs.FirstOrDefault(x => x.PlayerPortal);
         if (portalPair != null)
         {
-            if(portalPair.Portals[1] == null)
+            if (portalPair.Portals[1] == null)
             {
                 portalPair.Portals[1] = newPortal;
-            } else
+            }
+            else
             {
                 var oldestPortal = portalPair.Portals[portalPair.LatestIndex % 2];
                 Destroy(oldestPortal.gameObject);
@@ -69,7 +71,8 @@ public class PortalHandler : MonoBehaviour
                 portalPair.Portals[portalPair.LatestIndex % 2] = newPortal;
                 portalPair.LatestIndex += 1;
             }
-        } else
+        }
+        else
         {
             PortalPairs.Add(new PortalPair(newPortal, null) { PlayerPortal = true });
         }
@@ -80,13 +83,13 @@ public class PortalHandler : MonoBehaviour
     public void EnterPortal(Portal entered)
     {
         var nextPortal = PortalPairs.First(p => p.Portals.Any(x => x == entered)).Portals.FirstOrDefault(p => p != entered);
-        if(nextPortal != null)
+        if (nextPortal != null)
         {
             Player.EnterTile(nextPortal.Tile);
         }
     }
 
-    public void CreatePortalPair(Tile tile1, Tile tile2, Direction direction1, Direction direction2)
+    public void CreatePortalPair(Tile tile1, Tile tile2)
     {
         var color = PortalColors[PortalPairs.Count];
 
@@ -104,5 +107,25 @@ public class PortalHandler : MonoBehaviour
         secondPortal.GetComponent<Portal>().Init(this, tile2);
 
         PortalPairs.Add(new PortalPair(firstPortal, secondPortal) { PlayerPortal = false });
+    }
+
+    public void DeleteNonPlayerPortals()
+    {
+        foreach (var portalPair in PortalPairs.Where(x => !x.PlayerPortal).ToList())
+        {
+            Destroy(portalPair.Portals[0].gameObject);
+            Destroy(portalPair.Portals[1].gameObject);
+
+            PortalPairs.Remove(portalPair);
+        }
+    }
+
+    internal void Teleport(EnemyProjectile projectile, Portal entered)
+    {
+        var nextPortal = PortalPairs.First(p => p.Portals.Any(x => x == entered)).Portals.FirstOrDefault(p => p != entered);
+        //gameObject.transform.position = nextPortal.transform.position;
+
+        projectile.Teleport(nextPortal.transform.position, nextPortal.transform.position.x > Player.transform.position.x ? Vector2.left : Vector2.right);
+
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scripts.Board;
+using System.Linq;
 
 public enum Direction
 {
@@ -42,7 +43,7 @@ public class CharacterController : MonoBehaviour
     void Start()
     {
         board = GameObject.Find("Board").GetComponent<GridTileBoard>();
-        var firstTile = board.GetTile(1, 1);
+        var firstTile = board.tiles.OrderBy(x => x.xPos + x.yPos).First(x => x.canWalkOn);
         Player.EnterTile(firstTile);
         //m_DirectionalArrows.SetActive(false);
         m_PlayerState = PlayerState.Idle;

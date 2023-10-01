@@ -33,4 +33,16 @@ public class Portal : Hazard
     {
         PortalHandler.EnterPortal(this);
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        print("hit");
+        if(collision.gameObject.tag == "PortalBullet")
+        {
+            var portalBullet = collision.GetComponent<EnemyProjectile>();
+
+            if (!portalBullet.RecentlyTeleported)
+                PortalHandler.Teleport(portalBullet, this);
+        }
+    }
 }

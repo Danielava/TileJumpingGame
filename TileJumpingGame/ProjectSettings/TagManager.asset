@@ -13,6 +13,7 @@ TagManager:
   - Bomb
   - Lamp
   - Boulder
+  - PortalBullet
   layers:
   - Default
   - TransparentFX
