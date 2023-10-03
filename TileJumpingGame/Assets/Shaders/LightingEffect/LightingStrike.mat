@@ -101,15 +101,15 @@ Material:
     - _Cutoff: 0.5
     - _DetailAlbedoMapScale: 1
     - _DetailNormalMapScale: 1
-    - _DistortionAmount: -0.16
+    - _DistortionAmount: 0.13
     - _DstBlend: 0
     - _EnvironmentReflections: 1
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Height: 1.94
+    - _Height: 1
     - _Metallic: 0
-    - _NoiseScale: 79
+    - _NoiseScale: 80
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueOffset: 0
@@ -119,7 +119,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
-    - _Width: 0.01
+    - _Width: 0.007
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
@@ -127,7 +127,7 @@ Material:
     - _Color: {r: 0.8571446, g: 1, b: 0, a: 1}
     - _Color2: {r: 0, g: 0.9293938, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Noise2Offset: {r: 2.34, g: 1.49, b: 0, a: 0}
-    - _NoiseSpeed: {r: 0.73, g: 0, b: 0, a: 0}
+    - _Noise2Offset: {r: 2, g: 0, b: 0, a: 0}
+    - _NoiseSpeed: {r: 1, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
   m_BuildTextureStacks: []
