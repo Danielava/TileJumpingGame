@@ -107,7 +107,7 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Height: 1
+    - _Height: 0.01
     - _Metallic: 0
     - _NoiseScale: 80
     - _OcclusionStrength: 1
@@ -119,6 +119,7 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
+    - _UpperCutoff: 1
     - _Width: 0.007
     - _WorkflowMode: 1
     - _ZWrite: 1

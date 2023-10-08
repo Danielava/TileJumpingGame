@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
+using static UnityEditor.PlayerSettings;
 
 public class ChainLightning : Spell
 {
-    public GameObject m_LightningProjectile;
+    public ChainLightingProjectile m_LightningProjectile;
 
     public override void InitSpell()
     {
@@ -15,9 +17,10 @@ public class ChainLightning : Spell
 
     public override void CastSpell()
     {
-        //TODO: Perform your spell here!
-        Vector3 pos = GameObject.FindWithTag("Player").transform.position + new Vector3(0, 0, -0.5f);
-        Instantiate(m_LightningProjectile, pos, Quaternion.identity);
+        //StartCoroutine(CastChtinainLighg());
+        Vector3 playerPos = GameObject.FindWithTag("Player").transform.position + new Vector3(0, 0, -0.5f);
+        m_LightningProjectile.InitiateChainLighting(playerPos);
+        
         base.CastSpell();
     }
 }

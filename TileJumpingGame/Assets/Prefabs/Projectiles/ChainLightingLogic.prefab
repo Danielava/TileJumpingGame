@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &2571762842165854
+--- !u!1 &1575695464209004818
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,22 +8,22 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4348492583617365731}
-  - component: {fileID: -7439772281366932645}
+  - component: {fileID: 264182843769181525}
+  - component: {fileID: -693067679590377794}
   m_Layer: 0
-  m_Name: ChainLightning_Spell
+  m_Name: ChainLightingLogic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4348492583617365731
+--- !u!4 &264182843769181525
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2571762842165854}
+  m_GameObject: {fileID: 1575695464209004818}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -32,22 +32,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-7439772281366932645
+--- !u!114 &-693067679590377794
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2571762842165854}
+  m_GameObject: {fileID: 1575695464209004818}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b861e13f743e044485a2664f161adab, type: 3}
+  m_Script: {fileID: 11500000, guid: d0965cf0dd861dd40a0b41b89a24bc46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SpellImage: {fileID: 7273070126994156962, guid: c48dec8d30da16d479c787f84f8b64c9,
-    type: 3}
-  m_SpellName: ChainLightning
-  m_SpellType: 0
-  m_LightningProjectile: {fileID: -693067679590377794, guid: ebfe660b0598fa942891594b95162e0d,
-    type: 3}
   m_DistanceThreshold: 10
+  m_ChainLightingVFX: {fileID: 7297245997962124769, guid: 8a25cafa07443ae478dbe4b9ddce383b,
+    type: 3}
