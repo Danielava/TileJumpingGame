@@ -48,7 +48,6 @@ public class LaserCollision : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D col)
     {
-        print("collision");
         if (!m_IsThisEnemyLaser && col.tag == "Boss")
         {
             col.GetComponent<Boss>().TakeDamage(m_DamagePerSecond * Time.deltaTime);

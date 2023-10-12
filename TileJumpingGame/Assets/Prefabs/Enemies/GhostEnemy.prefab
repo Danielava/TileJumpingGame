@@ -169,14 +169,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da7a71bf9a3f1bb4f8ef1a8c08530caf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Board: {fileID: 0}
+  MoveSpeed: 0.1
   MaxHealth: 5
   CurrentHealth: 5
-  RandomMovement: 1
-  AttackInterval: 2
+  MoveInterval: 0
   AttackDelay: 0.75
   SpeedMultiplier: 1
-  Board: {fileID: 0}
-  CurrentTile: {fileID: 0}
   AttackHandler: {fileID: 0}
   AttackType: 0
+  Player: {fileID: 0}
   Lamp: {fileID: 7718137259072826996, guid: 3088b7968775c0b43aefc9d934bed401, type: 3}

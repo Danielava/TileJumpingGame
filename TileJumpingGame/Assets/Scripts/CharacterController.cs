@@ -4,41 +4,15 @@ using UnityEngine;
 using Assets.Scripts.Board;
 using System.Linq;
 
-public enum Direction
-{
-    Up,
-    Left,
-    Down,
-    Right,
-    NONE
-}
-
-public enum PlayerState
-{
-    Idle,
-    Moving,
-    PreparingSpell,
-    CastingSpell,
-    Channeling
-}
-
 public class CharacterController : MonoBehaviour
 {
     public int[] start_tile = new int[2]; //The tile to start at. They are 0-indexed.
     private GridTileBoard board;
     public Player Player;
-
-    public Inventory m_Inventory;
-
-    public GameObject m_DirectionalArrows; //Activated when player picks a directional spell
-    public PlayerState m_PlayerState = PlayerState.Idle;
-    private Spell m_PreparedSpell;
-    private ChanneledSpell channeledSpell;
-
+    public Inventory Inventory;
+    public GameObject DirectionalArrows; //Activated when player picks a directional spell
     public float MoveSpeed;
-
     public Direction bufferedMove;
-    private float bufferTime = 0.2f;
     // Start is called before the first frame update
     void Start()
     {
@@ -46,11 +20,7 @@ public class CharacterController : MonoBehaviour
         var firstTile = board.tiles.OrderBy(x => x.xPos + x.yPos).First(x => x.canWalkOn);
         Player.EnterTile(firstTile);
         //m_DirectionalArrows.SetActive(false);
-        m_PlayerState = PlayerState.Idle;
-    }
-
-    private void Awake()
-    {
+        Player.PlayerState = PlayerState.Idle;
     }
 
     /*
@@ -63,207 +33,42 @@ public class CharacterController : MonoBehaviour
     void Update()
     {
         //Movement, check for collision in all of them before updating character position.
-
         //Up
         if (Input.GetKeyDown(KeyCode.W))
         {
-            if (m_PlayerState == PlayerState.PreparingSpell)
-            {
-                PlayerCastPreparedSpell(Direction.Up);
-            }
-            else if (m_PlayerState == PlayerState.Moving)
-            {
-                bufferedMove = Direction.Up;
-                StartCoroutine(ClearBuffer(bufferTime));
-            }
-            else
-            {
-                StartCoroutine(Move(Direction.Up, 1));
-            }
+            CastPreparedSpellOrMove(Direction.Up);
         }
         //Down
         if (Input.GetKeyDown(KeyCode.S))
         {
-            if (m_PlayerState == PlayerState.PreparingSpell)
-            {
-                PlayerCastPreparedSpell(Direction.Down);
-            }
-            else if (m_PlayerState == PlayerState.Moving)
-            {
-                bufferedMove = Direction.Down;
-                StartCoroutine(ClearBuffer(bufferTime));
-            }
-            else
-            {
-                StartCoroutine(Move(Direction.Down, 1));
-            }
+            CastPreparedSpellOrMove(Direction.Down);
         }
         //Right
         if (Input.GetKeyDown(KeyCode.D))
         {
-            if (m_PlayerState == PlayerState.PreparingSpell)
-            {
-                PlayerCastPreparedSpell(Direction.Right);
-            }
-            else if (m_PlayerState == PlayerState.Moving)
-            {
-                bufferedMove = Direction.Right;
-                StartCoroutine(ClearBuffer(bufferTime));
-            }
-            else
-            {
-                StartCoroutine(Move(Direction.Right, 1));
-            }
+            CastPreparedSpellOrMove(Direction.Right);
         }
         //Left
         if (Input.GetKeyDown(KeyCode.A))
         {
-            if (m_PlayerState == PlayerState.PreparingSpell)
-            {
-                PlayerCastPreparedSpell(Direction.Left);
-            }
-            else if (m_PlayerState == PlayerState.Moving)
-            {
-                bufferedMove = Direction.Left;
-                StartCoroutine(ClearBuffer(bufferTime));
-            }
-            else
-            {
-                StartCoroutine(Move(Direction.Left, 1));
-            }
+            CastPreparedSpellOrMove(Direction.Left);
         }
     }
 
-    private IEnumerator Move(Direction direction, int steps, float speed = 1)
+    public void CastPreparedSpellOrMove(Direction direction)
     {
-        if (m_PlayerState == PlayerState.Channeling)
+        if (Player.PlayerState == PlayerState.PreparingSpell)
         {
-            StopChanneling();
+            Player.PlayerCastPreparedSpell(direction);
         }
-
-        if (m_PlayerState != PlayerState.Idle || steps == 0) yield break;
-
-        Tile tile = null;
-        while (tile == null && steps != 0)
+        else if (Player.PlayerState == PlayerState.Moving)
         {
-            switch (direction)
-            {
-                case Direction.Up:
-                    if (board.CanMoveTo(Player.CurrentTile.xPos, Player.CurrentTile.yPos + steps))
-                    {
-                        tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos + steps);
-                        break;
-                    }
-                    break;
-                case Direction.Down:
-                    if (board.CanMoveTo(Player.CurrentTile.xPos, Player.CurrentTile.yPos - steps))
-                    {
-                        tile = board.GetTile(Player.CurrentTile.xPos, Player.CurrentTile.yPos - steps);
-                        break;
-                    }
-                    break;
-                case Direction.Right:
-                    if (board.CanMoveTo(Player.CurrentTile.xPos + steps, Player.CurrentTile.yPos))
-                    {
-                        tile = board.GetTile(Player.CurrentTile.xPos + steps, Player.CurrentTile.yPos);
-                        break;
-                    }
-                    break;
-                case Direction.Left:
-                    if (board.CanMoveTo(Player.CurrentTile.xPos - steps, Player.CurrentTile.yPos))
-                    {
-                        tile = board.GetTile(Player.CurrentTile.xPos - steps, Player.CurrentTile.yPos);
-                        break;
-                    }
-                    break;
-            }
-            steps--;
+            Player.bufferedMove = direction;
+            StartCoroutine(Player.ClearBuffer());
         }
-
-        if (tile != null)
+        else
         {
-            var moveLockDuration = MoveSpeed * (steps + 1) * speed;
-            gameObject.AddComponent<Move>().Init(tile.gameObject.transform.position, moveLockDuration, null);
-            m_PlayerState = PlayerState.Moving;
-            StartCoroutine(EnterTile(moveLockDuration, direction, tile));
-        }
-    }
-
-    public void CastSpell(Spell spell)
-    {
-        if (m_PlayerState == PlayerState.Channeling)
-        {
-            StopChanneling();
-        }
-        Player.CastSpell(spell);
-    }
-
-    public void PrepareSpell(Spell spell)
-    {
-        m_PlayerState = PlayerState.PreparingSpell;
-        //m_DirectionalArrows.SetActive(true);
-        m_PreparedSpell = spell;
-    }
-
-    private void PlayerCastPreparedSpell(Direction direction)
-    {
-        if (m_PlayerState == PlayerState.Channeling)
-        {
-            StopChanneling();
-        }
-        Player.CastSpell(m_PreparedSpell, direction);
-        m_PlayerState = PlayerState.Idle;
-        //m_DirectionalArrows.SetActive(true);
-    }
-
-    public void BeginChanneling(ChanneledSpell spell)
-    {
-        m_PlayerState = PlayerState.Channeling;
-        channeledSpell = spell;
-    }
-
-    public void StopChanneling()
-    {
-        if(channeledSpell != null && m_PlayerState == PlayerState.Channeling)
-        {
-            m_PlayerState = PlayerState.Idle;
-            channeledSpell.StopChanneling();
-
-            channeledSpell = null;
-        }
-    }
-
-    public void Teleport(Direction direction)
-    {
-        m_PlayerState = PlayerState.Idle;
-        StartCoroutine(Move(direction, 3, 0.1f));
-    }
-
-    private IEnumerator EnterTile(float waitTime, Direction direction, Tile tile)
-    {
-
-        yield return new WaitForSeconds(waitTime);
-
-        Player.EnterTile(tile, true);
-        m_PlayerState = PlayerState.Idle;
-        if (tile.tileType == TileType.Ice)
-        {
-            StartCoroutine(Move(direction, 1));
-        }
-        else if (bufferedMove != Direction.NONE)
-        {
-            StartCoroutine(Move(bufferedMove, 1));
-            bufferedMove = Direction.NONE;
-        }
-    }
-
-    private IEnumerator ClearBuffer(float waitTime)
-    {
-        yield return new WaitForSeconds(waitTime);
-
-        if (bufferedMove != Direction.NONE)
-        {
-            bufferedMove = Direction.NONE;
+            StartCoroutine(Player.TryMove(direction, 1));
         }
     }
 }

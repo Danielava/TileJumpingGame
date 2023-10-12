@@ -23,6 +23,7 @@ public class PlantSeed : Enemy
         var newEnemy = Instantiate(enemyPrefab, transform);
         newEnemy.transform.parent = transform.parent;
         newEnemy.GetComponent<Enemy>().CurrentTile = CurrentTile;
+        newEnemy.GetComponent<Enemy>().CurrentTile.entityOnTile = newEnemy.GetComponent<Enemy>();
         Destroy(gameObject);
     }
 }

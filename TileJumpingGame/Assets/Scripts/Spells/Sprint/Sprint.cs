@@ -17,8 +17,8 @@ public class Sprint : Spell
     public override void CastDirectionalSpell(Direction direction)
     {
         //TODO: Perform your spell here!
-        CharacterController characterController = GameObject.FindWithTag("Player").GetComponent<CharacterController>();
-        characterController.Teleport(direction);
+        Player player = GameObject.FindWithTag("Player").GetComponent<Player>();
+        player.Teleport(direction);
         Instantiate(explosion, GameObject.FindWithTag("Player").transform);
     }
 

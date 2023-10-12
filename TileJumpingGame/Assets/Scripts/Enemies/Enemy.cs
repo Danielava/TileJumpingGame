@@ -1,6 +1,5 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum AttackType
@@ -9,7 +8,7 @@ public enum AttackType
     Circle
 }
 
-public class Enemy : MonoBehaviour
+public class Enemy : BoardEntity
 {
     public int MaxHealth;
     public int CurrentHealth;
@@ -19,8 +18,6 @@ public class Enemy : MonoBehaviour
 
     public float SpeedMultiplier = 1;
 
-    public GridTileBoard Board;
-    public Tile CurrentTile;
     public AttackHandler AttackHandler;
 
     public AttackType AttackType;
@@ -28,18 +25,13 @@ public class Enemy : MonoBehaviour
     public Player Player;
     // Start is called before the first frame update
 
-    void Awake()
+    override public void Awake()
     {
+        base.Awake();
         Player = GameObject.Find("Player").GetComponent<Player>();
         AttackHandler = GameObject.Find("GameManager").GetComponent<AttackHandler>();
-        Board = GameObject.Find("Board").GetComponent<GridTileBoard>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 
     protected void MoveRandom()
     {
@@ -47,53 +39,54 @@ public class Enemy : MonoBehaviour
         switch (dir)
         {
             case 0:
-                CheckAndEnterTile(CurrentTile.xPos, CurrentTile.yPos + 1);
+                StartCoroutine(TryMove(Direction.Up));
                 break;
             case 1:
-                CheckAndEnterTile(CurrentTile.xPos, CurrentTile.yPos - 1);
+                StartCoroutine(TryMove(Direction.Down));
                 break;
             case 2:
 
-                CheckAndEnterTile(CurrentTile.xPos + 1, CurrentTile.yPos);
+                StartCoroutine(TryMove(Direction.Right));
                 break;
             case 3:
-                CheckAndEnterTile(CurrentTile.xPos - 1, CurrentTile.yPos);
+                StartCoroutine(TryMove(Direction.Left));
                 break;
         }
     }
 
     // Improve this simple SHIT algorithm
-    protected void MoveTowardsPlayer()
+    public void MoveTowardsPlayer()
     {
         var xDist = Player.CurrentTile.xPos - CurrentTile.xPos;
         var yDist = Player.CurrentTile.yPos - CurrentTile.yPos;
+
 
         if (Mathf.Abs(xDist) + Mathf.Abs(yDist) <= 1)
         {
             return;
         }
 
-
+        // Replace shitty pathfinding with a* or something
         if (Mathf.Abs(xDist) > Mathf.Abs(yDist))
         {
             if (xDist > 0)
             {
-                CheckAndEnterTile(CurrentTile.xPos + 1, CurrentTile.yPos);
+                StartCoroutine(TryMove(Direction.Right));
             }
             else
             {
-                CheckAndEnterTile(CurrentTile.xPos - 1, CurrentTile.yPos);
+                StartCoroutine(TryMove(Direction.Left));
             }
         }
         else
         {
             if (yDist > 0)
             {
-                CheckAndEnterTile(CurrentTile.xPos, CurrentTile.yPos + 1);
+                StartCoroutine(TryMove(Direction.Up));
             }
             else
             {
-                CheckAndEnterTile(CurrentTile.xPos, CurrentTile.yPos - 1);
+                StartCoroutine(TryMove(Direction.Down));
             }
         }
     }
@@ -118,14 +111,6 @@ public class Enemy : MonoBehaviour
             EnterTile(Board.GetTile(xPos, yPos));
         }
     }
-
-    private void EnterTile(Tile tile)
-    {
-        float zPos = transform.position.z;
-        transform.position = tile.transform.position + new Vector3(0, 0, zPos);
-        CurrentTile = tile;
-    }
-
 
     public static IEnumerator StartMove(float duration, bool repeat, Action callback)
     {

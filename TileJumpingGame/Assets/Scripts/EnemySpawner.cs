@@ -28,10 +28,9 @@ public class EnemySpawner : MonoBehaviour
         if (transform.childCount < MaxEnemyAmount)
         {
             var tile = TileBoard.GetValidSpawnPoint();
-
             var enemyObj = Instantiate(enemy, new Vector3(tile.transform.position.x, tile.transform.position.y, -0.04f), Quaternion.identity, transform);
-
             enemyObj.GetComponent<Enemy>().CurrentTile = tile;
+            tile.entityOnTile = enemyObj.GetComponent<Enemy>();
         }
     }
 }
