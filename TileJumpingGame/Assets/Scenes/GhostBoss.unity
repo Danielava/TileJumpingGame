@@ -749,9 +749,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   start_tile: 0300000003000000
   Player: {fileID: 101310538}
-  m_Inventory: {fileID: 101310539}
-  m_DirectionalArrows: {fileID: 0}
-  m_PlayerState: 0
+  Inventory: {fileID: 0}
+  DirectionalArrows: {fileID: 0}
   MoveSpeed: 0.1
   bufferedMove: 4
 --- !u!114 &101310538
@@ -766,9 +765,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68f8d22eaa1a7ee46ae61c6099b8eb36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Board: {fileID: 0}
+  MoveSpeed: 0.1
   playerHealthUI: {fileID: 789250593}
   maxHealth: 10
   inventory: {fileID: 101310539}
+  PlayerState: 0
+  bufferedMove: 4
+  bufferTime: 0.2
 --- !u!114 &101310539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4530,7 +4534,7 @@ MonoBehaviour:
   attackHandler: {fileID: 952979211}
   attackInterval: 5
   attackDelay: 1
-  SpeedMultiplier: 1
+  SpeedMultiplier: 0
   board: {fileID: 234397550}
   Phase: 0
   PhaseCutoffs:
