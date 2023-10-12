@@ -13,6 +13,8 @@ TagManager:
   - Bomb
   - Lamp
   - Boulder
+  - PortalBullet
+  - TeleportableProjectile
   layers:
   - Default
   - TransparentFX

@@ -29,7 +29,7 @@ public class TripleShot : Spell
 
         for(int i = 0; i < 16; i++)
         {
-            Instantiate(m_FireballProjectile, pos, Quaternion.identity).Init(6f, new Vector2(Mathf.Sin(Mathf.PI / 8 * i), Mathf.Cos(Mathf.PI / 8 * i)), i * -22.5f);
+            Instantiate(m_FireballProjectile, pos, Quaternion.identity).Init(6f, new Vector2(Mathf.Sin(Mathf.PI / 8 * i), Mathf.Cos(Mathf.PI / 8 * i)));
         }
         base.CastSpell();
     }

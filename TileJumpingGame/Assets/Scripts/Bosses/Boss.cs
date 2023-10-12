@@ -23,7 +23,7 @@ public class Boss : MonoBehaviour
     public float[] PhaseCutoffs = new float[] { 0 };
 
     //make list of premade attacks for each boss
-    void Start()
+    protected virtual void Start()
     {
         currentHealth = maxHealth;
     }
