@@ -18,9 +18,14 @@ public class Bounce : MonoBehaviour
 
     private Boss Boss;
 
-    public float BounceHeight = 5f;
+    public float BounceHeight = 7f;
 
-    public float Speed = 0.3f;
+    public float Speed = 0.3f; // 1s divided by this value = flight time
+
+    public float CustomGravityCutoff = 0.6f;
+    public float CustomGravityCoefficient = 0.2f;
+    public float SpeedToBoss = 2f;
+    public float SpeedToTile = 0.5f;
 
     public GameObject Mark;
     private GameObject mark;
@@ -35,6 +40,10 @@ public class Bounce : MonoBehaviour
     {
         t += Time.deltaTime * Speed;
         gameObject.transform.position = CalculatePosition(Positions[0], Positions[1], Positions[2], t);
+
+        if (t >= CustomGravityCutoff) //custom gravity physics
+            Speed += CustomGravityCoefficient * Time.deltaTime;
+
         if(t >= 1)
         {
             if(state == BounceState.ToField)
@@ -69,7 +78,7 @@ public class Bounce : MonoBehaviour
         Positions[0] = Player.transform.position;
         Positions[2] = new Vector3(Boss.transform.position.x, Boss.transform.position.y);
         Positions[1] = (Positions[0] + Positions[2]) / 2;
-        Speed = 2f;
+        Speed = SpeedToBoss;
 
     }
 
@@ -77,7 +86,7 @@ public class Bounce : MonoBehaviour
     {
         Boss.TakeDamage(10);
 
-        MoveToTile(GameObject.Find("Board").GetComponent<GridTileBoard>().GetRandomTile());
+        MoveToTile(GameObject.Find("Board").GetComponent<GridTileBoard>().GetValidSpawnPoint());
     }
 
     private void MoveToTile(Tile tile)
@@ -87,8 +96,8 @@ public class Bounce : MonoBehaviour
 
         Positions[0] = transform.position;
         Positions[2] = new Vector3(tile.transform.position.x, tile.transform.position.y);
-        Positions[1] = (Positions[0] + Positions[2]) / 2 + new Vector3(0, BounceHeight);
-        Speed = 0.33f;
+        Positions[1] = tile.transform.position + new Vector3(0, BounceHeight);
+        Speed = SpeedToTile;
         InitMark();
     }
 

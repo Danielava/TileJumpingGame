@@ -52,6 +52,10 @@ MonoBehaviour:
   - {x: 0, y: 0, z: 0}
   BounceHeight: 5
   Speed: 0.3
+  CustomGravityCutoff: 0.6
+  CustomGravityCoefficient: 0.2
+  SpeedToBoss: 2
+  SpeedToTile: 0.5
   Mark: {fileID: 7802380343233759089, guid: d86f7bac049622d479e64ff78e1366aa, type: 3}
 --- !u!212 &3632385020242153411
 SpriteRenderer:

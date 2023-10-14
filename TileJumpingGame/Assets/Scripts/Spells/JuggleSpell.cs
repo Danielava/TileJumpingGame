@@ -12,13 +12,9 @@ public class JuggleSpell : Spell
     public override void CastSpell()
     {
         var player = GameObject.FindWithTag("Player").GetComponent<Player>();
-
-        var currentTile = player.CurrentTile;
-
         var board = GameObject.Find("Board").GetComponent<GridTileBoard>();
 
-        Instantiate(BounceObj).GetComponent<Bounce>().Init(board.GetRandomTile(), player);
-
+        Instantiate(BounceObj).GetComponent<Bounce>().Init(board.GetValidSpawnPoint(), player);
 
         base.CastSpell();
     }
